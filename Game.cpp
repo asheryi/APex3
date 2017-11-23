@@ -26,12 +26,13 @@ Game::Game(int rows, int columns) {
     this->gameLogic = new StdGameLogic();
     this->display = new Console(*board);
 
-    PlayerController *pc = new ConsoleController();
+    PlayerController *pc1 = new ConsoleController();
+    PlayerController *pc2 = new ConsoleController();
 
 
-    this->players[0] = new HumanPlayer(pc, black);
+    this->players[0] = new HumanPlayer(pc1, black);
     this->players[0]->updateScore(2);
-    this->players[1] = new AIplayer(pc, *board, *gameLogic, white);
+    this->players[1] = new AIplayer(pc2, *board, *gameLogic, white);
     this->players[1]->updateScore(2);
 
     this->currPlayer = 0;

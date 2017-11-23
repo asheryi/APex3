@@ -22,6 +22,6 @@ Color Player::getRivalColor() {
 
 Player::Player(PlayerController *controller, Color color) : controller(controller),
                                                             color(color) {
-
+    score = 0;
 }
 
