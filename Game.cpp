@@ -104,6 +104,9 @@ void Game::start() {
                                                players[1]->getScore());
     }
 
+    deleteVector(*movePaths);
+    delete movePaths;
+
     display->showEndGameStatus(gameStatus);
 }
 
