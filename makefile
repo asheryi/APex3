@@ -1,5 +1,5 @@
-a.out: AIplayer.o Board.o Cell.o Console.o ConsoleController.o Directions.o Game.o HumanPlayer.o main.o Path.o Player.o StandardAttack.o StdGameLogic.o
-	g++  AIplayer.o Board.o Cell.o Console.o ConsoleController.o Directions.o Game.o HumanPlayer.o main.o Path.o Player.o StandardAttack.o StdGameLogic.o
+a.out: AIplayer.o Board.o Cell.o Console.o ConsoleController.o Counter.o Directions.o Game.o HumanPlayer.o main.o Path.o Player.o StandardAttack.o StdGameLogic.o
+	g++  AIplayer.o Board.o Cell.o Console.o ConsoleController.o Counter.o Directions.o Game.o HumanPlayer.o main.o Path.o Player.o StandardAttack.o StdGameLogic.o
 
 AIplayer.o: AIplayer.h AIplayer.cpp Board.h Player.h Path.h GameLogic.h
 	g++ -c AIplayer.cpp
@@ -16,6 +16,9 @@ Console.o: Console.h Console.cpp Display.h Board.h Cell.h
 ConsoleController.o: ConsoleController.h ConsoleController.cpp PlayerController.h
 	g++ -c ConsoleController.cpp
 
+Counter.o: Counter.h Counter.cpp
+	g++ -c Counter.cpp
+
 Directions.o: Directions.h Directions.cpp Cell.h
 	g++ -c Directions.cpp
 
@@ -31,7 +34,7 @@ main.o: main.cpp Game.h
 Path.o: Path.h Path.cpp Cell.h
 	g++ -c Path.cpp
 
-Player.o: Player.h Player.cpp PlayerController.h TypesOf.h Path.h
+Player.o: Player.h Player.cpp PlayerController.h TypesOf.h Path.h Counter.h
 	g++ -c Player.cpp
 
 StandardAttack.o: StandardAttack.h StandardAttack.cpp Attack.h Path.h
