@@ -6,36 +6,32 @@
 #include "Console.h"
 #include "HumanPlayer.h"
 #include "ConsoleController.h"
-#include "Attack.h"
 #include "StandardAttack.h"
+#include "AIplayer.h"
+#include "VectorExterminator.h"
 
 using namespace std;
 
 Game::Game(int rows, int columns) {
     std::vector<Cell *> blacks(2), whites(2);
 
-    blacks[0] = new Cell(2, 3);
-    blacks[1] = new Cell(3, 2);
+    blacks[0] = new Cell(rows / 2, columns / 2 + 1);
+    blacks[1] = new Cell(rows / 2 + 1, columns / 2);
 
-    whites[0] = new Cell(2, 2);
-    whites[1] = new Cell(3, 3);
-
-    this->blacks = blacks.size();
-    this->whites = whites.size();
+    whites[0] = new Cell(rows / 2, columns / 2);
+    whites[1] = new Cell(rows / 2 + 1, columns / 2 + 1);
 
     this->board = new Board(rows, columns, blacks, whites);
 
-
-    this->gameLogic = new StdGameLogic(*board);
+    this->gameLogic = new StdGameLogic();
     this->display = new Console(*board);
-    this->players[0] = new HumanPlayer(black);
-    PlayerController *pc1 = new ConsoleController();
-    this->players[0]->setController(pc1);
-    this->players[0]->updateScore(blacks.size());
-    this->players[1] = new HumanPlayer(white);
-    PlayerController *pc2 = new ConsoleController();
-    this->players[1]->setController(pc2);
-    this->players[1]->updateScore(whites.size());
+
+    PlayerController *pc = new ConsoleController();
+
+
+    this->players[0] = new HumanPlayer(pc, black);
+    this->players[1] = new AIplayer(nullptr, *board, *gameLogic, white);
+
     this->currPlayer = 0;
 
     deleteVector(blacks);
@@ -53,9 +49,15 @@ void Game::start() {
     //
 
     Color currPlayerColor(players[currPlayer]->getColor());
-    GameStatus gameStatus = gameLogic->currGameStatus(currPlayerColor, blacks, whites);
+
+    std::vector<Path *> *movePaths = this->gameLogic->validMovePaths(*board, currPlayerColor);
+    bool currPlayerhasMoves = !movePaths->empty();
+
+    GameStatus gameStatus = gameLogic->currGameStatus(*board, currPlayerhasMoves, currPlayerColor,
+                                                      players[0]->getScore(),
+                                                      players[1]->getScore());
+
     while (gameStatus == noOneWon || gameStatus == passTurn) {
-        std::vector<Path *> *movePaths = this->gameLogic->validPathsOfMoves(currPlayerColor);
 
         bool passTurnState = gameStatus == passTurn;
         // ?
@@ -63,7 +65,7 @@ void Game::start() {
 
         if (!passTurnState) {
             // AI recieves board in constructor .
-            Cell *move = players[currPlayer]->makeMove();
+            Cell *move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             Path *currPathOfLandingPoint;
 
             while (true) {
@@ -76,11 +78,12 @@ void Game::start() {
                     if (currPathOfLandingPoint == 0) {
                         display->showError(notValidMove);
                     } else {
+                        display->showMoveDone(*move, currPlayerColor);
                         break;
                     }
                 }
                 delete move;
-                move = players[currPlayer]->makeMove();
+                move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             }
             this->attackThose(*currPathOfLandingPoint, currPlayerColor);
 
@@ -91,10 +94,14 @@ void Game::start() {
         delete movePaths;
 
         nextPlayer(currPlayerColor);
-        gameStatus = gameLogic->currGameStatus(currPlayerColor, blacks, whites);
+        movePaths = this->gameLogic->validMovePaths(*board, currPlayerColor);
+        currPlayerhasMoves = !movePaths->empty();
+
+        gameStatus = gameLogic->currGameStatus(*board, currPlayerhasMoves, currPlayerColor, players[0]->getScore(),
+                                               players[1]->getScore());
     }
 
-    display->showEndGameStatus(gameLogic->currGameStatus(currPlayerColor, blacks, whites));
+    display->showEndGameStatus(gameStatus);
 }
 
 Path *Game::pathOfLandingPoint(std::vector<Path *> paths, const Cell &point) {
@@ -113,13 +120,11 @@ bool Game::isOutOfBounds(const Cell &point) {
 
 void Game::attackThose(const Path &path, Color currPlayerColor) {
     StandardAttack attack(path);
-    int score = 0;
     while (attack.hasNext()) {
         Cell c = attack.getNext();
         this->board->setCellAs(c.getRow(), c.getColumn(), currPlayerColor);
-        score++;
     }
-    updateScores(*players[currPlayer], *players[1 - currPlayer], score);
+    updateScores(*players[currPlayer], *players[1 - currPlayer], path.score());
 }
 
 void Game::updateScores(Player &curr, Player &other, int score) {

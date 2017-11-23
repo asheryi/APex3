@@ -1,10 +1,12 @@
 #include "HumanPlayer.h"
 
-HumanPlayer::HumanPlayer(Color color){
-    this->color=color;
-}
- Cell* HumanPlayer::makeMove(){
+Cell *HumanPlayer::chooseAndReturnMove(const std::vector<Path *> &availableMovePaths) {
     return controller->getLandingPoint();
+}
+
+HumanPlayer::HumanPlayer(PlayerController *controller, Color color) : Player(controller,
+                                                                             color) {
+
 }
 
 

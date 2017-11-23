@@ -8,8 +8,9 @@
 class HumanPlayer:public Player{
 
 public:
-    HumanPlayer(Color color);
-    virtual Cell* makeMove();
+    HumanPlayer(PlayerController *controller, Color color);
+
+    virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths);
 };
 
 

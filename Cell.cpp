@@ -7,7 +7,7 @@
 Cell::Cell(int row, int column) : row(row), column(column) {}
 
 int Cell::getColumn() const {
-    return column;
+    return this->column;
 }
 
 int Cell::getRow() const {
@@ -36,3 +36,9 @@ bool Cell::operator==(Cell p) {
 bool Cell::operator!=(Cell p) {
     return ((row != p.row) || (column != p.column));
 }
+
+ostream &operator<<(ostream &stream, const Cell &cell) {
+    stream << "(" << cell.row << "," << cell.column << ")";
+    return stream;
+}
+

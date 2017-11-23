@@ -17,6 +17,10 @@ private:
     Cell *landing;
     vector<Cell *> directions;
     vector<Cell *> stopCells;
+    /*
+    int abs(int x);
+     */
+
 public:
     /*****************************************************************************
     *function name:Path
@@ -52,6 +56,8 @@ public:
     *NOTE:
     *****************************************************************************/
     Cell *getDirection(int index) const;
+
+    int score() const;
 
     int movesCount() const;
 

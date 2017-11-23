@@ -13,6 +13,8 @@ class Board {
 public:
     Board(int rows, int columns, const std::vector<Cell *> &blacks, const std::vector<Cell *> &whites);
 
+    Board(const Board &board);
+
     /**
      * @return how many rows .
      */

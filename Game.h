@@ -20,8 +20,6 @@ private:
     Display *display;
     Board *board;
     int currPlayer;
-    int blacks;
-    int whites;
 
     /**
      * Switching the player .
@@ -67,18 +65,6 @@ public:
      * Starting the actual game .
      */
     void start();
-
-    /**
-     * Deleting the vector.
-     * @param points - vector of points.
-     */
-    template <class T>
-    void deleteVector(std::vector<T *> &nodes){
-        for (unsigned int i = 0; i < nodes.size(); i++) {
-            delete nodes[i];
-        }
-        nodes.clear();
-    }
 
     void updateScores(Player &curr, Player &other, int score);
 };

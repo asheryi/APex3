@@ -98,4 +98,9 @@ void Console::showEndGameStatus(GameStatus gameStatus) const {
     }
 }
 
+void Console::showMoveDone(const Cell &cell, Color playerColor) const {
+    char whoDidAMove = colorAsCharacter(playerColor) == 'x' ? 'X' : 'O';
+    cout << whoDidAMove << " played : " << cell << endl;
+}
+
 

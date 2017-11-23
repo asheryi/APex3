@@ -11,15 +11,19 @@
 #include <iostream>
 #include <vector>
 #include "Path.h"
+#include "Board.h"
 // GameLogic interface of logic .
 
 class GameLogic {
 public:
     /**
-     * @param color - of the
+     * Return valid moves , each move with it's path - it's trajectories to "eat" on the board .
+     *
+     * @param board - the board to check the player in the given color's moves.
+     * @param color - of the player .
      * @return all of the valid moves available for the player which color was given .
      */
-    virtual std::vector<Path *> *validPathsOfMoves(Color color) const = 0;
+    virtual std::vector<Path *> *validMovePaths(const Board &board, Color color) const = 0;
 
     /**
      * Returns the current Game Status which could be : noValidMoves , whitwWon , blackWon , passTurn(the player cannot
@@ -30,7 +34,8 @@ public:
      * @return the curr game status as described .
      */
     virtual GameStatus
-    currGameStatus(const Color &currPlayerColor, int blacks, int whites) = 0;
+    currGameStatus(const Board &board, bool currPlayerhasMoves, const Color &currPlayerColor, int blacks,
+                   int whites) = 0;
 };
 
 

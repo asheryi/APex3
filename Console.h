@@ -34,6 +34,9 @@ public:
     void showError(Error errorType) const;
 
     void showEndGameStatus(GameStatus gameStatus) const;
+
+    void showMoveDone(const Cell &cell, Color playerColor) const;
+
 };
 
 

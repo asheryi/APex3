@@ -13,12 +13,6 @@ void Path::insertMove(Cell *direction, Cell *stopCell) {
 }
 
 Cell *Path::getStopCell(int index) const {
-    /* if (index < stopCells.size() && index >= 0) {
-
-     } else {
-         //TODO:Should be NULL
-         return 0;
-     }*/
     return stopCells[index];
 }
 
@@ -28,12 +22,6 @@ Cell Path::getLanding() const {
 
 Cell *Path::getDirection(int index) const {
     return directions[index];
-    /*if (index < directions.size() && index >= 0) {
-
-    } else {
-        //TODO:Should be NULL
-        return 0;
-    }*/
 }
 
 int Path::movesCount() const {
@@ -52,9 +40,29 @@ Path::~Path() {
 
 Path::Path(const Path &other) {
     this->landing = new Cell(*other.landing);
-    for(unsigned int i=0;i<other.directions.size();i++){
+    for (unsigned int i = 0; i < other.directions.size(); i++) {
         this->directions.push_back(new Cell(*other.directions[i]));
         this->stopCells.push_back(new Cell(*other.stopCells[i]));
     }
 }
+
+int Path::score() const {
+    int result = 1;
+    for (unsigned int i = 0; i < this->directions.size(); i++) {
+        Cell *currStopCell = stopCells[i];
+        int flipsOnThatDirection = abs(currStopCell->getColumn() - landing->getColumn());
+        if (flipsOnThatDirection == 0) {
+            flipsOnThatDirection = abs(currStopCell->getRow() - landing->getColumn());
+        }
+        result += flipsOnThatDirection;
+    }
+    return result;
+}
+/*
+int Path::abs(int x) {
+    return x >= 0 ? x : -x;
+}
+ */
+
+
 

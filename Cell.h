@@ -4,6 +4,9 @@
 #ifndef EX2_CELL_H
 #define EX2_CELL_H
 
+#include <iostream>
+
+using namespace std;
 // Represents a cell in a matrix . (in this case board)
 
 class Cell {
@@ -29,14 +32,18 @@ public:
     Cell &operator+=(Cell p);
 
     Cell operator-(Cell p);
+
     /**
      * Comparing two cells row by row , column by column .
      * @param p - othe cell .
      * @return true if and only if this row = to p's and same for column .
      */
     bool operator==(Cell p);
+
     bool operator!=(Cell p);
-    };
+
+    friend ostream &operator<<(ostream &stream, const Cell &cell);
+};
 
 
 #endif //EX2_CELL_H

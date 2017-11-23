@@ -8,6 +8,7 @@
 #include "TypesOf.h"
 #include <vector>
 #include "Path.h"
+
 class Display {
 public:
     /**
@@ -30,6 +31,7 @@ public:
      */
     virtual void showEndGameStatus(GameStatus gameStatus) const = 0;
 
+    virtual void showMoveDone(const Cell &cell, Color playerColor) const = 0;
 };
 
 
