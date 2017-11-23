@@ -52,7 +52,7 @@ int Path::score() const {
         Cell *currStopCell = stopCells[i];
         int flipsOnThatDirection = abs(currStopCell->getColumn() - landing->getColumn());
         if (flipsOnThatDirection == 0) {
-            flipsOnThatDirection = abs(currStopCell->getRow() - landing->getColumn());
+            flipsOnThatDirection = abs(currStopCell->getRow() - landing->getRow());
         }
         result += flipsOnThatDirection;
     }
