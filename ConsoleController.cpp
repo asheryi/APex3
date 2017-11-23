@@ -1,7 +1,6 @@
 #include "ConsoleController.h"
 #include <limits>
 Cell* ConsoleController::getLandingPoint() const {
-    Cell *p;
     int row, col;
     char comma;
     std::cin >> row >> comma >> col;

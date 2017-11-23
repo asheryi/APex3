@@ -58,11 +58,10 @@ int Path::score() const {
     }
     return result;
 }
-/*
-int Path::abs(int x) {
+
+int Path::abs(int x) const {
     return x >= 0 ? x : -x;
 }
- */
 
 
 

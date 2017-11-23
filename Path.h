@@ -17,9 +17,8 @@ private:
     Cell *landing;
     vector<Cell *> directions;
     vector<Cell *> stopCells;
-    /*
-    int abs(int x);
-     */
+
+    int abs(int x) const;
 
 public:
     /*****************************************************************************
@@ -61,7 +60,7 @@ public:
 
     int movesCount() const;
 
-    Path(const Path& other);
+    Path(const Path &other);
 
     ~Path();
 };

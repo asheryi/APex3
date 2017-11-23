@@ -7,12 +7,14 @@
 class Attack {
 public:
     /*****************************************************************************
-    *function name:hasNext
-    *operation function:indicate if we can call getNext function
+    *function name:hasNext:indicate if we can call getNext function
+    * duplicates.
+    *NOTE::indicate if we can call getNext function
     * duplicates.
     *NOTE:
-    *****************************************************************************/
     virtual bool hasNext()=0;
+    virtual bool hasNext()=0;
+    *operation function
     /*****************************************************************************
     *function name:getNext
     *operation function:return the next disc position which need to be flip.

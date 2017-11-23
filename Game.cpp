@@ -30,7 +30,7 @@ Game::Game(int rows, int columns) {
 
 
     this->players[0] = new HumanPlayer(pc, black);
-    this->players[1] = new AIplayer(nullptr, *board, *gameLogic, white);
+    this->players[1] = new AIplayer(pc, *board, *gameLogic, white);
 
     this->currPlayer = 0;
 
