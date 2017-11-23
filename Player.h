@@ -4,6 +4,7 @@
 #include "PlayerController.h"
 #include "TypesOf.h"
 #include "Path.h"
+#include "Counter.h"
 
 #ifndef PLAYER_H_
 #define PLAYER_H_
@@ -12,13 +13,14 @@ using namespace std;
 
 class Player {
 protected:
-    int score;
     Color color;
     PlayerController *controller;
+    Counter *scoreCounter;
 
-    Player(PlayerController *controller, Color color);
+    Player(PlayerController *controller, Counter *scoreCounter, Color color);
 
     Color getRivalColor();
+
 public:
     /*****************************************************************************
     *function name:updateScore

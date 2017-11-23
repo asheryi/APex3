@@ -46,7 +46,7 @@ Path::Path(const Path &other) {
     }
 }
 
-int Path::score() const {
+int Path::length() const {
     int result = 1;
     for (unsigned int i = 0; i < this->directions.size(); i++) {
         Cell *currStopCell = stopCells[i];

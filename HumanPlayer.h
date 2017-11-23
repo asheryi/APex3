@@ -5,10 +5,10 @@
 #include "PlayerController.h"
 #include "Cell.h"
 
-class HumanPlayer:public Player{
+class HumanPlayer : public Player {
 
 public:
-    HumanPlayer(PlayerController *controller, Color color);
+    HumanPlayer(PlayerController *controller, Counter *scoreCounter, Color color);
 
     virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths);
 };

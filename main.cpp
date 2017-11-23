@@ -4,7 +4,7 @@
 #include "Game.h"
 
 int main() {
-    Game game(3, 3);
+    Game game(4, 4);
 
     game.start();
 

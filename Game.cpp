@@ -23,6 +23,9 @@ Game::Game(int rows, int columns) {
 
     this->board = new Board(rows, columns, blacks, whites);
 
+    Counter *blacksCounter = new Counter(blacks.size());
+    Counter *whitesCounter = new Counter(whites.size());
+
     this->gameLogic = new StdGameLogic();
     this->display = new Console(*board);
 
@@ -30,9 +33,9 @@ Game::Game(int rows, int columns) {
     PlayerController *pc2 = new ConsoleController();
 
 
-    this->players[0] = new HumanPlayer(pc1, black);
+    this->players[0] = new HumanPlayer(pc1, blacksCounter, black);
     this->players[0]->updateScore(2);
-    this->players[1] = new AIplayer(pc2, *board, *gameLogic, white);
+    this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
     this->players[1]->updateScore(2);
 
     this->currPlayer = 0;
@@ -130,7 +133,7 @@ void Game::attackThose(const Path &path, Color currPlayerColor) {
         Cell c = attack.getNext();
         this->board->setCellAs(c.getRow(), c.getColumn(), currPlayerColor);
     }
-    updateScores(*players[currPlayer], *players[1 - currPlayer], path.score());
+    updateScores(*players[currPlayer], *players[1 - currPlayer], path.length());
 }
 
 void Game::updateScores(Player &curr, Player &other, int score) {

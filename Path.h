@@ -56,7 +56,7 @@ public:
     *****************************************************************************/
     Cell *getDirection(int index) const;
 
-    int score() const;
+    int length() const;
 
     int movesCount() const;
 

@@ -31,6 +31,6 @@ set(SOURCE_FILES
         StandardAttack.h
         StdGameLogic.cpp
         StdGameLogic.h
-        TypesOf.h AIplayer.cpp AIplayer.h VectorExterminator.h)
+        TypesOf.h AIplayer.cpp AIplayer.h VectorExterminator.h Counter.cpp Counter.h)
 
 add_executable(ex3 ${SOURCE_FILES})

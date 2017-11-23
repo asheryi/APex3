@@ -6,11 +6,12 @@
 #include "StandardAttack.h"
 #include "VectorExterminator.h"
 
-AIplayer::AIplayer(PlayerController *controller,
+AIplayer::AIplayer(PlayerController *controller, Counter *scoreCounter, const Counter &otherPlayerCounter,
                    const Board &gameBoard,
-                   const GameLogic &gameLogic, Color color) : Player(controller, color),
+                   const GameLogic &gameLogic, Color color) : Player(controller, scoreCounter, color),
                                                               gameBoard(gameBoard),
-                                                              gameLogic(gameLogic) {
+                                                              gameLogic(gameLogic),
+                                                              otherPlayerCounter(otherPlayerCounter) {
 
 }
 
@@ -31,6 +32,7 @@ Cell *AIplayer::chooseAndReturnMove(const std::vector<Path *> &availableMovePath
 
         int grade = maxScore(*otherMoves);
         if (grade < minGrade) {
+            minGrade = grade;
             AIFinalMove = availableMovePaths[i]->getLanding();
         }
 
@@ -53,7 +55,16 @@ void AIplayer::attackThose(const Path *path, Board &board) const {
 int AIplayer::maxScore(const std::vector<Path *> &movePaths) const {
     int maxScore = 0;
     for (unsigned int i = 0; i < movePaths.size(); i++) {
-        int currScore = movePaths[i]->score();
+        int currLength = movePaths[i]->length();
+        // according to the algorithm , we need to subtract the number of AI's disk from the other player's .
+        // the length of the path is the number of flips + 1 .
+        // meaning the num of other player's disks - the num of AI's disks , is the subtraction  AFTER the flips :
+        int numOfOtherPlayerDisks = this->otherPlayerCounter.getValue() + currLength;
+        int numOfAIDisks = this->scoreCounter->getValue() - currLength +
+                           1; // adding 1 beacause of length is with the empty cell also ...
+
+        int currScore = numOfOtherPlayerDisks - numOfAIDisks;
+
         if (currScore > maxScore) {
             maxScore = currScore;
         }

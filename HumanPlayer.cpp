@@ -4,8 +4,9 @@ Cell *HumanPlayer::chooseAndReturnMove(const std::vector<Path *> &availableMoveP
     return controller->getLandingPoint();
 }
 
-HumanPlayer::HumanPlayer(PlayerController *controller, Color color) : Player(controller,
-                                                                             color) {
+HumanPlayer::HumanPlayer(PlayerController *controller, Counter *scoreCounter, Color color) : Player(controller,
+                                                                                                    scoreCounter,
+                                                                                                    color) {
 
 }
 

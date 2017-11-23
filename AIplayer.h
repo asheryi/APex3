@@ -14,13 +14,14 @@
 class AIplayer : public Player {
     const Board &gameBoard;
     const GameLogic &gameLogic;
+    const Counter &otherPlayerCounter;
 private:
     void attackThose(const Path *path, Board &board) const;
 
     int maxScore(const std::vector<Path *> &movePaths) const;
 
 public:
-    AIplayer(PlayerController *controller,
+    AIplayer(PlayerController *controller, Counter *scoreCounter, const Counter &otherPlayerCounter,
              const Board &gameBoard,
              const GameLogic &gameLogic, Color color);
 
