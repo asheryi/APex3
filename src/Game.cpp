@@ -1,14 +1,14 @@
 // 318225851
 // Yishay Asher
 
-#include "Game.h"
-#include "StdGameLogic.h"
-#include "Console.h"
-#include "HumanPlayer.h"
-#include "ConsoleController.h"
-#include "StandardAttack.h"
-#include "AIplayer.h"
-#include "VectorExterminator.h"
+#include "../include/Game.h"
+#include "../include/StdGameLogic.h"
+#include "../include/Console.h"
+#include "../include/HumanPlayer.h"
+#include "../include/ConsoleController.h"
+#include "../include/StandardAttack.h"
+#include "../include/AIplayer.h"
+#include "../include/VectorExterminator.h"
 
 using namespace std;
 

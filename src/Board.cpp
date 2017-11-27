@@ -1,7 +1,7 @@
 // 318225851
 // Yishay Asher
 
-#include "Board.h"
+#include "../include/Board.h"
 
 
 Board::Board(int rows, int columns, const std::vector<Cell *> &blacks, const std::vector<Cell *> &whites)

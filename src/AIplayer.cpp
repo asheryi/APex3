@@ -2,9 +2,9 @@
 // Created by yishay on 11/23/17.
 //
 
-#include "AIplayer.h"
-#include "StandardAttack.h"
-#include "VectorExterminator.h"
+#include "../include/AIplayer.h"
+#include "../include/StandardAttack.h"
+#include "../include/VectorExterminator.h"
 
 AIplayer::AIplayer(PlayerController *controller, Counter *scoreCounter, const Counter &otherPlayerCounter,
                    const Board &gameBoard,
@@ -61,7 +61,7 @@ int AIplayer::maxScore(const std::vector<Path *> &movePaths) const {
         // meaning the num of other player's disks - the num of AI's disks , is the subtraction  AFTER the flips :
         int numOfOtherPlayerDisks = this->otherPlayerCounter.getValue() + currLength;
         int numOfAIDisks = this->scoreCounter->getValue() - currLength +
-                           1; // adding 1 beacause of length is with the empty cell also ...
+                           1; // adding 1 because of length is with the empty cell also ...
 
         int currScore = numOfOtherPlayerDisks - numOfAIDisks;
 

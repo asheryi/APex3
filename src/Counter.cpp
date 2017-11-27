@@ -2,7 +2,7 @@
 // Created by yishay on 11/23/17.
 //
 
-#include "Counter.h"
+#include "../include/Counter.h"
 
 int Counter::getValue() const {
     return value;

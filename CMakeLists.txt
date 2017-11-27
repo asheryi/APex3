@@ -3,34 +3,44 @@ project(ex3)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES
-        Attack.h
-        Board.cpp
-        Board.h
-        Cell.cpp
-        Cell.h
-        Console.cpp
-        Console.h
-        ConsoleController.cpp
-        ConsoleController.h
-        Directions.cpp
-        Directions.h
-        Display.h
-        Game.cpp
-        Game.h
-        GameLogic.h
-        HumanPlayer.cpp
-        HumanPlayer.h
-        main.cpp
-        Path.cpp
-        Path.h
-        Player.cpp
-        Player.h
-        PlayerController.h
-        StandardAttack.cpp
-        StandardAttack.h
-        StdGameLogic.cpp
-        StdGameLogic.h
-        TypesOf.h AIplayer.cpp AIplayer.h VectorExterminator.h Counter.cpp Counter.h)
+add_subdirectory(gtest_src/googletest-master)
+include_directories(gtest_src/googletest-master/googletest/include)
+include_directories(gtest_src/googletest-master/googlemock/include)
 
-add_executable(ex3 ${SOURCE_FILES})
+set(SOURCE_FILES
+        include/Attack.h
+        src/Board.cpp
+        include/Board.h
+        src/Cell.cpp
+        include/Cell.h
+        src/Console.cpp
+        include/Console.h
+        src/ConsoleController.cpp
+        include/ConsoleController.h
+        src/Directions.cpp
+        include/Directions.h
+        include/Display.h
+        src/Game.cpp
+        include/Game.h
+        include/GameLogic.h
+        src/HumanPlayer.cpp
+        include/HumanPlayer.h
+        src/Path.cpp
+        include/Path.h
+        src/Player.cpp
+        include/Player.h
+        include/PlayerController.h
+        src/StandardAttack.cpp
+        include/StandardAttack.h
+        src/StdGameLogic.cpp
+        include/StdGameLogic.h
+        include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h)
+
+set(TEST_FILES
+        test/test_1.cpp test/BoardTest.cpp)
+
+add_executable(ex3 ${SOURCE_FILES} src/main.cpp)
+
+add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} test/test_main.cpp)
+target_link_libraries(ex3_test gtest gtest_main)
+add_test(ex3_testd ex3_test)
