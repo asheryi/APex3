@@ -38,7 +38,7 @@ void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColo
     if (passTurn) {
         cout << "No possible moves. Play passes to the other player." << endl;
     } else {
-        cout << "Your possible moves are : " << endl;
+        cout << "Your possible moves are : ";
         if (!moves.empty()) {
             cout << "(" << moves[0]->getLanding().getRow() << "," << moves[0]->getLanding().getColumn() << ")";
         }
@@ -48,10 +48,9 @@ void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColo
 
         cout << endl;
 
-        cout << "Please enter your move row,col as described : " << endl;
-        cout << "The first is row number between 1 and " << board.getRows() << "," << endl;
-        cout << "the second is column number between 1 and " << board.getColumns()
-             << ", with a comma to seperate.( e.g. 3,4)" << endl;
+        cout << "Please enter your move : row,col (row input from 1 to " << board.getRows() << ", col from 1 to "
+             << board.getColumns() << ") :" << endl;
+
     }
 }
 

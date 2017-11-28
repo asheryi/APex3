@@ -19,35 +19,37 @@ class BoardTest : public testing::Test {
         blacks->push_back(new Cell(5, 6));
 
 
-        blacks->push_back(new Cell(2, 2));
-        blacks->push_back(new Cell(3, 3));
-        blacks->push_back(new Cell(4, 5));
+        whites->push_back(new Cell(2, 2));
+        whites->push_back(new Cell(3, 3));
+        whites->push_back(new Cell(4, 5));
 
 
-        this->board(8, 8, *blacks, *whites);
+        this->board = new Board(8, 8, *blacks, *whites);
 
     }
 
     virtual void TearDown() {
+        delete board;
         delete blacks;
         delete whites;
     }
 
 
 protected:
-    Board board;
+    Board *board;
     vector<Cell *> *blacks;
     vector<Cell *> *whites;
 };
 
 
-TEST_F(BoardTest, testingConstructor) {
-    EXPECT_EQ(board.getCellValue(1, 1), black);
-    EXPECT_EQ(board.getCellValue(8, 8), black);
-    EXPECT_EQ(board.getCellValue(5, 6), black);
+TEST_F(BoardTest, ConstructorCheckValidInput) {
+    EXPECT_EQ(board->getCellValue(1, 1), black);
+    EXPECT_EQ(board->getCellValue(8, 8), black);
+    EXPECT_EQ(board->getCellValue(5, 6), black);
 
-    EXPECT_EQ(board.getCellValue(2, 2), white);
-    EXPECT_EQ(board.getCellValue(3, 3), white);
-    EXPECT_EQ(board.getCellValue(4, 4), white);
+    EXPECT_EQ(board->getCellValue(2, 2), white);
+    EXPECT_EQ(board->getCellValue(3, 3), white);
+    EXPECT_EQ(board->getCellValue(4, 5), white);
 
+    EXPECT_EQ(board->getCellValue(8, 6), empty);
 }
