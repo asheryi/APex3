@@ -4,7 +4,6 @@
 #include "../include/Game.h"
 #include "../include/StdGameLogic.h"
 #include "../include/Console.h"
-#include "../include/HumanPlayer.h"
 #include "../include/ConsoleController.h"
 #include "../include/StandardAttack.h"
 #include "../include/AIplayer.h"
@@ -33,7 +32,9 @@ Game::Game(int rows, int columns) {
     PlayerController *pc2 = new ConsoleController();
 
 
-    this->players[0] = new HumanPlayer(pc1, blacksCounter, black);
+    //this->players[0] = new HumanPlayer(pc1, blacksCounter, black);
+    this->players[0] = new AIplayer(pc1, blacksCounter, *whitesCounter, *board, *gameLogic, black);
+
     this->players[0]->updateScore(2);
     this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
     this->players[1]->updateScore(2);
