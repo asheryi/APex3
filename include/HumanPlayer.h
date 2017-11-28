@@ -11,6 +11,8 @@ public:
     HumanPlayer(PlayerController *controller, Counter *scoreCounter, Color color);
 
     virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths);
+
+    virtual char getMenuSelection();
 };
 
 

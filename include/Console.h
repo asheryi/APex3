@@ -29,14 +29,16 @@ protected:
 public:
     Console(const Board &b);
 
-    virtual void show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn) const;
+    virtual void showMenu() const;
+
+    virtual void
+    show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks, int whites) const;
 
     virtual void showError(Error errorType) const;
 
     virtual void showEndGameStatus(GameStatus gameStatus) const;
 
     virtual void showMoveDone(const Cell &cell, Color playerColor) const;
-
 };
 
 

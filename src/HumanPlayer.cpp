@@ -10,4 +10,8 @@ HumanPlayer::HumanPlayer(PlayerController *controller, Counter *scoreCounter, Co
 
 }
 
+char HumanPlayer::getMenuSelection() {
+    return controller->getMenuSelection();
+}
+
 

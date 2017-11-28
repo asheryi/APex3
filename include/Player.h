@@ -52,7 +52,6 @@ public:
     *NOTE:
     *****************************************************************************/
     virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths)=0;
-
     virtual ~Player();
 };
 

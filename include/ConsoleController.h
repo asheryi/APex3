@@ -6,6 +6,8 @@
 class ConsoleController: public PlayerController {
 public:
     Cell* getLandingPoint()const;
+
+    char getMenuSelection() const;
 };
 
 

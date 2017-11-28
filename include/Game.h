@@ -67,6 +67,8 @@ public:
     void start();
 
     void updateScores(Player &curr, Player &other, int score);
+
+    void createPlayers(int blacks, int whites);
 };
 
 

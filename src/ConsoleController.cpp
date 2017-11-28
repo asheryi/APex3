@@ -12,3 +12,9 @@ Cell* ConsoleController::getLandingPoint() const {
     return new Cell(row, col);
 
 }
+
+char ConsoleController::getMenuSelection() const {
+    char selection;
+    std::cin >> selection;
+    return selection;
+}

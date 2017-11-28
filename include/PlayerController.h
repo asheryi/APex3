@@ -12,6 +12,8 @@ public:
     *NOTE:
     *****************************************************************************/
     virtual Cell* getLandingPoint()const=0;
+
+    virtual char getMenuSelection() const =0;
 };
 
 

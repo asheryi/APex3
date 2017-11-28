@@ -17,7 +17,8 @@ public:
      * @param currPlayerColor - the current player's color .
      * @param passTurn - true if the situation is that the current player have no moves and the other one does have .
      */
-    virtual void show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn) const = 0;
+    virtual void show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks,
+                      int whites) const = 0;
 
     /**
      * Shows the error given.
@@ -32,6 +33,8 @@ public:
     virtual void showEndGameStatus(GameStatus gameStatus) const = 0;
 
     virtual void showMoveDone(const Cell &cell, Color playerColor) const = 0;
+
+    virtual void showMenu() const = 0;
 };
 
 

@@ -6,7 +6,8 @@
 
 using namespace std;
 
-void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn) const {
+void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks,
+                   int whites) const {
     // counting how many tiny lines needed in order to print the broken line .
     int count = 2;
 
@@ -27,6 +28,8 @@ void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColo
     }
 
     cout << endl;
+
+    cout << "Black Score: " << blacks << "        White Score: " << whites << endl;
 
     char color = (*currPlayerColor == black ? 'X' : 'O');
 
@@ -99,4 +102,9 @@ void Console::showEndGameStatus(GameStatus gameStatus) const {
 void Console::showMoveDone(const Cell &cell, Color playerColor) const {
     char whoDidAMove = colorAsCharacter(playerColor) == 'x' ? 'X' : 'O';
     cout << whoDidAMove << " played : " << cell << endl;
+}
+
+void Console::showMenu() const {
+    cout << "For play against human player please press h" << endl;
+    cout << "For play against AI player please press a" << endl;
 }

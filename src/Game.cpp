@@ -25,32 +25,45 @@ Game::Game(int rows, int columns) {
 
     this->board = new Board(rows, columns, blacks, whites);
 
-    Counter *blacksCounter = new Counter(blacks.size());
-    Counter *whitesCounter = new Counter(whites.size());
+
 
     this->gameLogic = new StdGameLogic();
-    this->displays[0] = new AIConsole(*board);
-    this->displays[1] = new AIConsole(*board);
-
-
-
-    PlayerController *pc1 = new ConsoleController();
-    PlayerController *pc2 = new ConsoleController();
-
-
-    //this->players[0] = new HumanPlayer(pc1, blacksCounter, black);
-    this->players[0] = new AIplayer(pc1, blacksCounter, *whitesCounter, *board, *gameLogic, black);
-
-    this->players[0]->updateScore(2);
-    this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
-    this->players[1]->updateScore(2);
-
-    this->currPlayer = 0;
+    createPlayers(blacks.size(), whites.size());
 
     deleteVector(blacks);
     deleteVector(whites);
 }
 
+void Game::createPlayers(int blacks, int whites) {
+    Counter *blacksCounter = new Counter(blacks);
+    Counter *whitesCounter = new Counter(whites);
+
+
+    PlayerController *pc1 = new ConsoleController();
+    PlayerController *pc2 = new ConsoleController();
+    HumanPlayer *humanPlayer = new HumanPlayer(pc1, blacksCounter, black);
+    this->players[0] = humanPlayer;
+    this->players[0]->updateScore(2);
+
+    this->displays[0] = new HumanConsole(*board);
+    this->displays[0]->showMenu();
+
+    char selection = humanPlayer->getMenuSelection();
+    while (selection != 'h' && selection != 'a') {
+        this->displays[0]->showMenu();
+        selection = humanPlayer->getMenuSelection();
+    }
+    if (selection == 'h') {
+        this->displays[1] = new HumanConsole(*board);
+        this->players[1] = new HumanPlayer(pc2, whitesCounter, white);
+    } else {
+        this->displays[1] = new AIConsole(*board);
+        this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
+    }
+    this->players[1]->updateScore(2);
+
+    this->currPlayer = 0;
+}
 void Game::nextPlayer(Color &currPlayerColor) {
     this->currPlayer = (this->currPlayer + 1) % 2;
     currPlayerColor = players[this->currPlayer]->getColor();
@@ -74,7 +87,9 @@ void Game::start() {
 
         bool passTurnState = gameStatus == passTurn;
         // ?
-        this->displays[currPlayer]->show(*movePaths, &currPlayerColor, passTurnState);
+        this->displays[currPlayer]->show(*movePaths, &currPlayerColor, passTurnState, players[0]->getScore(),
+                                         players[1]->getScore());
+
 
         if (!passTurnState) {
             // AI recieves board in constructor .
