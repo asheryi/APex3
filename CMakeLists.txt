@@ -34,7 +34,7 @@ set(SOURCE_FILES
         src/StdGameLogic.cpp
         include/StdGameLogic.h
         include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h
-        include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp)
+        include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp src/HumanConsole.cpp)
 
 set(TEST_FILES
         test/test_1.cpp test/BoardTest.cpp test/AITest.cpp)

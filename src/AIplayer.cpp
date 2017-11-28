@@ -17,6 +17,9 @@ AIplayer::AIplayer(PlayerController *controller, Counter *scoreCounter, const Co
 
 Cell *AIplayer::chooseAndReturnMove(const std::vector<Path *> &availableMovePaths) {
 
+
+    //TODO change signature of function !!!
+
     int minGrade = gameBoard.getRows() * gameBoard.getColumns(); // no better grade than that ...
     Cell AIFinalMove;
 

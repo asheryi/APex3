@@ -10,7 +10,7 @@
 
 class HumanConsole : public Console {
 public:
-    HumanConsole(const Board &b) : Console(b) {}
+    HumanConsole(const Board &b);
 
 };
 
