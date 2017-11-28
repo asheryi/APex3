@@ -70,9 +70,6 @@ void Game::nextPlayer(Color &currPlayerColor) {
 }
 
 void Game::start() {
-    // pseudo code of AI algo :
-    // create board for each move m .
-    //
 
     Color currPlayerColor(players[currPlayer]->getColor());
 
@@ -86,7 +83,6 @@ void Game::start() {
     while (gameStatus == noOneWon || gameStatus == passTurn) {
 
         bool passTurnState = gameStatus == passTurn;
-        // ?
         this->displays[currPlayer]->show(*movePaths, &currPlayerColor, passTurnState, players[0]->getScore(),
                                          players[1]->getScore());
 

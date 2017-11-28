@@ -10,6 +10,7 @@
 #include "../include/StdGameLogic.h"
 #include "../include/Console.h"
 #include "../include/ConsoleController.h"
+#include "../include/VectorExterminator.h"
 
 class AITest : public testing::Test {
     virtual void SetUp() {
@@ -63,5 +64,15 @@ protected:
 
 
 TEST_F(AITest, testingValidAIMove) {
-    EXPECT_EQ(this->AI->)
+    vector<Path *> *movePaths = gameLogic->validMovePaths(*board, white);
+    Cell * selectedMove = this->AI->chooseAndReturnMove(*movePaths);
+    // After checking manually ...
+    Cell supposeToReturnCell(2,2);
+
+    //EXPECT_EQ(*selectedMove, supposeToReturnCell);
+    EXPECT_TRUE(*selectedMove == supposeToReturnCell);
+
+    deleteVector(*movePaths);
+    delete movePaths;
+    delete selectedMove;
 }

@@ -12,7 +12,7 @@ public:
 
     virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths);
 
-    virtual char getMenuSelection();
+    virtual int getMenuSelection();
 };
 
 
