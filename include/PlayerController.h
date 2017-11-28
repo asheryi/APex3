@@ -1,9 +1,11 @@
 #ifndef EX1_PLAYERCONTROLLER_H
 #define EX1_PLAYERCONTROLLER_H
+
 #include <iostream>
 #include "Cell.h"
 
 using namespace std;
+
 class PlayerController {
 public:
     /*****************************************************************************
@@ -11,9 +13,9 @@ public:
     *operation function:return from keyboard a landing point choose by the player
     *NOTE:
     *****************************************************************************/
-    virtual Cell* getLandingPoint()const=0;
+    virtual Cell *getLandingPoint() const =0;
 
-    virtual char getMenuSelection() const =0;
+    virtual int getMenuSelection() const =0;
 };
 
 

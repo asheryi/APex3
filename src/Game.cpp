@@ -26,7 +26,6 @@ Game::Game(int rows, int columns) {
     this->board = new Board(rows, columns, blacks, whites);
 
 
-
     this->gameLogic = new StdGameLogic();
     createPlayers(blacks.size(), whites.size());
 
@@ -48,12 +47,12 @@ void Game::createPlayers(int blacks, int whites) {
     this->displays[0] = new HumanConsole(*board);
     this->displays[0]->showMenu();
 
-    char selection = humanPlayer->getMenuSelection();
-    while (selection != 'h' && selection != 'a') {
+    int selection = humanPlayer->getMenuSelection();
+    while (selection != 1 && selection != 0) {
         this->displays[0]->showMenu();
         selection = humanPlayer->getMenuSelection();
     }
-    if (selection == 'h') {
+    if (selection == 1) {
         this->displays[1] = new HumanConsole(*board);
         this->players[1] = new HumanPlayer(pc2, whitesCounter, white);
     } else {
@@ -64,6 +63,7 @@ void Game::createPlayers(int blacks, int whites) {
 
     this->currPlayer = 0;
 }
+
 void Game::nextPlayer(Color &currPlayerColor) {
     this->currPlayer = (this->currPlayer + 1) % 2;
     currPlayerColor = players[this->currPlayer]->getColor();

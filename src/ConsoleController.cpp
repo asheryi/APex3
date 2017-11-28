@@ -1,6 +1,7 @@
 #include "../include/ConsoleController.h"
 #include <limits>
-Cell* ConsoleController::getLandingPoint() const {
+
+Cell *ConsoleController::getLandingPoint() const {
     int row, col;
     char comma;
     std::cin >> row >> comma >> col;
@@ -13,8 +14,13 @@ Cell* ConsoleController::getLandingPoint() const {
 
 }
 
-char ConsoleController::getMenuSelection() const {
-    char selection;
-    std::cin >> selection;
+int ConsoleController::getMenuSelection() const {
+    int selection;
+    std::cin >> selection ;
+    if (std::cin.fail()) {
+        std::cin.clear();
+        std::cin.ignore(numeric_limits<int>::max(), '\n');
+        return -1;
+    }
     return selection;
 }

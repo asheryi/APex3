@@ -105,6 +105,6 @@ void Console::showMoveDone(const Cell &cell, Color playerColor) const {
 }
 
 void Console::showMenu() const {
-    cout << "For play against human player please press h" << endl;
-    cout << "For play against AI player please press a" << endl;
+    cout << "To play against human player please press 1" << endl;
+    cout << "TO play against AI player please press 0" << endl;
 }
