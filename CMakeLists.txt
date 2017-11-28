@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(ex3)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 98)
 
 add_subdirectory(gtest_src/googletest-master)
 include_directories(gtest_src/googletest-master/googletest/include)
@@ -41,6 +41,7 @@ set(TEST_FILES
 
 add_executable(ex3 ${SOURCE_FILES} src/main.cpp)
 
+
 add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} test/test_main.cpp)
-target_link_libraries(ex3_test gtest gtest_main)
+target_link_libraries(ex3_test gtest gmock gtest_main)
 add_test(ex3_test ex3_test)
