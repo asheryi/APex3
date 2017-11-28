@@ -33,9 +33,7 @@ void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColo
     cout << color << ",it's your move ." << endl;
 
     if (passTurn) {
-        cout << "No possible moves. Play passes to the other player. Press any key to continue." << endl;
-        char x;
-        cin >> x;
+        cout << "No possible moves. Play passes to the other player." << endl;
     } else {
         cout << "Your possible moves are : " << endl;
         if (!moves.empty()) {

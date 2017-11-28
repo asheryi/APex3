@@ -22,7 +22,7 @@ protected:
 };
 
 
-TEST_F(BoardTest, ddsvsdv) {
+TEST_F(BoardTest, testingBoard) {
     vector<int> a = {1, 2};
     vector<int> b = {2, 1};
 

@@ -43,4 +43,4 @@ add_executable(ex3 ${SOURCE_FILES} src/main.cpp)
 
 add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} test/test_main.cpp)
 target_link_libraries(ex3_test gtest gtest_main)
-add_test(ex3_testd ex3_test)
+add_test(ex3_test ex3_test)
