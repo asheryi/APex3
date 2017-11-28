@@ -8,6 +8,9 @@
 #include "../include/StandardAttack.h"
 #include "../include/AIplayer.h"
 #include "../include/VectorExterminator.h"
+#include "../include/HumanPlayer.h"
+#include "../include/HumanConsole.h"
+#include "../include/AIConsole.h"
 
 using namespace std;
 
@@ -26,7 +29,10 @@ Game::Game(int rows, int columns) {
     Counter *whitesCounter = new Counter(whites.size());
 
     this->gameLogic = new StdGameLogic();
-    this->display = new Console(*board);
+    this->displays[0] = new AIConsole(*board);
+    this->displays[1] = new AIConsole(*board);
+
+
 
     PlayerController *pc1 = new ConsoleController();
     PlayerController *pc2 = new ConsoleController();
@@ -68,7 +74,7 @@ void Game::start() {
 
         bool passTurnState = gameStatus == passTurn;
         // ?
-        this->display->show(*movePaths, &currPlayerColor, passTurnState);
+        this->displays[currPlayer]->show(*movePaths, &currPlayerColor, passTurnState);
 
         if (!passTurnState) {
             // AI recieves board in constructor .
@@ -77,15 +83,15 @@ void Game::start() {
 
             while (true) {
                 if (move == NULL) {
-                    display->showError(notIntegers);
+                    displays[currPlayer]->showError(notIntegers);
                 } else if (isOutOfBounds(*move)) {
-                    display->showError(outOfBounds);
+                    displays[currPlayer]->showError(outOfBounds);
                 } else {
                     currPathOfLandingPoint = pathOfLandingPoint(*movePaths, *move);
                     if (currPathOfLandingPoint == 0) {
-                        display->showError(notValidMove);
+                        displays[currPlayer]->showError(notValidMove);
                     } else {
-                        display->showMoveDone(*move, currPlayerColor);
+                        displays[currPlayer]->showMoveDone(*move, currPlayerColor);
                         break;
                     }
                 }
@@ -111,7 +117,7 @@ void Game::start() {
     deleteVector(*movePaths);
     delete movePaths;
 
-    display->showEndGameStatus(gameStatus);
+    displays[currPlayer]->showEndGameStatus(gameStatus);
 }
 
 Path *Game::pathOfLandingPoint(std::vector<Path *> paths, const Cell &point) {
@@ -145,7 +151,9 @@ void Game::updateScores(Player &curr, Player &other, int score) {
 Game::~Game() {
     delete players[0];
     delete players[1];
-    delete display;
+    delete displays[0];
+
+    delete displays[1];
     delete gameLogic;
     delete board;
 }

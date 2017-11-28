@@ -13,7 +13,6 @@ set(SOURCE_FILES
         include/Board.h
         src/Cell.cpp
         include/Cell.h
-        src/Console.cpp
         include/Console.h
         src/ConsoleController.cpp
         include/ConsoleController.h
@@ -34,7 +33,8 @@ set(SOURCE_FILES
         include/StandardAttack.h
         src/StdGameLogic.cpp
         include/StdGameLogic.h
-        include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h)
+        include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h
+        include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp)
 
 set(TEST_FILES
         test/test_1.cpp test/BoardTest.cpp)

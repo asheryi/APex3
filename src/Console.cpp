@@ -1,7 +1,7 @@
-// 318225851
-// Yishay Asher
+//
+// Created by walter on 11/28/17.
+//
 
-#include <iostream>
 #include "../include/Console.h"
 
 using namespace std;
@@ -100,5 +100,3 @@ void Console::showMoveDone(const Cell &cell, Color playerColor) const {
     char whoDidAMove = colorAsCharacter(playerColor) == 'x' ? 'X' : 'O';
     cout << whoDidAMove << " played : " << cell << endl;
 }
-
-

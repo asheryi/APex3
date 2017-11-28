@@ -10,32 +10,32 @@
 #include "Cell.h"
 
 class Console : public Display {
-private:
+protected:
     const Board &board;
 
     /**
      * prints a broken line .
      * @param count - how many tiny lines to draw.
      */
-    void printBrokenLine(int count) const;
+    virtual void printBrokenLine(int count) const;
 
     /**
      * Converts the color as enum to the corresponding character to print on the board.
      * @param color .
      * @return the character as described above.
      */
-    char colorAsCharacter(Color color) const;
+    virtual char colorAsCharacter(Color color) const;
 
 public:
     Console(const Board &b);
 
-    void show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn) const;
+    virtual void show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn) const;
 
-    void showError(Error errorType) const;
+    virtual void showError(Error errorType) const;
 
-    void showEndGameStatus(GameStatus gameStatus) const;
+    virtual void showEndGameStatus(GameStatus gameStatus) const;
 
-    void showMoveDone(const Cell &cell, Color playerColor) const;
+    virtual void showMoveDone(const Cell &cell, Color playerColor) const;
 
 };
 

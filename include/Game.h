@@ -17,7 +17,7 @@ class Game {
 private:
     GameLogic *gameLogic;
     Player *players[2];
-    Display *display;
+    Display *displays[2];
     Board *board;
     int currPlayer;
 
