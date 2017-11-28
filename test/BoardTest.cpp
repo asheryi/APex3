@@ -23,9 +23,5 @@ protected:
 
 
 TEST_F(BoardTest, testingBoard) {
-    vector<int> a = {1, 2};
-    vector<int> b = {2, 1};
-
-    EXPECT_EQ(a, b);
     EXPECT_EQ(board_->getRows(), 8);
 }
