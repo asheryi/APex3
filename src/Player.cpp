@@ -4,26 +4,26 @@ using namespace std;
 
 
 void Player::updateScore(int newScore) {
-    scoreCounter->setValue(newScore);
+    discsCounter->setValue(newScore);
 }
 
 int Player::getScore() const {
-    return scoreCounter->getValue();
+    return discsCounter->getValue();
 }
 
 
 Player::~Player() {
     delete controller;
-    delete scoreCounter;
+    delete discsCounter;
 }
 
 Color Player::getRivalColor() {
     return color == black ? white : black;
 }
 
-Player::Player(PlayerController *controller, Counter *scoreCounter, Color color) : controller(controller),
+Player::Player(PlayerController *controller, Counter *discsCounter, Color color) : controller(controller),
                                                                                    color(color),
-                                                                                   scoreCounter(scoreCounter) {
+                                                                                   discsCounter(discsCounter) {
 
 }
 

@@ -8,7 +8,8 @@
 //
 using namespace std;
 
-void AIConsole::show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks,
+void AIConsole::show(const Board &board, const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn,
+                     int blacks,
                      int whites) const {
     cout << "Black Score: " << blacks << "        White Score: " << whites << endl;
 
@@ -17,4 +18,4 @@ void AIConsole::show(const std::vector<Path *> &moves, const Color *currPlayerCo
 void AIConsole::showError(Error errorType) const {
 }
 
-AIConsole::AIConsole(const Board &b) : Console(b) {}
+AIConsole::AIConsole() {}

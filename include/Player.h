@@ -15,9 +15,9 @@ class Player {
 protected:
     Color color;
     PlayerController *controller;
-    Counter *scoreCounter;
+    Counter *discsCounter;
 
-    Player(PlayerController *controller, Counter *scoreCounter, Color color);
+    Player(PlayerController *controller, Counter *discsCounter, Color color);
 
     Color getRivalColor();
 

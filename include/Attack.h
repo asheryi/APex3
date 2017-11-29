@@ -3,24 +3,19 @@
 
 
 #include "Cell.h"
+
 //abstract class for attack so the board could know which discs it need to flip
 class Attack {
 public:
-    /*****************************************************************************
-    *function name:hasNext:indicate if we can call getNext function
-    * duplicates.
-    *NOTE::indicate if we can call getNext function
-    * duplicates.
-    *NOTE:
+    /**
+     * indicate if we can call getNext function , aka there is a next cell .
+     * @return true if and only if there is a next cell .
+     */
     virtual bool hasNext()=0;
-    virtual bool hasNext()=0;
-    *operation function
-    /*****************************************************************************
-    *function name:getNext
-    *operation function:return the next disc position which need to be flip.
-    * duplicates.
-    *NOTE:
-    *****************************************************************************/
+
+    /**
+     * @return the next disc position which need to be flip.
+     */
     virtual Cell getNext()=0;
 };
 

@@ -10,7 +10,10 @@
 
 class HumanConsole : public Console {
 public:
-    HumanConsole(const Board &b) : Console(b) {}
+    /**
+     * Constructor .
+     */
+    HumanConsole();
 
 };
 

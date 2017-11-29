@@ -4,13 +4,12 @@ Cell *HumanPlayer::chooseAndReturnMove(const std::vector<Path *> &availableMoveP
     return controller->getLandingPoint();
 }
 
-HumanPlayer::HumanPlayer(PlayerController *controller, Counter *scoreCounter, Color color) : Player(controller,
-                                                                                                    scoreCounter,
+HumanPlayer::HumanPlayer(PlayerController *controller, Counter *discsCounter, Color color) : Player(controller,
+                                                                                                    discsCounter,
                                                                                                     color) {
-
 }
 
-char HumanPlayer::getMenuSelection() {
+int HumanPlayer::getMenuSelection() {
     return controller->getMenuSelection();
 }
 

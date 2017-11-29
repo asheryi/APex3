@@ -11,8 +11,6 @@
 
 class Console : public Display {
 protected:
-    const Board &board;
-
     /**
      * prints a broken line .
      * @param count - how many tiny lines to draw.
@@ -27,12 +25,12 @@ protected:
     virtual char colorAsCharacter(Color color) const;
 
 public:
-    Console(const Board &b);
+    Console();
 
     virtual void showMenu() const;
 
     virtual void
-    show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks, int whites) const;
+    show(const Board& board,const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks, int whites) const;
 
     virtual void showError(Error errorType) const;
 

@@ -6,22 +6,23 @@
 
 using namespace std;
 
-void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks,
+void Console::show(const Board &board, const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn,
+                   int blacks,
                    int whites) const {
     // counting how many tiny lines needed in order to print the broken line .
     int count = 2;
 
     cout << " | ";
-    for (int i = 1; i <= this->board.getColumns(); i++) {
+    for (int i = 1; i <= board.getColumns(); i++) {
         cout << i << " | ";
         count += 4;
     }
 
     printBrokenLine(count);
 
-    for (int i = 1; i <= this->board.getRows(); i++) {
+    for (int i = 1; i <= board.getRows(); i++) {
         cout << i << "|";
-        for (int j = 1; j <= this->board.getColumns(); j++) {
+        for (int j = 1; j <= board.getColumns(); j++) {
             cout << " " << colorAsCharacter(board.getCellValue(i, j)) << ' ' << '|';
         }
         printBrokenLine(count);
@@ -38,7 +39,7 @@ void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColo
     if (passTurn) {
         cout << "No possible moves. Play passes to the other player." << endl;
     } else {
-        cout << "Your possible moves are : " << endl;
+        cout << "Your possible moves are : ";
         if (!moves.empty()) {
             cout << "(" << moves[0]->getLanding().getRow() << "," << moves[0]->getLanding().getColumn() << ")";
         }
@@ -48,10 +49,9 @@ void Console::show(const std::vector<Path *> &moves, const Color *currPlayerColo
 
         cout << endl;
 
-        cout << "Please enter your move row,col as described : " << endl;
-        cout << "The first is row number between 1 and " << board.getRows() << "," << endl;
-        cout << "the second is column number between 1 and " << board.getColumns()
-             << ", with a comma to seperate.( e.g. 3,4)" << endl;
+        cout << "Please enter your move : row,col (row input from 1 to " << board.getRows() << ", col from 1 to "
+             << board.getColumns() << ") :" << endl;
+
     }
 }
 
@@ -63,7 +63,7 @@ void Console::printBrokenLine(int count) const {
     cout << endl;
 }
 
-Console::Console(const Board &b) : board(b) {}
+Console::Console() {}
 
 void Console::showError(Error errorType) const {
     cout << "Error !" << endl;
