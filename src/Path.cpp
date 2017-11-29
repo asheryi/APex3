@@ -24,7 +24,7 @@ Cell *Path::getDirection(int index) const {
     return directions[index];
 }
 
-int Path::movesCount() const {
+int Path::numberOfEatingDirections() const {
     return directions.size();
 }
 

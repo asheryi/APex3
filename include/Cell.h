@@ -16,12 +16,27 @@ private:
 public:
     Cell();
 
+    /**
+   * Cell Constructor.
+   * @param row - int ,row of cell.
+   * @param column - - int , column of cell.
+   */
     Cell(int row, int column);
 
+    /**
+     *Copy constructor of Cell.
+     * @param p - cell to be copy.
+     */
     Cell(const Cell &p);
 
+    /**
+    *returns the cell column.
+    */
     int getColumn() const;
 
+    /**
+   *returns the cell row.
+   */
     int getRow() const;
 
     /**
@@ -35,13 +50,22 @@ public:
 
     /**
      * Comparing two cells row by row , column by column .
-     * @param p - othe cell .
+     * @param p - other cell .
      * @return true if and only if this row = to p's and same for column .
      */
     bool operator==(Cell p);
 
+    /**
+    * checks if the cell not equal.
+    * @param p - other cell .
+    * @return true if this row != to p's or same for column .
+    */
     bool operator!=(Cell p);
 
+/**
+    *applied to print the cell.
+    * @param p - cell to print.
+    */
     friend ostream &operator<<(ostream &stream, const Cell &cell);
 };
 

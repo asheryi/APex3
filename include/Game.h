@@ -66,8 +66,19 @@ public:
      */
     void start();
 
+    /**
+    * Update the scores of the players.
+    * @param curr-Player - the active player now.
+    * @param other-Player - the rival of the active player.
+    * @param score-int - score to update.
+    */
     void updateScores(Player &curr, Player &other, int score);
 
+    /**
+   * create the players.
+   * @param blacks-int - black disks amount.
+   * @param whites-int - white disks amount.
+   */
     void createPlayers(int blacks, int whites);
 };
 

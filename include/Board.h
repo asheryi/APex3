@@ -11,8 +11,19 @@
 
 class Board {
 public:
+    /**
+    * Builds the board with the given rows and columns and initialize the board.
+    * @param rows - int ,rows size.
+    * @param columns - - int , columns size.
+    * @param blacks - vector of cells to place blacks disks.
+    * @param whites - vector of cells to place whites disks.
+    */
     Board(int rows, int columns, const std::vector<Cell *> &blacks, const std::vector<Cell *> &whites);
 
+    /**
+     * Copy constructor board
+     * @param board - board
+     */
     Board(const Board &board);
 
     /**

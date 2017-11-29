@@ -21,7 +21,7 @@ std::vector<Path *> *StdGameLogic::validMovePaths(const Board &board, Color colo
             Path *path;
             path = theEatingPathOfMove(board, currPotentialMove, color);
             // if the move is valid it's addded, otherwise the eating path is deleted .
-            if (path->movesCount() > 0) {
+            if (path->numberOfEatingDirections() > 0) {
                 paths->push_back(path);
             } else {
                 delete path;

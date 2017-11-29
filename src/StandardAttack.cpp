@@ -5,14 +5,14 @@ StandardAttack::StandardAttack(const Path &path_) : path(path_), curr(path_.getL
 
 bool StandardAttack::hasNext() {
     //TODO:change 0 to loop
-    if (index < path.movesCount()) {
+    if (index < path.numberOfEatingDirections()) {
         // ??? path.getStopCell(index) != 0 && path.getDirection(index) != 0 &&
         if ((curr - *path.getDirection(index)) != *path.getStopCell(index)) {
             return true;
         } else {
             index++;
             curr = path.getLanding();
-            if (index < path.movesCount()) {
+            if (index < path.numberOfEatingDirections()) {
                 curr += *path.getDirection(index);
             }
             return hasNext();

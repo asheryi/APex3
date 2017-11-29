@@ -56,10 +56,20 @@ public:
     *****************************************************************************/
     Cell *getDirection(int index) const;
 
+    /*
+     * @return the amount of disks to eat.
+     */
     int length() const;
 
-    int movesCount() const;
+    /*
+     * @return the amounts of eating directions.
+     */
+    int numberOfEatingDirections() const;
 
+    /*
+     * Copy constructor.
+     * @param other- Path-to be copy.
+     */
     Path(const Path &other);
 
     ~Path();
