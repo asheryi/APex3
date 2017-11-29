@@ -21,8 +21,9 @@ public:
     static const Cell downLeft;
     static const Cell upRight;
     static const Cell downRight;
-
-    static const Cell allDirections[8];
+    // all of the available directions .
+    static const int allDirectionsSize = 8;
+    static const Cell allDirections[allDirectionsSize];
 };
 
 

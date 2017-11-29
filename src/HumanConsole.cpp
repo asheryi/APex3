@@ -6,6 +6,6 @@
 #include "../include/Console.h"
 #include "../include/HumanConsole.h"
 
-HumanConsole::HumanConsole(const Board &b) : Console(b) {
+HumanConsole::HumanConsole() {
 
 }

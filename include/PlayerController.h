@@ -8,13 +8,14 @@ using namespace std;
 
 class PlayerController {
 public:
-    /*****************************************************************************
-    *function name: getLandingPoint
-    *operation function:return from keyboard a landing point choose by the player
-    *NOTE:
-    *****************************************************************************/
+    /**
+     * @return selected landing point , aka move .
+     */
     virtual Cell *getLandingPoint() const =0;
 
+    /**
+     * @return Main menu selection .
+     */
     virtual int getMenuSelection() const =0;
 };
 

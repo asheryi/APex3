@@ -6,9 +6,9 @@
 #include "../include/StandardAttack.h"
 #include "../include/VectorExterminator.h"
 
-AIplayer::AIplayer(PlayerController *controller, Counter *scoreCounter, const Counter &otherPlayerCounter,
+AIplayer::AIplayer(PlayerController *controller, Counter *disksCounter, const Counter &otherPlayerCounter,
                    const Board &gameBoard,
-                   const GameLogic &gameLogic, Color color) : Player(controller, scoreCounter, color),
+                   const GameLogic &gameLogic, Color color) : Player(controller, disksCounter, color),
                                                               gameBoard(gameBoard),
                                                               gameLogic(gameLogic),
                                                               otherPlayerCounter(otherPlayerCounter) {
@@ -63,7 +63,7 @@ int AIplayer::maxScore(const std::vector<Path *> &movePaths) const {
         // the length of the path is the number of flips + 1 .
         // meaning the num of other player's disks - the num of AI's disks , is the subtraction  AFTER the flips :
         int numOfOtherPlayerDisks = this->otherPlayerCounter.getValue() + currLength;
-        int numOfAIDisks = this->scoreCounter->getValue() - currLength +
+        int numOfAIDisks = this->discsCounter->getValue() - currLength +
                            1; // adding 1 because of length is with the empty cell also ...
 
         int currScore = numOfOtherPlayerDisks - numOfAIDisks;

@@ -44,7 +44,7 @@ void Game::createPlayers(int blacks, int whites) {
     this->players[0] = humanPlayer;
     this->players[0]->updateScore(2);
 
-    this->displays[0] = new HumanConsole(*board);
+    this->displays[0] = new HumanConsole();
     this->displays[0]->showMenu();
 
     int selection = humanPlayer->getMenuSelection();
@@ -53,10 +53,10 @@ void Game::createPlayers(int blacks, int whites) {
         selection = humanPlayer->getMenuSelection();
     }
     if (selection == 1) {
-        this->displays[1] = new HumanConsole(*board);
+        this->displays[1] = new HumanConsole();
         this->players[1] = new HumanPlayer(pc2, whitesCounter, white);
     } else {
-        this->displays[1] = new AIConsole(*board);
+        this->displays[1] = new AIConsole();
         this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
     }
     this->players[1]->updateScore(2);
@@ -83,7 +83,7 @@ void Game::start() {
     while (gameStatus == noOneWon || gameStatus == passTurn) {
 
         bool passTurnState = gameStatus == passTurn;
-        this->displays[currPlayer]->show(*movePaths, &currPlayerColor, passTurnState, players[0]->getScore(),
+        this->displays[currPlayer]->show(*board, *movePaths, &currPlayerColor, passTurnState, players[0]->getScore(),
                                          players[1]->getScore());
 
 
