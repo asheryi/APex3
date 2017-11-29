@@ -74,25 +74,6 @@ public :
         return correct;
     }
 
-    bool NocontainsInvalidMoves(vector<Cell *> cells) {
-        //if there is no matching with their size its invalid
-        if (possiblePathLanding.size() != paths->size())return false;
-        bool correct = true;
-        for (int i = 0; i < paths->size(); i++) {
-            Cell cell = (*paths)[i]->getLanding();
-            correct = false;
-            for (int j = 0; j < possiblePathLanding.size(); j++) {
-                if (cell == *possiblePathLanding[j]) {
-                    correct = true;
-                }
-            }
-            if (!correct) {
-                break;
-            }
-        }
-        return true;
-    }
-
     bool noOneWonCheck() {
 
         return (gameStatus == noOneWon);
@@ -197,7 +178,7 @@ public :
 TEST_F(StdGameLogicTest, validMoveCheck) {
     EXPECT_TRUE(notEmptyMoves());
     EXPECT_TRUE(pathsSameAs(possiblePathLanding));
-    EXPECT_TRUE(NocontainsInvalidMoves(possiblePathLanding));
+    EXPECT_FALSE(pathsSameAs(notPossiblePathLanding));
 }
 
 TEST_F(StdGameLogicTest, currGameStatusNoOneOwnCheck) {
