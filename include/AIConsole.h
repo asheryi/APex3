@@ -1,7 +1,3 @@
-//
-// Created by walter on 11/28/17.
-//
-
 #ifndef EX3_AICONSOLE_H
 #define EX3_AICONSOLE_H
 

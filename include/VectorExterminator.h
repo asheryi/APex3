@@ -1,6 +1,3 @@
-//
-// Created by yishay on 11/23/17.
-//
 
 #ifndef EX3_DELETEVECTOR_H
 #define EX3_DELETEVECTOR_H

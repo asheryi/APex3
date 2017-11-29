@@ -1,6 +1,4 @@
-//
-// Created by walter on 11/28/17.
-//
+
 
 #include "../include/Console.h"
 

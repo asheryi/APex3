@@ -1,5 +1,3 @@
-// 318225851
-// Yishay Asher
 
 #include "../include/StdGameLogic.h"
 #include "../include/VectorExterminator.h"
@@ -40,9 +38,7 @@ Path *StdGameLogic::theEatingPathOfMove(const Board &board, const Cell &move, Co
     }
 
 
-    //TODO change 8 to direcctions size ...
-
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < this->directions.allDirectionsSize; i++) {
         updatePathBasedOnDirection(board, this->directions.allDirections[i], move, color, tmpPath);
     }
     return tmpPath;

@@ -1,6 +1,4 @@
-//
-// Created by Brain on 11/3/2017.
-//
+
 
 #ifndef EX1_PATH_H
 #define EX1_PATH_H
@@ -27,7 +25,6 @@ public:
      * disc, and the direction the disc attack.
     *NOTE:
     *****************************************************************************/
-    //TODO:should be const??
     Path(Cell *landing);
 
     /*****************************************************************************

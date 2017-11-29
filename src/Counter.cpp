@@ -1,6 +1,3 @@
-//
-// Created by yishay on 11/23/17.
-//
 
 #include "../include/Counter.h"
 

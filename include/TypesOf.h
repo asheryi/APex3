@@ -1,6 +1,3 @@
-// 318225851
-// Yishay Asher
-
 //
 // File of enums which are types of ...
 //

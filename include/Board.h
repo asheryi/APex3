@@ -1,5 +1,4 @@
-// 318225851
-// Yishay Asher
+
 
 #ifndef EX2_BOARD_H
 #define EX2_BOARD_H

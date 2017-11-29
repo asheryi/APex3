@@ -1,5 +1,4 @@
-// 318225851
-// Yishay Asher
+
 
 #include "../include/Game.h"
 #include "../include/StdGameLogic.h"

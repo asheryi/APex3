@@ -37,7 +37,7 @@ set(SOURCE_FILES
         include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp src/HumanConsole.cpp)
 
 set(TEST_FILES
-        test/test_1.cpp test/BoardTest.cpp test/AITest.cpp)
+        test/BoardTest.cpp test/AITest.cpp test/StdGameLogicTest.cpp)
 
 
 add_executable(ex3 ${SOURCE_FILES} src/main.cpp)

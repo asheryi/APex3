@@ -1,6 +1,3 @@
-//
-// Created by Brain on 11/11/2017.
-//
 
 #ifndef EX1_STANDARDATTACT_H
 #define EX1_STANDARDATTACT_H

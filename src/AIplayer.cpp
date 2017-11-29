@@ -1,6 +1,4 @@
-//
-// Created by yishay on 11/23/17.
-//
+
 
 #include "../include/AIplayer.h"
 #include "../include/StandardAttack.h"
@@ -17,8 +15,6 @@ AIplayer::AIplayer(PlayerController *controller, Counter *disksCounter, const Co
 
 Cell *AIplayer::chooseAndReturnMove(const std::vector<Path *> &availableMovePaths) {
 
-
-    //TODO change signature of function !!!
 
     int minGrade = gameBoard.getRows() * gameBoard.getColumns(); // no better grade than that ...
     Cell AIFinalMove;

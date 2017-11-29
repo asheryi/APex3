@@ -1,5 +1,4 @@
-// 318225851
-// Yishay Asher
+
 
 #ifndef EX2_STDGAMELOGIC_H
 #define EX2_STDGAMELOGIC_H

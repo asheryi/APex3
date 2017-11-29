@@ -1,5 +1,4 @@
-// 318225851
-// Yishay Asher
+
 
 #ifndef EX2_GAME_H
 #define EX2_GAME_H

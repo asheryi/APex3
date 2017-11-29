@@ -1,5 +1,3 @@
-// 318225851
-// Yishay Asher
 
 #include "../include/Board.h"
 
