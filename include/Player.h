@@ -45,6 +45,9 @@ public:
         return color;
     }
 
+    virtual void update() {
+
+    }
 
     /*****************************************************************************
     *function name:chooseAndReturnMove
@@ -52,6 +55,7 @@ public:
     *NOTE:
     *****************************************************************************/
     virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths)=0;
+
     virtual ~Player();
 };
 

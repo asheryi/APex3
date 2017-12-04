@@ -9,7 +9,7 @@
 using namespace std;
 
 int main() {
-    Client client("127.0.0.1", 15555);
+    Client client("127.0.0.1", 23333);
     try {
         client.connectToServer();
     } catch (const char *msg) {

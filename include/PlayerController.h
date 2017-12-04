@@ -17,6 +17,8 @@ public:
      * @return Main menu selection .
      */
     virtual int getMenuSelection() const =0;
+
+    virtual void updateMove() {};
 };
 
 

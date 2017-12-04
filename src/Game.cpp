@@ -87,7 +87,6 @@ void Game::start() {
 
 
         if (!passTurnState) {
-            // AI recieves board in constructor .
             Cell *move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             Path *currPathOfLandingPoint;
 
@@ -109,6 +108,7 @@ void Game::start() {
                 move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             }
             this->attackThose(*currPathOfLandingPoint, currPlayerColor);
+            this->players[currPlayer]->update();
 
             delete move;
         }
