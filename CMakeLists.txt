@@ -39,7 +39,15 @@ set(SOURCE_FILES
 set(TEST_FILES
         test/BoardTest.cpp test/AITest.cpp test/StdGameLogicTest.cpp)
 
+set(CLIENT_FILES
+        client_files/Client.cpp client_files/Client.h)
 
+
+set(SERVER_FILES
+        server_files/Server.cpp server_files/Server.h)
+
+add_executable(client ${CLIENT_FILES} client_files/main.cpp)
+add_executable(server ${SERVER_FILES} server_files/main.cpp)
 add_executable(ex3 ${SOURCE_FILES} src/main.cpp)
 add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} test/test_main.cpp)
 
