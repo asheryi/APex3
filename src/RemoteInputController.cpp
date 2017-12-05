@@ -9,9 +9,9 @@ RemoteInputController::RemoteInputController(int clientSocket) : clientSocket(cl
 Cell *RemoteInputController::getLandingPoint() const {
     // Read the move from the server
     Cell move;
-    // int n = read(clientSocket, &move, sizeof(move));
-    char string[8];
-    int n = read(clientSocket, &string, 8);
+    int n = read(clientSocket, &move, sizeof(move));
+    //char string[8];
+    //int n = read(clientSocket, string, 8);
     if (n == -1) {
 
         //TODO who is gonna catch it ? , how to display , where the display comes from ? args to main maybe ...

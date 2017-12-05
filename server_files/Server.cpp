@@ -83,9 +83,9 @@ void Server::initializeClients() {
 }
 
 void Server::writeToClient(Cell cell) {
-    // int n = write(clientSockets[currPlayer], &cell, sizeof(cell));
-    char string[8] = "44354";
-    int n = write(clientSockets[currPlayer], &string, 8);
+    int n = write(clientSockets[currPlayer], &cell, sizeof(cell));
+    //char string[8] = "454";
+    //int n = write(clientSockets[currPlayer], string, 8);
     if (n == -1) {
         //TODO:How to solve it, think about it...
         throw "Problem";
