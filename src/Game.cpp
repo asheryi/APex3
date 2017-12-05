@@ -161,6 +161,7 @@ int Game::connectToServer() {
         throw "Error connecting to server";
     }
     cout << "Connected to server" << endl;
+    return clientSocket;
 }
 
 
