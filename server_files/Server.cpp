@@ -99,6 +99,8 @@ void Server::writeToClient(Cell cell) {
 Cell Server::readFromClient() {
     Cell cell;
     int n = read(clientSockets[currPlayer], &cell, sizeof(cell));
+    cout << "FROM CLIENT" << cell << endl;
+
     if (n == -1) {
         //TODO:How to solve it, think about it...
         throw "Problem";

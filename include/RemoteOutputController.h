@@ -18,7 +18,8 @@ public:
 
     virtual ~RemoteOutputController();
 
-    virtual void update(const Cell &cell);
+    virtual void update(Cell cell);
+
 };
 
 

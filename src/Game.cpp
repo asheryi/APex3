@@ -115,9 +115,9 @@ void Game::createPlayers(int blacks, int whites) {
 
             this->players[index] = blackPlayer;
             this->players[1 - index] = whitePlayer;
-            cout<<"wait to second player";
+            cout << "wait to second player" << endl;
             Cell *r = fromServer->getLandingPoint();
-            cout<<"the second player connected";
+            cout << "the second player connected" << endl;
 
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
