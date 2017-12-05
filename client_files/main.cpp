@@ -9,9 +9,10 @@
 using namespace std;
 
 int main() {
-    Client client("127.0.0.1", 23333);
+    Client client("172.0.0.1", 1234);
     try {
-        client.connectToServer();
+         client.connectToServer();
+        cout << "Failed to";
     } catch (const char *msg) {
         cout << "Failed to connect to server. Reason: " << msg << endl;
         exit(-1);
