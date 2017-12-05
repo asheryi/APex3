@@ -17,6 +17,8 @@ public:
     virtual int getMenuSelection();
 
     void modifyPlayerColor(Color color, Counter *discsCounter);
+
+    void setController(PlayerController *controller);
 };
 
 

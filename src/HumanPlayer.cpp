@@ -22,4 +22,8 @@ void HumanPlayer::modifyPlayerColor(Color color, Counter *discsCounter) {
     this->discsCounter = discsCounter;
 }
 
+void HumanPlayer::setController(PlayerController *controller) {
+    this->controller = controller;
+}
+
 
