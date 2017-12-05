@@ -83,6 +83,7 @@ void Server::initializeClients() {
     currPlayer = 1;
     writeToClient(Cell(2, 0));
     currPlayer = 0;
+    writeToClient(Cell (0,0));
 }
 
 void Server::writeToClient(Cell cell) {

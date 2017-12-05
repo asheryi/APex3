@@ -82,7 +82,6 @@ void Game::createPlayers(int blacks, int whites) {
             int clientSocket = this->connectToServer();
             PlayerController *toServer = new RemoteOutputController(tempController, clientSocket);
             PlayerController *fromServer = new RemoteInputController(clientSocket);
-
             HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
 
             Display *rivalDisplay = new AIConsole();
@@ -116,12 +115,16 @@ void Game::createPlayers(int blacks, int whites) {
 
             this->players[index] = blackPlayer;
             this->players[1 - index] = whitePlayer;
-
+            cout<<"wait to second player";
+            Cell *r = fromServer->getLandingPoint();
+            cout<<"the second player connected";
 
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
             exit(-1);
         }
+
+
 
     }
 
@@ -129,6 +132,7 @@ void Game::createPlayers(int blacks, int whites) {
     this->players[1]->updateScore(whites);
 
     this->currPlayer = 0;
+
 }
 
 int Game::connectToServer() {
