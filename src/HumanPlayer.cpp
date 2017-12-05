@@ -13,4 +13,13 @@ int HumanPlayer::getMenuSelection() {
     return controller->getMenuSelection();
 }
 
+HumanPlayer::HumanPlayer(PlayerController *controller) : Player(controller, NULL,
+                                                                empty) {
+}
+
+void HumanPlayer::modifyPlayerColor(Color color, Counter *discsCounter) {
+    this->color = color;
+    this->discsCounter = discsCounter;
+}
+
 

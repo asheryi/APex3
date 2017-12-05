@@ -8,11 +8,15 @@
 class HumanPlayer : public Player {
 
 public:
-    HumanPlayer(PlayerController *controller, Counter *scoreCounter, Color color);
+    HumanPlayer(PlayerController *controller, Counter *discsCounter, Color color);
+
+    HumanPlayer(PlayerController *controller);
 
     virtual Cell *chooseAndReturnMove(const std::vector<Path *> &availableMovePaths);
 
     virtual int getMenuSelection();
+
+    void modifyPlayerColor(Color color, Counter *discsCounter);
 };
 
 

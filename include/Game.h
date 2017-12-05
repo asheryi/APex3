@@ -19,6 +19,8 @@ private:
     Display *displays[2];
     Board *board;
     int currPlayer;
+    const char *serverIP;
+    int serverPort;
 
     /**
      * Switching the player .
@@ -38,14 +40,14 @@ private:
      * @param point - point to check.
      * @return true if the vector contains the point , false otherwise .
      */
-    Path* pathOfLandingPoint(std::vector<Path *> paths, const Cell &point);
+    Path *pathOfLandingPoint(std::vector<Path *> paths, const Cell &point);
 
     /**
      * Flips the  cells given on the board.
      * @param needsToBeFlipped - positions to flip .
      * @param currPlayer - the current player's color .
      */
-    void attackThose(const Path& path, Color currPlayer);
+    void attackThose(const Path &path, Color currPlayer);
 
 public:
     /**
@@ -53,7 +55,7 @@ public:
      * @param rows - #of rows in the board .
      * @param columns - #of columns in the board .
      */
-    Game(int rows, int columns);
+    Game(int rows, int columns, const char *serverIp, int serverPort);
 
     /**
      * Game destructor .
@@ -79,6 +81,8 @@ public:
    * @param whites-int - white disks amount.
    */
     void createPlayers(int blacks, int whites);
+
+    int connectToServer();
 };
 
 

@@ -5,6 +5,10 @@
 #ifndef EX3_SERVER_H
 #define EX3_SERVER_H
 
+#include "../include/Cell.h"
+
+#define MAX_CONNECTED_CLIENTS 2
+
 
 class Server {
 public:
@@ -15,13 +19,20 @@ public:
 private:
     int port;
     int serverSocket; // the socket's file descriptor
-    void handleClient(int clientSocket);
 
-    int calc(int arg1, const char op, int arg2) const;
+    int currPlayer;
+    int clientSockets[MAX_CONNECTED_CLIENTS];
 
     void stop();
-};
+    
+    void initializeClients();
 
+    void gameFlow();
+
+    Cell readFromClient();
+
+    void writeToClient(Cell cell);
+};
 
 
 #endif //EX3_SERVER_H
