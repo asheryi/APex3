@@ -7,7 +7,7 @@
 #include <stdlib.h>
 using namespace std;
 int main() {
-    Server server(1234);
+    Server server(33346);
     try {
         server.start();
     } catch (const char *msg) {

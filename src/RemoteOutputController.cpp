@@ -13,7 +13,7 @@ void RemoteOutputController::update(Cell cell) {
     int n = write(clientSocket, &cell, sizeof(cell));
     if (n == -1) {
         //TODO same to do as before
-        throw "Error writing arg1 to socket";
+        throw "Error writing cell to socket";
     }
 }
 

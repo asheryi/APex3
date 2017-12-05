@@ -83,13 +83,11 @@ void Server::initializeClients() {
     currPlayer = 1;
     writeToClient(Cell(2, 0));
     currPlayer = 0;
-    writeToClient(Cell (0,0));
+    //writeToClient(Cell (0,0));
 }
 
 void Server::writeToClient(Cell cell) {
     int n = write(clientSockets[currPlayer], &cell, sizeof(cell));
-    //char string[8] = "454";
-    //int n = write(clientSockets[currPlayer], string, 8);
     if (n == -1) {
         //TODO:How to solve it, think about it...
         throw "Problem";
@@ -99,7 +97,7 @@ void Server::writeToClient(Cell cell) {
 Cell Server::readFromClient() {
     Cell cell;
     int n = read(clientSockets[currPlayer], &cell, sizeof(cell));
-    cout << "FROM CLIENT" << cell << endl;
+    cout << "FROM CLIENT" << cell << " n is: " << n << endl;
 
     if (n == -1) {
         //TODO:How to solve it, think about it...

@@ -45,7 +45,6 @@ void Game::createPlayers(int blacks, int whites) {
 
 
     PlayerController *tempController = new ConsoleController();
-    PlayerController *pc2 = new ConsoleController();
     HumanPlayer *humanPlayer = new HumanPlayer(tempController);
     //TODO update score & free temp
 
@@ -64,6 +63,8 @@ void Game::createPlayers(int blacks, int whites) {
     bool network = selection == 3;
 
     if (normal || againstAI) {
+        PlayerController *pc2 = new ConsoleController();
+
         humanPlayer->modifyPlayerColor(black, blacksCounter);
         this->players[0] = humanPlayer;
         this->displays[0] = display;
@@ -98,32 +99,31 @@ void Game::createPlayers(int blacks, int whites) {
             HumanPlayer *whitePlayer = humanPlayer;
             Display *blackDisplay = rivalDisplay;
             Display *whiteDisplay = display;
-            int index = 1;
 
             if (*colorFlag == first) {
                 blackPlayer = activePlayer;
                 whitePlayer = rivalPlayer;
-                index = 0;
                 blackDisplay = display;
                 whiteDisplay = rivalDisplay;
             }
 
             blackPlayer->modifyPlayerColor(black, blacksCounter);
             whitePlayer->modifyPlayerColor(white, whitesCounter);
-            this->displays[index] = blackDisplay;
-            this->displays[1 - index] = whiteDisplay;
+            this->displays[0] = blackDisplay;
+            this->displays[1] = whiteDisplay;
 
-            this->players[index] = blackPlayer;
-            this->players[1 - index] = whitePlayer;
+            this->players[0] = blackPlayer;
+            this->players[1] = whitePlayer;
+            /*
             cout << "wait to second player" << endl;
             Cell *r = fromServer->getLandingPoint();
             cout << "the second player connected" << endl;
+             */
 
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
             exit(-1);
         }
-
 
 
     }
@@ -195,8 +195,12 @@ void Game::start() {
 
 
         if (!passTurnState) {
+            cout << "Entered to loop" << endl;
+            cout << currPlayer << endl;
+            cout << players[currPlayer]->getColor() << endl;
             Cell *move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             Path *currPathOfLandingPoint;
+            cout << "After choose move" << endl;
 
             while (true) {
                 if (move == NULL) {
