@@ -1,19 +1,26 @@
 
 
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <cstring>
+#include <cstdlib>
 #include "../include/Game.h"
 #include "../include/StdGameLogic.h"
 #include "../include/Console.h"
 #include "../include/ConsoleController.h"
 #include "../include/StandardAttack.h"
-#include "../include/AIplayer.h"
 #include "../include/VectorExterminator.h"
 #include "../include/HumanPlayer.h"
 #include "../include/HumanConsole.h"
 #include "../include/AIConsole.h"
+#include "../include/AIplayer.h"
+#include "../include/RemoteOutputController.h"
+#include "../include/RemoteInputController.h"
 
 using namespace std;
 
-Game::Game(int rows, int columns) {
+Game::Game(int rows, int columns, const char *serverIp, int serverPort) : serverIP(serverIp), serverPort(serverPort) {
     std::vector<Cell *> blacks(2), whites(2);
 
     blacks[0] = new Cell(rows / 2, columns / 2 + 1);
@@ -37,31 +44,125 @@ void Game::createPlayers(int blacks, int whites) {
     Counter *whitesCounter = new Counter(whites);
 
 
-    PlayerController *pc1 = new ConsoleController();
+    PlayerController *tempController = new ConsoleController();
     PlayerController *pc2 = new ConsoleController();
-    HumanPlayer *humanPlayer = new HumanPlayer(pc1, blacksCounter, black);
-    this->players[0] = humanPlayer;
-    this->players[0]->updateScore(2);
+    HumanPlayer *humanPlayer = new HumanPlayer(tempController);
+    //TODO update score & free temp
 
-    this->displays[0] = new HumanConsole();
-    this->displays[0]->showMenu();
+    Display *display = new HumanConsole();
+    display->showMenu();
 
     int selection = humanPlayer->getMenuSelection();
-    while (selection != 1 && selection != 0) {
-        this->displays[0]->showMenu();
+
+    while (selection < 1 || selection > 3) {
+        display->showMenu();
         selection = humanPlayer->getMenuSelection();
     }
-    if (selection == 1) {
-        this->displays[1] = new HumanConsole();
-        this->players[1] = new HumanPlayer(pc2, whitesCounter, white);
-    } else {
-        this->displays[1] = new AIConsole();
-        this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
+
+    bool normal = selection == 1;
+    bool againstAI = selection == 2;
+    bool network = selection == 3;
+
+    if (normal || againstAI) {
+        humanPlayer->modifyPlayerColor(black, blacksCounter);
+        this->players[0] = humanPlayer;
+        this->displays[0] = display;
+        if (normal) {
+            this->players[1] = new HumanPlayer(pc2, whitesCounter, white);
+            this->displays[1] = new HumanConsole();
+        } else {
+            this->displays[1] = new AIConsole();
+            this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
+        }
+    } else if (network) {
+        delete tempController;
+        try {
+            HumanPlayer *activePlayer = humanPlayer;
+
+            int clientSocket = this->connectToServer();
+            PlayerController *toServer = new RemoteOutputController(tempController, clientSocket);
+            PlayerController *fromServer = new RemoteInputController(clientSocket);
+
+            HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
+
+            Display *rivalDisplay = new AIConsole();
+
+            // if the cell is (1,0) - first , if (2,0) - second
+            Cell *colorFlag = fromServer->getLandingPoint();
+
+            Cell first(1, 0);
+
+            // Default second.
+            HumanPlayer *blackPlayer = rivalPlayer;
+            HumanPlayer *whitePlayer = humanPlayer;
+            Display *blackDisplay = rivalDisplay;
+            Display *whiteDisplay = display;
+            int index = 1;
+
+            if (*colorFlag == first) {
+                blackPlayer = activePlayer;
+                whitePlayer = rivalPlayer;
+                index = 0;
+                blackDisplay = display;
+                whiteDisplay = rivalDisplay;
+            }
+
+            blackPlayer->modifyPlayerColor(black, blacksCounter);
+            whitePlayer->modifyPlayerColor(white, whitesCounter);
+            this->displays[index] = blackDisplay;
+            this->displays[1 - index] = whiteDisplay;
+
+            this->players[index] = blackPlayer;
+            this->players[1 - index] = whitePlayer;
+
+
+        } catch (const char *msg) {
+            cout << "Failed to connect to server. Reason: " << msg << endl;
+            exit(-1);
+        }
+
     }
-    this->players[1]->updateScore(2);
+
+    this->players[0]->updateScore(blacks);
+    this->players[1]->updateScore(whites);
 
     this->currPlayer = 0;
 }
+
+int Game::connectToServer() {
+    // Create a socket point
+    int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    if (clientSocket == -1) {
+        throw "Error opening socket";
+    }
+    // Convert the ip string to a network address
+    struct in_addr address;
+    if (!inet_aton(serverIP, &address)) {
+        throw "Can't parse IP address";
+    }
+    // Get a hostent structure for the given host address
+    struct hostent *server;
+    server = gethostbyaddr((const void *) &address, sizeof
+            address, AF_INET);
+    if (server == NULL) {
+        throw "Host is unreachable";
+    }
+    // Create a structure for the server address
+    struct sockaddr_in serverAddress;
+    bzero((char *) &address, sizeof(address));
+    serverAddress.sin_family = AF_INET;
+    memcpy((char *) &serverAddress.sin_addr.s_addr, (char
+    *) server->h_addr, server->h_length);
+    // htons converts values between host and network byte orders
+    serverAddress.sin_port = htons(serverPort);
+    // Establish a connection with the TCP server
+    if (connect(clientSocket, (struct sockaddr
+    *) &serverAddress, sizeof(serverAddress)) == -1) {
+        throw "Error connecting to server";
+    }
+    cout << "Connected to server" << endl;
+}
+
 
 void Game::nextPlayer(Color &currPlayerColor) {
     this->currPlayer = (this->currPlayer + 1) % 2;
@@ -108,9 +209,12 @@ void Game::start() {
                 move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             }
             this->attackThose(*currPathOfLandingPoint, currPlayerColor);
-            this->players[currPlayer]->update();
+            this->players[currPlayer]->update(*move);
 
             delete move;
+        } else {
+            Cell noMove(-1, -1);
+            this->players[currPlayer]->update(noMove);
         }
 
         deleteVector(*movePaths);
@@ -126,6 +230,9 @@ void Game::start() {
 
     deleteVector(*movePaths);
     delete movePaths;
+
+    Cell end(-2, -2);
+    this->players[currPlayer]->update(end);
 
     displays[currPlayer]->showEndGameStatus(gameStatus);
 }

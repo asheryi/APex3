@@ -45,8 +45,8 @@ public:
         return color;
     }
 
-    virtual void update() {
-
+    virtual void update(const Cell &cell) {
+        controller->update(cell);
     }
 
     /*****************************************************************************

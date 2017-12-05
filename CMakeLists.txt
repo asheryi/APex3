@@ -34,7 +34,8 @@ set(SOURCE_FILES
         src/StdGameLogic.cpp
         include/StdGameLogic.h
         include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h
-        include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp src/HumanConsole.cpp)
+        include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp src/HumanConsole.cpp src/RemoteInputController.cpp src/RemoteOutputController.cpp
+        include/RemoteInputController.h include/RemoteOutputController.h)
 
 set(TEST_FILES
         test/BoardTest.cpp test/AITest.cpp test/StdGameLogicTest.cpp)
@@ -44,7 +45,7 @@ set(CLIENT_FILES
 
 
 set(SERVER_FILES
-        server_files/Server.cpp server_files/Server.h)
+        server_files/Server.cpp server_files/Server.h include/Cell.h src/Cell.cpp)
 
 add_executable(client ${CLIENT_FILES} client_files/main.cpp)
 add_executable(server ${SERVER_FILES} server_files/main.cpp)

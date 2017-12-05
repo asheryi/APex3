@@ -11,7 +11,6 @@ Cell *ConsoleController::getLandingPoint() const {
         return NULL;
     }
     return new Cell(row, col);
-
 }
 
 int ConsoleController::getMenuSelection() const {
