@@ -92,6 +92,8 @@ void Game::createPlayers(int blacks, int whites) {
 
             Cell first(1, 0);
 
+            humanPlayer->setController(toServer);
+
             // Default second.
             HumanPlayer *blackPlayer = rivalPlayer;
             HumanPlayer *whitePlayer = humanPlayer;

@@ -66,17 +66,20 @@ void Server::initializeClients() {
     // Accept a new client connection
     int clientSocket = accept(serverSocket, (struct
             sockaddr *) &clientAddress, &clientAddressLen);
-    cout << "First Client connected" << endl;
     if (clientSocket == -1)
         throw "Error on accept";
+    cout << "First Client connected" << endl;
     clientSockets[0] = clientSocket;
-    currPlayer = 0;
-    writeToClient(Cell(1, 0));
+
 
     clientSocket = accept(serverSocket, (struct
             sockaddr *) &clientAddress, &clientAddressLen);
+    if (clientSocket == -1)
+        throw "Error on accept";
     cout << "Second Client connected" << endl;
     clientSockets[1] = clientSocket;
+    currPlayer = 0;
+    writeToClient(Cell(1, 0));
     currPlayer = 1;
     writeToClient(Cell(2, 0));
     currPlayer = 0;
