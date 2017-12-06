@@ -31,11 +31,12 @@ void Server::gameFlow() {
     Cell gameOver(-2, -2);
     Cell passTurn(-1, -1);
     do {
+        //cout << "BEFORE READING FROM CLIENT" << endl;
         cell = readFromClient();
+        currPlayer = 1 - currPlayer;
         if (cell != passTurn) {
             writeToClient(cell);
         }
-        currPlayer = 1 - currPlayer;
     } while (cell != gameOver);
 }
 
@@ -97,7 +98,7 @@ void Server::writeToClient(Cell cell) {
 Cell Server::readFromClient() {
     Cell cell;
     int n = read(clientSockets[currPlayer], &cell, sizeof(cell));
-    cout << "FROM CLIENT" << cell << " n is: " << n << endl;
+    cout << "FROM CLIENT" << cell << endl;
 
     if (n == -1) {
         //TODO:How to solve it, think about it...

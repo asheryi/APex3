@@ -35,7 +35,8 @@ set(SOURCE_FILES
         include/StdGameLogic.h
         include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h
         include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp src/HumanConsole.cpp src/RemoteInputController.cpp src/RemoteOutputController.cpp
-        include/RemoteInputController.h include/RemoteOutputController.h)
+        include/RemoteInputController.h include/RemoteOutputController.h
+        include/RemoteConsole.h src/RemoteConsole.cpp)
 
 set(TEST_FILES
         test/BoardTest.cpp test/AITest.cpp test/StdGameLogicTest.cpp)

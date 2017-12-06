@@ -17,6 +17,7 @@
 #include "../include/AIplayer.h"
 #include "../include/RemoteOutputController.h"
 #include "../include/RemoteInputController.h"
+#include "../include/RemoteConsole.h"
 
 using namespace std;
 
@@ -76,7 +77,6 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
         }
     } else if (network) {
-        delete tempController;
         try {
             HumanPlayer *activePlayer = humanPlayer;
 
@@ -85,7 +85,7 @@ void Game::createPlayers(int blacks, int whites) {
             PlayerController *fromServer = new RemoteInputController(clientSocket);
             HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
 
-            Display *rivalDisplay = new AIConsole();
+            Display *rivalDisplay = new RemoteConsole();
 
             // if the cell is (1,0) - first , if (2,0) - second
             Cell *colorFlag = fromServer->getLandingPoint();
@@ -195,12 +195,10 @@ void Game::start() {
 
 
         if (!passTurnState) {
-            cout << "Entered to loop" << endl;
-            cout << currPlayer << endl;
-            cout << players[currPlayer]->getColor() << endl;
+            //cout << "Before choose move" << endl;
             Cell *move = players[currPlayer]->chooseAndReturnMove(*movePaths);
             Path *currPathOfLandingPoint;
-            cout << "After choose move" << endl;
+            //cout << "After choose move" << endl;
 
             while (true) {
                 if (move == NULL) {

@@ -8,8 +8,9 @@ RemoteOutputController::RemoteOutputController(PlayerController *pc, int clientS
                                                                                          clientSocket(clientSocket) {}
 
 
-void RemoteOutputController::update(Cell cell) {
+void RemoteOutputController::update(const Cell &cell) {
     // Write the move to the server
+    //cout << "OUTPUT CONTROLLER TRYING TO WRITE" << endl;
     int n = write(clientSocket, &cell, sizeof(cell));
     if (n == -1) {
         //TODO same to do as before

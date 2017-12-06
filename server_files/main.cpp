@@ -3,11 +3,12 @@
 //
 
 #include "Server.h"
-#include <iostream>
 #include <stdlib.h>
+
 using namespace std;
+
 int main() {
-    Server server(33346);
+    Server server(33378);
     try {
         server.start();
     } catch (const char *msg) {

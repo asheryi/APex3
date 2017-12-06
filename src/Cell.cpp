@@ -20,8 +20,9 @@ Cell &Cell::operator+=(Cell p) {
 }
 
 Cell Cell::operator-(Cell p) {
-    return Cell(getRow()-p.getRow(),getColumn()-p.getColumn());
+    return Cell(getRow() - p.getRow(), getColumn() - p.getColumn());
 }
+
 Cell::Cell(const Cell &p) {
     this->row = p.row;
     this->column = p.column;
@@ -32,6 +33,7 @@ Cell::Cell() : row(0), column(0) {}
 bool Cell::operator==(Cell p) {
     return row == p.row && column == p.column;
 }
+
 bool Cell::operator!=(Cell p) {
     return ((row != p.row) || (column != p.column));
 }

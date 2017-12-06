@@ -6,3 +6,7 @@
 HumanConsole::HumanConsole() {
 
 }
+
+void HumanConsole::showMoveDone(const Cell &cell, Color playerColor) const {
+
+}

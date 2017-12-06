@@ -13,6 +13,8 @@ public:
      */
     HumanConsole();
 
+    virtual void showMoveDone(const Cell &cell, Color playerColor) const;
+
 };
 
 

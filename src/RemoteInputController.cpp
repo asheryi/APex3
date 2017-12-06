@@ -10,7 +10,7 @@ Cell *RemoteInputController::getLandingPoint() const {
     // Read the move from the server
     Cell move;
     int n = read(clientSocket, &move, sizeof(move));
-    cout << "FROM SERVER" << move << endl;
+    //cout << "FROM SERVER" << move << endl;
     //char string[8];
     //int n = read(clientSocket, string, 8);
     if (n == -1) {
