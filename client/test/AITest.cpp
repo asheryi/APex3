@@ -6,7 +6,6 @@
 #include "../include/Board.h"
 #include "../include/AIplayer.h"
 #include "../include/StdGameLogic.h"
-#include "../include/Console.h"
 #include "../include/ConsoleController.h"
 #include "../include/VectorExterminator.h"
 
@@ -63,9 +62,9 @@ protected:
 
 TEST_F(AITest, testingValidAIMove) {
     vector<Path *> *movePaths = gameLogic->validMovePaths(*board, white);
-    Cell * selectedMove = this->AI->chooseAndReturnMove(*movePaths);
+    Cell *selectedMove = this->AI->chooseAndReturnMove(*movePaths);
     // After checking manually ...
-    Cell supposeToReturnCell(2,2);
+    Cell supposeToReturnCell(2, 2);
 
     //EXPECT_EQ(*selectedMove, supposeToReturnCell);
     EXPECT_TRUE(*selectedMove == supposeToReturnCell);

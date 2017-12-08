@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     string serverIp;
     int port;
     if (getConnectionDetails(&serverIp, &port)) {
-        Game game(8, 8, serverIp.c_str(), port);
+        Game game(3, 3, serverIp.c_str(), port);
 
         game.start();
     }
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 bool getConnectionDetails(string *serverIp, int *port) {
     string port_;
     string ip;
-    ifstream configFile("configFile");
+    ifstream configFile("configFileClient");
     if (configFile.is_open()) {
         getline(configFile, port_);
         getline(configFile, ip);

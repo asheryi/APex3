@@ -1,6 +1,3 @@
-//
-// Created by yishay on 12/4/17.
-//
 
 #include "../include/Server.h"
 #include <cstdlib>
@@ -26,7 +23,7 @@ int main() {
 
 bool getConnectionDetails(int *port) {
     string port_;
-    ifstream configFile("configFile");
+    ifstream configFile("configFileServer");
     if (configFile.is_open()) {
         getline(configFile, port_);
         configFile.close();
