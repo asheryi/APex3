@@ -61,20 +61,18 @@ void Server::initializeClients() {
     listen(serverSocket, MAX_CONNECTED_CLIENTS);
     // Define the client socket's structures
     struct sockaddr_in clientAddress;
-    socklen_t clientAddressLen;
+    socklen_t clientAddressLen = 0;
 
     cout << "Waiting for client connections..." << endl;
     // Accept a new client connection
-    int clientSocket = accept(serverSocket, (struct
-            sockaddr *) &clientAddress, &clientAddressLen);
+    int clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
     if (clientSocket == -1)
         throw "Error on accept";
     cout << "First Client connected" << endl;
     clientSockets[0] = clientSocket;
 
 
-    clientSocket = accept(serverSocket, (struct
-            sockaddr *) &clientAddress, &clientAddressLen);
+    clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
     if (clientSocket == -1)
         throw "Error on accept";
     cout << "Second Client connected" << endl;
