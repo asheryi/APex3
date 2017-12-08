@@ -25,13 +25,14 @@ void Console::show(const Board &board, const std::vector<Path *> &moves, const C
         }
         printBrokenLine(count);
     }
-    if (currPlayerColor == empty) {
-        return;
-    }
 
     cout << endl;
 
     cout << "Black Score: " << blacks << "        White Score: " << whites << endl;
+
+    if (currPlayerColor == empty) {
+        return;
+    }
 
     char color = (currPlayerColor == black ? 'X' : 'O');
 
