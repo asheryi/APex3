@@ -4,7 +4,7 @@
 int main(int argc,char* argv[]) {
     const char *serverIp = "127.0.0.1";
 
-    Game game(8, 8, serverIp, 33386);
+    Game game(3, 3, serverIp, 33386);
 
     game.start();
 

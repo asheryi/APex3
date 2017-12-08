@@ -29,7 +29,8 @@ public:
     virtual void showMenu() const;
 
     virtual void
-    show(const Board& board,const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks, int whites) const;
+    show(const Board &board, const std::vector<Path *> &moves, const Color &currPlayerColor, bool passTurn, int blacks,
+         int whites) const;
 
     virtual void showError(Error errorType) const;
 

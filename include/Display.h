@@ -19,7 +19,7 @@ public:
      * @param passTurn - true if the situation is that the current player have no moves and the other one does have .
      */
     virtual void
-    show(const Board &board, const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn, int blacks,
+    show(const Board &board, const std::vector<Path *> &moves, const Color &currPlayerColor, bool passTurn, int blacks,
          int whites) const = 0;
 
     /**

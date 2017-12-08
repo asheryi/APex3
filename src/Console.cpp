@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void Console::show(const Board &board, const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn,
+void Console::show(const Board &board, const std::vector<Path *> &moves, const Color &currPlayerColor, bool passTurn,
                    int blacks,
                    int whites) const {
     // counting how many tiny lines needed in order to print the broken line .
@@ -25,12 +25,15 @@ void Console::show(const Board &board, const std::vector<Path *> &moves, const C
         }
         printBrokenLine(count);
     }
+    if (currPlayerColor == empty) {
+        return;
+    }
 
     cout << endl;
 
     cout << "Black Score: " << blacks << "        White Score: " << whites << endl;
 
-    char color = (*currPlayerColor == black ? 'X' : 'O');
+    char color = (currPlayerColor == black ? 'X' : 'O');
 
     cout << color << ",it's your move ." << endl;
 
@@ -91,9 +94,9 @@ void Console::showEndGameStatus(GameStatus gameStatus) const {
     if (gameStatus == tie) {
         cout << "It's a tie ... never say never , try again and this time win ! " << endl;
     } else if (gameStatus == blackWon) {
-        cout << "X : you won , I knew it (:" << endl;
+        cout << "X won , I knew it (:" << endl;
     } else {
-        cout << "O : you won , I knew it (:" << endl;
+        cout << "O won , I knew it (:" << endl;
     }
 }
 

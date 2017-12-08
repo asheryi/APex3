@@ -5,7 +5,7 @@
 using namespace std;
 
 void
-RemoteConsole::show(const Board &board, const std::vector<Path *> &moves, const Color *currPlayerColor, bool passTurn,
+RemoteConsole::show(const Board &board, const std::vector<Path *> &moves, const Color &currPlayerColor, bool passTurn,
                     int blacks,
                     int whites) const {
     if (passTurn) {

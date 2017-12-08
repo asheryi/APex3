@@ -190,7 +190,7 @@ void Game::start() {
     while (gameStatus == noOneWon || gameStatus == passTurn) {
 
         bool passTurnState = gameStatus == passTurn;
-        this->displays[currPlayer]->show(*board, *movePaths, &currPlayerColor, passTurnState, players[0]->getScore(),
+        this->displays[currPlayer]->show(*board, *movePaths, currPlayerColor, passTurnState, players[0]->getScore(),
                                          players[1]->getScore());
 
 
@@ -236,14 +236,15 @@ void Game::start() {
         gameStatus = gameLogic->currGameStatus(*board, currPlayerhasMoves, currPlayerColor, players[0]->getScore(),
                                                players[1]->getScore());
     }
+    displays[currPlayer]->show(*board, *movePaths, empty, false, players[0]->getScore(), players[1]->getScore());
 
     deleteVector(*movePaths);
     delete movePaths;
 
     Cell end(-2, -2);
+    displays[currPlayer]->showEndGameStatus(gameStatus);
     this->players[currPlayer]->update(end);
 
-    displays[currPlayer]->showEndGameStatus(gameStatus);
 }
 
 Path *Game::pathOfLandingPoint(std::vector<Path *> paths, const Cell &point) {
