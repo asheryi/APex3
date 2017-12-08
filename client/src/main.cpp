@@ -10,7 +10,6 @@ int main(int argc, char *argv[]) {
     int port;
     if (getConnectionDetails(&serverIp, &port)) {
         Game game(3, 3, serverIp.c_str(), port);
-
         game.start();
     }
 
