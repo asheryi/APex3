@@ -8,49 +8,49 @@ include_directories(gtest_src/googletest-master/googletest/include)
 include_directories(gtest_src/googletest-master/googlemock/include)
 
 set(SOURCE_FILES
-        include/Attack.h
-        src/Board.cpp
-        include/Board.h
-        src/Cell.cpp
-        include/Cell.h
-        include/Console.h
-        src/ConsoleController.cpp
-        include/ConsoleController.h
-        src/Directions.cpp
-        include/Directions.h
-        include/Display.h
-        src/Game.cpp
-        include/Game.h
-        include/GameLogic.h
-        src/HumanPlayer.cpp
-        include/HumanPlayer.h
-        src/Path.cpp
-        include/Path.h
-        src/Player.cpp
-        include/Player.h
-        include/PlayerController.h
-        src/StandardAttack.cpp
-        include/StandardAttack.h
-        src/StdGameLogic.cpp
-        include/StdGameLogic.h
-        include/TypesOf.h src/AIplayer.cpp include/AIplayer.h include/VectorExterminator.h src/Counter.cpp include/Counter.h
-        include/HumanConsole.h src/AIConsole.cpp include/AIConsole.h src/Console.cpp src/HumanConsole.cpp src/RemoteInputController.cpp src/RemoteOutputController.cpp
-        include/RemoteInputController.h include/RemoteOutputController.h
-        include/RemoteConsole.h src/RemoteConsole.cpp)
+        client/include/Attack.h
+        client/src/Board.cpp
+        client/include/Board.h
+        client/src/Cell.cpp
+        client/include/Cell.h
+        client/include/Console.h
+        client/src/ConsoleController.cpp
+        client/include/ConsoleController.h
+        client/src/Directions.cpp
+        client/include/Directions.h
+        client/include/Display.h
+        client/src/Game.cpp
+        client/include/Game.h
+        client/include/GameLogic.h
+        client/src/HumanPlayer.cpp
+        client/include/HumanPlayer.h
+        client/src/Path.cpp
+        client/include/Path.h
+        client/src/Player.cpp
+        client/include/Player.h
+        client/include/PlayerController.h
+        client/src/StandardAttack.cpp
+        client/include/StandardAttack.h
+        client/src/StdGameLogic.cpp
+        client/include/StdGameLogic.h
+        client/include/TypesOf.h client/src/AIplayer.cpp client/include/AIplayer.h client/include/VectorExterminator.h client/src/Counter.cpp client/include/Counter.h
+        client/include/HumanConsole.h client/src/AIConsole.cpp client/include/AIConsole.h client/src/Console.cpp client/src/HumanConsole.cpp client/src/RemoteInputController.cpp client/src/RemoteOutputController.cpp
+        client/include/RemoteInputController.h client/include/RemoteOutputController.h
+        client/include/RemoteConsole.h client/src/RemoteConsole.cpp)
 
 set(TEST_FILES
         test/BoardTest.cpp test/AITest.cpp test/StdGameLogicTest.cpp)
 
 set(CLIENT_FILES
-        client_files/Client.cpp client_files/Client.h)
+        client/Client.cpp client/Client.h)
 
 
 set(SERVER_FILES
-        server_files/Server.cpp server_files/Server.h include/Cell.h src/Cell.cpp)
+        server/src/Server.cpp server/include/Server.h client/include/Cell.h client/src/Cell.cpp)
 
-add_executable(client ${CLIENT_FILES} client_files/main.cpp)
-add_executable(server ${SERVER_FILES} server_files/main.cpp)
-add_executable(ex3 ${SOURCE_FILES} src/main.cpp)
+add_executable(client ${CLIENT_FILES} client/main.cpp)
+add_executable(server ${SERVER_FILES} server/src/main.cpp)
+add_executable(ex3 ${SOURCE_FILES} client/src/main.cpp)
 add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} test/test_main.cpp)
 
 target_link_libraries(ex3_test gtest gmock gtest_main)

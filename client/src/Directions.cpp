@@ -1,6 +1,6 @@
 
 
-#include "../include/Directions.h"
+#include "../../include/Directions.h"
 
 const Cell Directions::left(0, -1);
 const Cell Directions::right(0, 1);

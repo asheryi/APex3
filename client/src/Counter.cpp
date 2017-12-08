@@ -1,5 +1,5 @@
 
-#include "../include/Counter.h"
+#include "../../include/Counter.h"
 
 int Counter::getValue() const {
     return value;

@@ -2,7 +2,7 @@
 
 #include <zconf.h>
 #include <cstdlib>
-#include "../include/RemoteInputController.h"
+#include "../../include/RemoteInputController.h"
 
 RemoteInputController::RemoteInputController(int clientSocket) : clientSocket(clientSocket) {}
 

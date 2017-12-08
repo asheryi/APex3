@@ -2,7 +2,7 @@
 // Created by yishay on 12/4/17.
 //
 
-#include "Server.h"
+#include "../include/Server.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>

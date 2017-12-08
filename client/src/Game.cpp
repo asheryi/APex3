@@ -5,19 +5,19 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include <cstdlib>
-#include "../include/Game.h"
-#include "../include/StdGameLogic.h"
-#include "../include/Console.h"
-#include "../include/ConsoleController.h"
-#include "../include/StandardAttack.h"
-#include "../include/VectorExterminator.h"
-#include "../include/HumanPlayer.h"
-#include "../include/HumanConsole.h"
-#include "../include/AIConsole.h"
-#include "../include/AIplayer.h"
-#include "../include/RemoteOutputController.h"
-#include "../include/RemoteInputController.h"
-#include "../include/RemoteConsole.h"
+#include "../../include/Game.h"
+#include "../../include/StdGameLogic.h"
+#include "../../include/Console.h"
+#include "../../include/ConsoleController.h"
+#include "../../include/StandardAttack.h"
+#include "../../include/VectorExterminator.h"
+#include "../../include/HumanPlayer.h"
+#include "../../include/HumanConsole.h"
+#include "../../include/AIConsole.h"
+#include "../../include/AIplayer.h"
+#include "../../include/RemoteOutputController.h"
+#include "../../include/RemoteInputController.h"
+#include "../../include/RemoteConsole.h"
 
 using namespace std;
 

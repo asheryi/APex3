@@ -1,4 +1,4 @@
-#include "../include/ConsoleController.h"
+#include "../../include/ConsoleController.h"
 #include <limits>
 
 Cell *ConsoleController::getLandingPoint() const {

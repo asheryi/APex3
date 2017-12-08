@@ -1,11 +1,12 @@
 
 
 #include <zconf.h>
-#include "../include/RemoteOutputController.h"
+#include "../../include/RemoteOutputController.h"
 
 
-RemoteOutputController::RemoteOutputController(PlayerController *pc, int clientSocket) : pc(pc),
-                                                                                         clientSocket(clientSocket) {}
+RemoteOutputController::RemoteOutputController(PlayerController *pc, int clientSocket) : clientSocket(clientSocket) {
+    this->pc = pc;
+}
 
 
 void RemoteOutputController::update(const Cell &cell) {

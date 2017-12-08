@@ -1,6 +1,6 @@
 
 
-#include "../include/Cell.h"
+#include "../../include/Cell.h"
 
 
 Cell::Cell(int row, int column) : row(row), column(column) {}
