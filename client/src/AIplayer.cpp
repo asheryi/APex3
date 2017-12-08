@@ -1,8 +1,8 @@
 
 
-#include "../../include/AIplayer.h"
-#include "../../include/StandardAttack.h"
-#include "../../include/VectorExterminator.h"
+#include "../include/AIplayer.h"
+#include "../include/StandardAttack.h"
+#include "../include/VectorExterminator.h"
 
 AIplayer::AIplayer(PlayerController *controller, Counter *disksCounter, const Counter &otherPlayerCounter,
                    const Board &gameBoard,

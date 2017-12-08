@@ -3,8 +3,7 @@
 //
 
 #include "../include/Server.h"
-#include <stdlib.h>
-#include "../include/Game.h"
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 

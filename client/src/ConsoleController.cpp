@@ -1,4 +1,4 @@
-#include "../../include/ConsoleController.h"
+#include "../include/ConsoleController.h"
 #include <limits>
 
 Cell *ConsoleController::getLandingPoint() const {
@@ -15,7 +15,7 @@ Cell *ConsoleController::getLandingPoint() const {
 
 int ConsoleController::getMenuSelection() const {
     int selection;
-    std::cin >> selection ;
+    std::cin >> selection;
     if (std::cin.fail()) {
         std::cin.clear();
         std::cin.ignore(numeric_limits<int>::max(), '\n');

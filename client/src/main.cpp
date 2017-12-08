@@ -1,5 +1,5 @@
 
-#include "../../include/Game.h"
+#include "../include/Game.h"
 #include <fstream>
 
 bool getConnectionDetails(string *serverIp, int *port);

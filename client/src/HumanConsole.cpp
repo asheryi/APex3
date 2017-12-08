@@ -1,7 +1,7 @@
 
 
-#include "../../include/Console.h"
-#include "../../include/HumanConsole.h"
+#include "../include/Console.h"
+#include "../include/HumanConsole.h"
 
 HumanConsole::HumanConsole() {
 

@@ -1,7 +1,7 @@
 
 
 #include <zconf.h>
-#include "../../include/RemoteOutputController.h"
+#include "../include/RemoteOutputController.h"
 
 
 RemoteOutputController::RemoteOutputController(PlayerController *pc, int clientSocket) : clientSocket(clientSocket) {

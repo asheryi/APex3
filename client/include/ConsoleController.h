@@ -3,9 +3,10 @@
 
 
 #include "PlayerController.h"
-class ConsoleController: public PlayerController {
+
+class ConsoleController : public PlayerController {
 public:
-    Cell* getLandingPoint()const;
+    Cell *getLandingPoint() const;
 
     int getMenuSelection() const;
 };

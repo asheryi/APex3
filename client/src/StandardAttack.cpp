@@ -1,4 +1,4 @@
-#include "../../include/StandardAttack.h"
+#include "../include/StandardAttack.h"
 
 StandardAttack::StandardAttack(const Path &path_) : path(path_), curr(path_.getLanding()), index(0) {
 }

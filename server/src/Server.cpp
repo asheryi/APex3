@@ -6,7 +6,8 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
-#include <string.h>
+#include <cstring>
+#include <iostream>
 
 using namespace std;
 

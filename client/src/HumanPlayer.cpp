@@ -1,4 +1,4 @@
-#include "../../include/HumanPlayer.h"
+#include "../include/HumanPlayer.h"
 
 Cell *HumanPlayer::chooseAndReturnMove(const std::vector<Path *> &availableMovePaths) {
     return controller->getLandingPoint();

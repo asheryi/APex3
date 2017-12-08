@@ -1,6 +1,6 @@
 
-#include "../../include/StdGameLogic.h"
-#include "../../include/VectorExterminator.h"
+#include "../include/StdGameLogic.h"
+#include "../include/VectorExterminator.h"
 
 using namespace std;
 

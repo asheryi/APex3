@@ -7,7 +7,7 @@ add_subdirectory(gtest_src/googletest-master)
 include_directories(gtest_src/googletest-master/googletest/include)
 include_directories(gtest_src/googletest-master/googlemock/include)
 
-set(SOURCE_FILES
+set(CLIENT_FILES
         client/include/Attack.h
         client/src/Board.cpp
         client/include/Board.h
@@ -39,19 +39,14 @@ set(SOURCE_FILES
         client/include/RemoteConsole.h client/src/RemoteConsole.cpp)
 
 set(TEST_FILES
-        test/BoardTest.cpp test/AITest.cpp test/StdGameLogicTest.cpp)
-
-set(CLIENT_FILES
-        client/Client.cpp client/Client.h)
-
+        client/test/BoardTest.cpp client/test/AITest.cpp client/test/StdGameLogicTest.cpp)
 
 set(SERVER_FILES
-        server/src/Server.cpp server/include/Server.h client/include/Cell.h client/src/Cell.cpp)
+        server/src/Server.cpp server/include/Server.h server/include/Cell.h server/src/Cell.cpp)
 
-add_executable(client ${CLIENT_FILES} client/main.cpp)
+add_executable(client ${CLIENT_FILES} client/src/main.cpp)
 add_executable(server ${SERVER_FILES} server/src/main.cpp)
-add_executable(ex3 ${SOURCE_FILES} client/src/main.cpp)
-add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} test/test_main.cpp)
+add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} client/test/test_main.cpp)
 
 target_link_libraries(ex3_test gtest gmock gtest_main)
 add_test(ex3_test ex3_test)

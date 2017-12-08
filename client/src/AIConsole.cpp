@@ -1,5 +1,5 @@
 
-#include "../../include/AIConsole.h"
+#include "../include/AIConsole.h"
 
 using namespace std;
 
