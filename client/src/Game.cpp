@@ -108,6 +108,8 @@ void Game::createPlayers(int blacks, int whites) {
                 whiteDisplay = rivalDisplay;
             }
 
+            delete colorFlag;
+
             blackPlayer->modifyPlayerColor(black, blacksCounter);
             whitePlayer->modifyPlayerColor(white, whitesCounter);
             this->displays[0] = blackDisplay;
@@ -115,11 +117,6 @@ void Game::createPlayers(int blacks, int whites) {
 
             this->players[0] = blackPlayer;
             this->players[1] = whitePlayer;
-            /*
-            cout << "wait to second player" << endl;
-            Cell *r = fromServer->getLandingPoint();
-            cout << "the second player connected" << endl;
-             */
 
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
