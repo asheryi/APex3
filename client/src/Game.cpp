@@ -21,7 +21,8 @@
 
 using namespace std;
 
-Game::Game(int rows, int columns, const char *serverIp, int serverPort) : serverIP(serverIp), serverPort(serverPort) {
+Game::Game(int rows, int columns, const char *serverIp, int serverPort)
+        : players(), displays(), currPlayer(), serverIP(serverIp), serverPort(serverPort) {
     std::vector<Cell *> blacks(2), whites(2);
 
     blacks[0] = new Cell(rows / 2, columns / 2 + 1);
@@ -140,7 +141,7 @@ int Game::connectToServer() {
         throw "Error opening socket";
     }
     // Convert the ip string to a network address
-    struct in_addr address;
+    struct in_addr address = {};
     if (!inet_aton(serverIP, &address)) {
         throw "Can't parse IP address";
     }
@@ -152,7 +153,7 @@ int Game::connectToServer() {
         throw "Host is unreachable";
     }
     // Create a structure for the server address
-    struct sockaddr_in serverAddress;
+    struct sockaddr_in serverAddress = {};
     bzero((char *) &address, sizeof(address));
     serverAddress.sin_family = AF_INET;
     memcpy((char *) &serverAddress.sin_addr.s_addr, (char

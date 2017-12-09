@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Server::Server(int port) : port(port), serverSocket(0) {
+Server::Server(int port) : port(port), serverSocket(0), currPlayer(), clientSockets() {
     cout << "Server" << endl;
 }
 
@@ -30,11 +30,16 @@ void Server::gameFlow() {
     Cell gameOver(-2, -2);
     Cell passTurn(-1, -1);
     do {
-        cell = readFromClient();
-        currPlayer = 1 - currPlayer;
-        if (cell != passTurn) {
-            writeToClient(cell);
+        try {
+            cell = readFromClient();
+            currPlayer = 1 - currPlayer;
+            if (cell != passTurn) {
+                writeToClient(cell);
+            }
+        } catch (const char *msg) {
+            return;
         }
+
     } while (cell != gameOver);
 }
 
@@ -88,7 +93,7 @@ void Server::initializeClients() {
 
 void Server::writeToClient(Cell cell) {
     int n = write(clientSockets[currPlayer], &cell, sizeof(cell));
-    if (n == -1) {
+    if (n <= 0) {
         //TODO:How to solve it, think about it...
         throw "Problem";
     }
@@ -98,7 +103,7 @@ Cell Server::readFromClient() {
     Cell cell;
     int n = read(clientSockets[currPlayer], &cell, sizeof(cell));
 
-    if (n == -1) {
+    if (n <= 0) {
         //TODO:How to solve it, think about it...
         throw "Problem";
     }
