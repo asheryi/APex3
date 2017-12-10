@@ -19,6 +19,8 @@ public:
     virtual int getMenuSelection() const =0;
 
     virtual void update(const Cell &cell) {};
+
+    virtual ~PlayerController() {};
 };
 
 

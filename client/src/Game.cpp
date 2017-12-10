@@ -278,7 +278,6 @@ Game::~Game() {
     delete players[0];
     delete players[1];
     delete displays[0];
-
     delete displays[1];
     delete gameLogic;
     delete board;
