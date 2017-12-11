@@ -9,6 +9,10 @@
 class RemoteInputController : public PlayerController {
     int clientSocket;
 public:
+    /**
+    * RemoteInputController constructor.
+    * @param clientSocket -int, client's socket.
+    */
     RemoteInputController(int clientSocket);
 
     virtual Cell *getLandingPoint() const;

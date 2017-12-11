@@ -20,7 +20,11 @@ int main() {
         }
     }
 }
-
+/**
+    * Reading from the configurations file the port of server.
+    * @param port - pointer to the port variable.
+    * @return true if the file exists otherwise false.
+    */
 bool getConnectionDetails(int *port) {
     string port_;
     ifstream configFile("configFileServer");

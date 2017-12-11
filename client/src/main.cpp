@@ -15,7 +15,12 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
+/**
+    * Reading from the configurations file the port and ip address of server.
+    * @param serverIp - pointer, to the serverIp variable.
+    * @param port - pointer, to the port variable.
+    * @return true if the file exists otherwise false.
+    */
 bool getConnectionDetails(string *serverIp, int *port) {
     string port_;
     string ip;
