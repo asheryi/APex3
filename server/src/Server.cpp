@@ -109,7 +109,7 @@ Cell Server::readFromClient() {
     }
     return cell;
 }
-//TODO:remove stop?.
+
 void Server::stop() {
     cout << "Game over !" <<
          close(serverSocket);
