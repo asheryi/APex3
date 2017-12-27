@@ -1,5 +1,6 @@
 
 #include "../include/Server.h"
+#include "../include/ClientHandler.h"
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -9,9 +10,10 @@ using namespace std;
 bool getConnectionDetails(int *port);
 
 int main() {
+    ClientHandler* clientHandler=new ClientHandler();
     int port;
     if (getConnectionDetails(&port)) {
-        Server server(port);
+        Server server(port,clientHandler);
         try {
             server.start();
         } catch (const char *msg) {

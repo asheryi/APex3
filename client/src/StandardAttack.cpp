@@ -4,7 +4,6 @@ StandardAttack::StandardAttack(const Path &path_) : path(path_), curr(path_.getL
 }
 
 bool StandardAttack::hasNext() {
-    //TODO:change 0 to loop
     if (index < path.numberOfEatingDirections()) {
         // ??? path.getStopCell(index) != 0 && path.getDirection(index) != 0 &&
         if ((curr - *path.getDirection(index)) != *path.getStopCell(index)) {

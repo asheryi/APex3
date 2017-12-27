@@ -49,7 +49,6 @@ void Game::createPlayers(int blacks, int whites) {
 
     PlayerController *tempController = new ConsoleController();
     HumanPlayer *humanPlayer = new HumanPlayer(tempController);
-    //TODO update score & free temp
 
     Display *display = new HumanConsole();
     display->showMenu();

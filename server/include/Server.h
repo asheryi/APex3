@@ -3,9 +3,10 @@
 #define EX3_SERVER_H
 
 #include "../include/Cell.h"
+#include "ClientHandler.h"
+#include <pthread.h>
 
 #define MAX_CONNECTED_CLIENTS 10
-
 
 class Server {
 public:
@@ -13,14 +14,19 @@ public:
    * Server constructor.
    * @param port -int, server's port.
    */
-    Server(int port);
+    Server(int port,ClientHandler* clientHandler);
 
     /**
    * start the server operation.
    */
     void start();
+    bool* getAlive();
+    pthread_mutex_t* getAliveMutex();
 
 private:
+    ClientHandler* clientHandler;
+    bool alive;
+    pthread_mutex_t alive_mutex;
     int port;
     int serverSocket; // the socket's file descriptor
 
@@ -28,7 +34,6 @@ private:
     int clientSockets[MAX_CONNECTED_CLIENTS];
 
     void stop();
-
     /**
      * initializeClients initializes the clients sockets.
      */
@@ -55,6 +60,25 @@ private:
     * @param clientSocket -int, client's socket.
     */
     void initializeServer();
+
+    typedef struct HandleClientStruct {
+    public:
+        void setSid(int sid_){
+            sid=sid_;
+        }
+        int getSid(){
+            return sid;
+        }
+        void setClientHandler(ClientHandler* clientHandler_){
+            clientHandler=clientHandler_;
+        }
+        ClientHandler* getClientHandler(){
+            return clientHandler;
+        }
+    private:
+        int sid;
+        ClientHandler* clientHandler;
+    } HandleClientStruct;
 };
 
 

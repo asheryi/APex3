@@ -14,7 +14,6 @@ void RemoteOutputController::update(const Cell &cell) {
     //cout << "OUTPUT CONTROLLER TRYING TO WRITE" << endl;
     int n = write(clientSocket, &cell, sizeof(cell));
     if (n == -1) {
-        //TODO same to do as before
         throw "Error writing cell to socket";
     }
 }

@@ -6,25 +6,56 @@
 
 using namespace std;
 
-Server::Server(int port) : port(port), serverSocket(0), currPlayer(), clientSockets() {
+Server::Server(int port,ClientHandler* clientHandler) : port(port),alive(true), clientHandler(clientHandler),serverSocket(0), currPlayer(), clientSockets() {
     cout << "Server" << endl;
+    clientHandler->setAlive(getAlive());
+    clientHandler->setAliveMutex(getAliveMutex());
 }
 
 void Server::start() {
     initializeServer();
 
-    while (true) {
-        initializeClients();
+    while (alive) {
+        pthread_mutex_unlock(&alive_mutex);
+        // Define the client socket's structures
+        struct sockaddr_in clientAddress;
+        socklen_t clientAddressLen = 0;
+        //TODO:testing
+        cout << "Waiting for connection request" << endl;
+        // Accept a new client connection
+        int sid = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
+        if (sid == -1)
+            throw "Error on accept";
+        cout << "Connection request accepted\nCreates Command thread" << endl;
+        HandleClientStruct* clientStruct;
+        clientStruct->setSid(sid);
+        clientStruct->setClientHandler(clientHandler);
+        pthread_t handleClientThread;
+        pthread_create(&handleClientThread, NULL, clientHandler->handle, (void*)clientStruct);
+        string serverCommand;
+        cin>>serverCommand;
 
-        gameFlow();
+        //initializeClients();
+
+        //gameFlow();
 
         // Close communication with the clients
-        close(clientSockets[0]);
-        close(clientSockets[1]);
-        cout << "Game Over ! ready for the next couple of players ." << endl;
+        //close(clientSockets[0]);
+        //close(clientSockets[1]);
+        //cout << "Game Over ! ready for the next couple of players ." << endl;
+        pthread_mutex_lock(&alive_mutex);
+        if(cin=="exit"){
+
+            alive=false;
+        }
     }
 }
-
+bool* Server::getAlive(){
+    return &alive;
+}
+pthread_mutex_t* Server::getAliveMutex(){
+    return &alive_mutex;
+}
 void Server::gameFlow() {
     Cell cell;
     Cell gameOver(-2, -2);
@@ -94,8 +125,7 @@ void Server::initializeClients() {
 void Server::writeToClient(Cell cell) {
     int n = write(clientSockets[currPlayer], &cell, sizeof(cell));
     if (n <= 0) {
-        //TODO:How to solve it, think about it...
-        throw "Problem";
+        throw "Problem with write operation";
     }
 }
 
@@ -104,8 +134,7 @@ Cell Server::readFromClient() {
     int n = read(clientSockets[currPlayer], &cell, sizeof(cell));
 
     if (n <= 0) {
-        //TODO:How to solve it, think about it...
-        throw "Problem";
+        throw "Problem with read operation";
     }
     return cell;
 }
@@ -114,3 +143,4 @@ void Server::stop() {
     cout << "Game over !" <<
          close(serverSocket);
 }
+
