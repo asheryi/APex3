@@ -84,18 +84,23 @@ void Game::createPlayers(int blacks, int whites) {
             HumanPlayer *activePlayer = humanPlayer;
 
             int clientSocket = this->connectToServer();
-            PlayerController *toServer = new RemoteOutputController(tempController, clientSocket);
-            PlayerController *fromServer = new RemoteInputController(clientSocket);
+            RemoteOutputController *toServer = new RemoteOutputController(tempController, clientSocket);
+            RemoteInputController *fromServer = new RemoteInputController(clientSocket);
             HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
 
             Display *rivalDisplay = new RemoteConsole();
 
+             string respond;
+             toServer->sendCommand("list_games");
+             respond=fromServer->getRespond();
+             cout<<respond<<endl;
             // if the cell is (1,0) - first , if (2,0) - second
             Cell *colorFlag = fromServer->getLandingPoint();
 
             Cell first(1, 0);
 
             humanPlayer->setController(toServer);
+
 
             // Default second.
             HumanPlayer *blackPlayer = rivalPlayer;
@@ -136,37 +141,42 @@ void Game::createPlayers(int blacks, int whites) {
 }
 
 int Game::connectToServer() {
-    // Create a socket point
-    int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
-    if (clientSocket == -1) {
-        throw "Error opening socket";
-    }
-    // Convert the ip string to a network address
-    struct in_addr address = {};
-    if (!inet_aton(serverIP, &address)) {
-        throw "Can't parse IP address";
-    }
-    // Get a hostent structure for the given host address
-    struct hostent *server;
-    server = gethostbyaddr((const void *) &address, sizeof
-            address, AF_INET);
-    if (server == NULL) {
-        throw "Host is unreachable";
-    }
-    // Create a structure for the server address
-    struct sockaddr_in serverAddress = {};
-    bzero((char *) &address, sizeof(address));
-    serverAddress.sin_family = AF_INET;
-    memcpy((char *) &serverAddress.sin_addr.s_addr, (char
-    *) server->h_addr, server->h_length);
-    // htons converts values between host and network byte orders
-    serverAddress.sin_port = htons(serverPort);
-    // Establish a connection with the TCP server
-    if (connect(clientSocket, (struct sockaddr
-    *) &serverAddress, sizeof(serverAddress)) == -1) {
+    int clientSocket=0;
+    try {
+        // Create a socket point
+        clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+        if (clientSocket == -1) {
+            throw "Error opening socket";
+        }
+        // Convert the ip string to a network address
+        struct in_addr address = {};
+        if (!inet_aton(serverIP, &address)) {
+            throw "Can't parse IP address";
+        }
+        // Get a hostent structure for the given host address
+        struct hostent *server;
+        server = gethostbyaddr((const void *) &address, sizeof
+                address, AF_INET);
+        if (server == NULL) {
+            throw "Host is unreachable";
+        }
+        // Create a structure for the server address
+        struct sockaddr_in serverAddress = {};
+        bzero((char *) &address, sizeof(address));
+        serverAddress.sin_family = AF_INET;
+        memcpy((char *) &serverAddress.sin_addr.s_addr, (char
+        *) server->h_addr, server->h_length);
+        // htons converts values between host and network byte orders
+        serverAddress.sin_port = htons(serverPort);
+        // Establish a connection with the TCP server
+        if (connect(clientSocket, (struct sockaddr
+        *) &serverAddress, sizeof(serverAddress)) == -1) {
+            throw "Error connecting to server";
+        }
+        cout << "Connected to server" << endl;
+    }catch(const char *msg) {
         throw "Error connecting to server";
     }
-    cout << "Connected to server" << endl;
     return clientSocket;
 }
 

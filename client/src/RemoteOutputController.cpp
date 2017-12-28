@@ -17,7 +17,16 @@ void RemoteOutputController::update(const Cell &cell) {
         throw "Error writing cell to socket";
     }
 }
+void RemoteOutputController::sendCommand(string command) {
+    // Write the move to the server
 
+    //cout << "OUTPUT CONTROLLER TRYING TO WRITE" << endl;
+   const char *com=command.c_str();
+    int n = write(clientSocket,com,sizeof(com));
+    if (n == -1) {
+        throw "Error writing cell to socket";
+    }
+}
 
 RemoteOutputController::~RemoteOutputController() {
     delete pc;

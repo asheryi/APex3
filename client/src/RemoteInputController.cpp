@@ -14,7 +14,18 @@ Cell *RemoteInputController::getLandingPoint() const {
     }
     return new Cell(move);
 }
+string RemoteInputController::getRespond() const {
+    // Read the move from the server
 
+    char* res;
+    int n = read(clientSocket, res, 20);
+    if (n == -1) {
+        throw "Error reading result from socket";
+    }
+    string t=string(res);
+    cout<<t;
+    return t;
+}
 int RemoteInputController::getMenuSelection() const {
     return 0;
 }
