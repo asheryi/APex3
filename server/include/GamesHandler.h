@@ -3,6 +3,7 @@
 #include<map>
 #include "GameManager.h"
 #include <pthread.h>
+#include <vector>
 
 
 class GamesHandler {
@@ -17,8 +18,7 @@ public:
     bool addGame(string name,GameManager* gm);
     void activateGame(string name,int socket);
     unsigned long howManyHoldOnGames() const;
-
-    string getHoldOnGames();
+    vector<string>* getHoldOnGames();
 };
 #endif
 

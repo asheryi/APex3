@@ -1,14 +1,14 @@
 #include "../include/CommandsManager.h"
 #include "../include/ThreadsManager.h"
 
-CommandsManager::CommandsManager(ThreadsManager *threadsManager) : commandsMap(), gamesHandler() {
+ClientCommandsManager::ClientCommandsManager(ThreadsManager *threadsManager) : commandsMap(), gamesHandler() {
     error = new ErrorCommand();
 
-    commandsMap["start"] = new StartCommand();
+    commandsMap["start"] = new ClientStartCommand();
     commandsMap["list_games"] = new ListGamesCommand(gamesHandler);
     commandsMap["join"] = new JoinCommand(threadsManager);
 }
-void CommandsManager::executeCommand(string
+void ClientCommandsManager::executeCommand(string
                                      command, vector<string>* args) {
     if ( commandsMap.find(command) == commandsMap.end() ) { // not found
         this->error->execute(*args);
@@ -17,7 +17,7 @@ void CommandsManager::executeCommand(string
         commandsMap[command]->execute(*args);
     }
 }
-CommandsManager::~CommandsManager() {
+ClientCommandsManager::~ClientCommandsManager() {
     map<string, Command *>::iterator it;
 
     for (it = commandsMap.begin(); it != commandsMap.end(); it++) {

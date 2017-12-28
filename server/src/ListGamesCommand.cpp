@@ -6,13 +6,21 @@ void ListGamesCommand::execute(vector<string> args) {
     int sid = atoi(args[0].c_str());
     //string gamesList = gamesHandler.getHoldOnGames();
     unsigned long gamesCount = gamesHandler.howManyHoldOnGames();
-    cout<<"The Games Count Is"<<gamesCount<<endl;
+    //cout<<"The Games Count Is"<<gamesCount<<endl;
     int n = write(sid,&gamesCount,sizeof(unsigned long));
-    const char * gamesList = gamesHandler.getHoldOnGames().c_str();
-    cout<<gamesList;
-    n = write(sid,gamesList,sizeof(gamesList));
+    vector<string>* gameList=gamesHandler.getHoldOnGames();
+    unsigned long gameNameLength;
+    for(int i=0;i<gameList->size();i++){
+       // gameNameLength = gameList->at(i).length();
+       // int n = write(sid,&gameNameLength,sizeof(unsigned long));
+        const char * gamesList =  gameList->at(i).c_str();
+        n = write(sid,gamesList,sizeof(char)*50);
+    }
+   // gameNameLength =0;
+    //int n = write(sid,&gameNameLength,sizeof(unsigned long));
     close(sid);
 }
+
 ListGamesCommand::~ListGamesCommand() {
 
 }

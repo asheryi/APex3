@@ -38,7 +38,8 @@ set(CLIENT_FILES
         client/include/TypesOf.h client/src/AIplayer.cpp client/include/AIplayer.h client/include/VectorExterminator.h client/src/Counter.cpp client/include/Counter.h
         client/include/HumanConsole.h client/src/AIConsole.cpp client/include/AIConsole.h client/src/Console.cpp client/src/HumanConsole.cpp client/src/RemoteInputController.cpp client/src/RemoteOutputController.cpp
         client/include/RemoteInputController.h client/include/RemoteOutputController.h
-        client/include/RemoteConsole.h client/src/RemoteConsole.cpp)
+        client/include/RemoteConsole.h client/src/RemoteConsole.cpp client/src/ClientCommandsManager.cpp client/include/ClientCommandsManager.h client/include/Command.h client/include/ClientStartCommand.h client/include/ClientJoinCommand.h client/include/ClientListGamesCommand.h
+        client/src/ClientStartCommand.cpp client/src/ClientJoinCommand.cpp client/src/ClientListGamesCommand.cpp)
 
 set(TEST_FILES
         client/test/BoardTest.cpp client/test/AITest.cpp client/test/StdGameLogicTest.cpp)

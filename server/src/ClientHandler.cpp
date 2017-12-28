@@ -75,7 +75,7 @@ void ClientHandler::addThread(pthread_t thread) {
 }
 
 ClientHandler::ClientHandler() : sids_mutex() {
-    commandsManager = new CommandsManager(&threadsManager);
+    commandsManager = new ClientCommandsManager(&threadsManager);
 }
 
 void ClientHandler::addClientSid(int sid) {

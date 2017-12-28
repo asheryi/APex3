@@ -18,6 +18,7 @@
 #include "../include/RemoteOutputController.h"
 #include "../include/RemoteInputController.h"
 #include "../include/RemoteConsole.h"
+#include "../include/ClientCommandsManager.h"
 
 using namespace std;
 
@@ -90,10 +91,17 @@ void Game::createPlayers(int blacks, int whites) {
 
             Display *rivalDisplay = new RemoteConsole();
 
-             string respond;
+             string command;
+            cout<<"Socket PLayer:"<<clientSocket<<endl;
+            cin>>command;
+            ClientCommandsManager *cm=new ClientCommandsManager(clientSocket);
+            while(command!="exit"){
+                cm->executeCommand(command);
+                cin>>command;
+            }
              toServer->sendCommand("list_games");
-             respond=fromServer->getRespond();
-             cout<<respond<<endl;
+            command=fromServer->getRespond();
+            cout<<command<<endl;
             // if the cell is (1,0) - first , if (2,0) - second
             Cell *colorFlag = fromServer->getLandingPoint();
 

@@ -3,19 +3,19 @@
 
 #include <map>
 #include "GamesHandler.h"
-#include "../include/StartCommand.h"
+#include "StartCommand.h"
 #include "../include/ErrorCommand.h"
-#include "../include/ListGamesCommand.h"
+#include "ListGamesCommand.h"
 #include "../include/JoinCommand.h"
 #include "ThreadsManager.h"
 
-class CommandsManager {
+class ClientCommandsManager {
 public:
-    CommandsManager(const ThreadsManager *threadsManager);
+    ClientCommandsManager(const ThreadsManager *threadsManager);
 
-    CommandsManager(ThreadsManager *threadsManager);
+    ClientCommandsManager(ThreadsManager *threadsManager);
 
-    ~CommandsManager();
+    ~ClientCommandsManager();
     void executeCommand(string command,
                         vector<string>* args);
 private:
