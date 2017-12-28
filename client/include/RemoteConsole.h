@@ -15,6 +15,8 @@ public:
               int whites) const;
 
     void showError(Error errorType) const;
+
+    virtual void showMessage(string message) const {}
 };
 
 

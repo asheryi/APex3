@@ -27,7 +27,6 @@ public:
    * @param cell -Cell, client's selected move.
    */
     virtual void update(const Cell &cell);
-    virtual void sendCommand(string command);
 
 };
 

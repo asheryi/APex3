@@ -15,17 +15,8 @@ void RemoteOutputController::update(const Cell &cell) {
     int n = write(clientSocket, &cell, sizeof(cell));
     if (n == -1) {
         throw "Error writing cell to socket";
-    }
-}
-void RemoteOutputController::sendCommand(string command) {
-    // Write the move to the server
-
-    //cout << "OUTPUT CONTROLLER TRYING TO WRITE" << endl;
-   const char *com=command.c_str();
-    int size=command.length()+1;
-    int n = write(clientSocket,com,sizeof(char)*size);
-    if (n == -1) {
-        throw "Error writing cell to socket";
+    } else if (n == 0) {
+        throw "Server disconnected , sorry, play fast next time (:";
     }
 }
 

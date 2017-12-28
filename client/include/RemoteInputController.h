@@ -16,7 +16,6 @@ public:
     RemoteInputController(int clientSocket);
 
     virtual Cell *getLandingPoint() const;
-    virtual string getRespond() const;
 
     virtual int getMenuSelection() const;
 };
