@@ -125,7 +125,7 @@ void Game::prepareGame(int playerIndex) {
         return;
     }
 
-    // Swap from first to second
+    // Swap from first to be second
     Display *tempDisplay = this->displays[0];
     this->displays[0] = this->displays[1];
     this->displays[1] = tempDisplay;
