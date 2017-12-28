@@ -18,7 +18,7 @@ public:
 
     bool exists(string name);
 
-    bool addGame(string name, GameManager *gm);
+    void addGame(string name, GameManager *gm);
 
     void activateGame(string name, int socket);
 

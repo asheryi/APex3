@@ -3,7 +3,7 @@
 void ClientStartCommand::execute(string command) {
     const char *com =command.c_str();
     int n = write(sid, com, sizeof(char) * 60);
-    int respond;
+    int respond=0;
     read(sid, &respond, sizeof(int));
     if(respond==-1){
         clientDisplay->showMessage("this game is taken");

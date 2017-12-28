@@ -7,11 +7,15 @@ void StartCommand::execute(vector<string> args) {
     cout<<"Wellcom to Start Command"<<endl;
     cout<<"The game you want to create is: "<<gameName<<endl;
     int respond=1;
-    GameManager *gm=new GameManager(sid);
-    if(gamesHandler->addGame(gameName,gm)){
+
+    //if(gamesHandler->addGame(gameName,gm)){
+    if(!gamesHandler->exists(gameName)){
+        cout<<"game was created"<<endl;
+        GameManager *gm=new GameManager(sid);
+        gamesHandler->addGame(gameName,gm);
         int n = write(sid,&respond,sizeof(int));
     }else{
-        delete gm;
+        cout<<"game was not created"<<endl;
         respond=-1;
         int n = write(sid,&respond,sizeof(int));
     }
