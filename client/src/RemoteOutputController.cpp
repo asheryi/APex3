@@ -22,7 +22,8 @@ void RemoteOutputController::sendCommand(string command) {
 
     //cout << "OUTPUT CONTROLLER TRYING TO WRITE" << endl;
    const char *com=command.c_str();
-    int n = write(clientSocket,com,sizeof(com));
+    int size=command.length()+1;
+    int n = write(clientSocket,com,sizeof(char)*size);
     if (n == -1) {
         throw "Error writing cell to socket";
     }

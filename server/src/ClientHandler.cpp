@@ -15,6 +15,7 @@ void *ClientHandler::handle(void *handleClientStruct_) {
 }
 
 string ClientHandler::getCommand(string input) {
+    cout<<input<<endl;
     return input.substr(0, input.find(" "));
 }
 

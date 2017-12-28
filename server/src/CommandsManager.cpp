@@ -12,6 +12,7 @@ void CommandsManager::executeCommand(string
                                      command, vector<string>* args) {
     if ( commandsMap.find(command) == commandsMap.end() ) { // not found
         this->error->execute(*args);
+        cout<<"Command Error"<<endl;
     } else { // found
         commandsMap[command]->execute(*args);
     }

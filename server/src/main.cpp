@@ -14,8 +14,10 @@ int main() {
     int port;
     if (getConnectionDetails(&port)) {
         Server server(port,clientHandler);
+
         try {
             server.start();
+
         } catch (const char *msg) {
             cout << "Cannot start server. Reason: " << msg << endl;
             exit(-1);
