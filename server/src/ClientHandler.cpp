@@ -87,8 +87,8 @@ void ClientHandler::addClientSid(int sid) {
 void ClientHandler::removeClientSid(int sid) {
     pthread_mutex_lock(&sids_mutex);
 
-    connectedClientsSid.erase(remove(connectedClientsSid.begin(), connectedClientsSid.end(), connectedClientsSid),
-                              connectedClientsSid.end());
+    //connectedClientsSid.erase(remove(connectedClientsSid.begin(), connectedClientsSid.end(), connectedClientsSid),
+    //                          connectedClientsSid.end());
     pthread_mutex_unlock(&sids_mutex);
 
 }

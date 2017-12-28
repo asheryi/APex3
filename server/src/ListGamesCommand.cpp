@@ -1,6 +1,6 @@
 #include "../include/ListGamesCommand.h"
 
-ListGamesCommand::ListGamesCommand(const GamesHandler &gamesHandler) : gamesHandler(gamesHandler) {}
+ListGamesCommand::ListGamesCommand(GamesHandler &gamesHandler) : gamesHandler(gamesHandler) {}
 
 void ListGamesCommand::execute(vector<string> args) {
     int sid = atoi(args[0].c_str());

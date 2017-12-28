@@ -18,7 +18,7 @@ public:
     void activateGame(string name,int socket);
     unsigned long howManyHoldOnGames() const;
 
-    string getHoldOnGames()const;
+    string getHoldOnGames();
 };
 #endif
 

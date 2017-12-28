@@ -28,7 +28,7 @@ void GamesHandler::activateGame(string name,int socket) {
     pthread_mutex_unlock(&maps_mutex);
 }
 
-string GamesHandler::getHoldOnGames() const {
+string GamesHandler::getHoldOnGames() {
     string result = "";
     pthread_mutex_lock(&maps_mutex);
     /*for (const pair<const string, GameManager *> & gameName:holdOnGames){
@@ -46,7 +46,11 @@ string GamesHandler::getHoldOnGames() const {
     return result;
 }
 
-GamesHandler::GamesHandler() : holdOnGames(),activeGames(){
+GamesHandler::GamesHandler() : holdOnGames(), maps_mutex(), activeGames() {
+    holdOnGames["yossi"] = new GameManager(123);
+    holdOnGames["is"] = new GameManager(124);
+    holdOnGames["your"] = new GameManager(113);
+    holdOnGames["friend"] = new GameManager(111);
 }
 
 unsigned long GamesHandler::howManyHoldOnGames() const {

@@ -36,7 +36,7 @@ void Server::start() {
 
 }
 
-static void *Server::receiveClients(void *receiveClientsStructArg) {
+void *Server::receiveClients(void *receiveClientsStructArg) {
     ReceiveClientsStruct *receiveClientsStruct = (ReceiveClientsStruct *) (receiveClientsStructArg);
     int serverSocket = receiveClientsStruct->serverSocket;
     ClientHandler *clientHandler = receiveClientsStruct->clientHandler;

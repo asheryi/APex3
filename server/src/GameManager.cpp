@@ -3,10 +3,8 @@
 
 using namespace std;
 
-GameManager::GameManager(int socket_,bool* alive_,pthread_mutex_t* alive_mutex_) {
+GameManager::GameManager(int socket_) {
     playersSid[0]=socket_;
-    alive=alive_;
-    alive_mutex=alive_mutex_;
 
     currPlayer = 0;
 }
@@ -58,8 +56,7 @@ void GameManager::runGame(GameManager* gameManager) {
         } catch (const char *msg) {
             return;
         }
-        pthread_mutex_unlock(alive_mutex);
-    } while (*alive && cell != gameOver);
+    } while (cell != gameOver);
 }
 
 void GameManager::nextPlayer() {
