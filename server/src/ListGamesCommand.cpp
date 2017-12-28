@@ -9,6 +9,7 @@ void ListGamesCommand::execute(vector<string> args) {
     cout<<"The Games Count Is"<<gamesCount<<endl;
     int n = write(sid,&gamesCount,sizeof(unsigned long));
     const char * gamesList = gamesHandler.getHoldOnGames().c_str();
+    cout<<gamesList;
     n = write(sid,gamesList,sizeof(gamesList));
     close(sid);
 }

@@ -16,16 +16,17 @@ Cell *RemoteInputController::getLandingPoint() const {
 }
 string RemoteInputController::getRespond() const {
     // Read the move from the server
-    string d="df";
+    string d="";
     unsigned long sizeRespond;
-    int n = read(clientSocket, &sizeRespond, sizeof(unsigned long));
-    cout<<sizeRespond;
-    char* res=(char*) malloc(sizeof(char)*sizeRespond);
-     n = read(clientSocket, res, sizeRespond);
+    read(clientSocket, &sizeRespond, sizeof(unsigned long));
+    cout<<sizeRespond<<endl;
+    sizeRespond=(sizeRespond*50);
+    char* res=(char*)calloc(sizeRespond,sizeof(char));
+     int n = read(clientSocket, res, sizeRespond);
     if (n == -1) {
         throw "Error reading result from socket";
     }
-    cout<<&res;
+    cout<<res;
     return d;
 }
 int RemoteInputController::getMenuSelection() const {
