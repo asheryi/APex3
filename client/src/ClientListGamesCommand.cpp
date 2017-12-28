@@ -1,3 +1,4 @@
+#include <sstream>
 #include "../include/ClientListGamesCommand.h"
 
 ClientListGamesCommand::ClientListGamesCommand(int socket_, Display *display) : Command(display, socket_) {
@@ -18,10 +19,9 @@ void ClientListGamesCommand::execute(vector<string> args) {
     //receiving respond from server
     unsigned long sizeRespond;
     read(sid, &sizeRespond, sizeof(unsigned long));
-
-    string str = "Number of games is: ";
-
-    clientDisplay->showMessage(str);
+    stringstream gameNumStr;
+    gameNumStr<<"Number of games is: "<<sizeRespond;
+     clientDisplay->showMessage(gameNumStr.str());
     //cout << sizeRespond << endl;
 
     char res[50];

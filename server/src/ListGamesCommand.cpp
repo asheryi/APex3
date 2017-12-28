@@ -1,14 +1,14 @@
 #include "../include/ListGamesCommand.h"
 
-ListGamesCommand::ListGamesCommand(GamesHandler &gamesHandler) : gamesHandler(gamesHandler) {}
+ListGamesCommand::ListGamesCommand(GamesHandler* gamesHandler_):Command(gamesHandler_){}
 
 void ListGamesCommand::execute(vector<string> args) {
     int sid = atoi(args[0].c_str());
     //string gamesList = gamesHandler.getHoldOnGames();
-    unsigned long gamesCount = gamesHandler.howManyHoldOnGames();
+    unsigned long gamesCount = gamesHandler->howManyHoldOnGames();
     //cout<<"The Games Count Is"<<gamesCount<<endl;
     int n = write(sid,&gamesCount,sizeof(unsigned long));
-    vector<string>* gameList=gamesHandler.getHoldOnGames();
+    vector<string>* gameList=gamesHandler->getHoldOnGames();
     unsigned long gameNameLength;
     for(int i=0;i<gameList->size();i++){
        // gameNameLength = gameList->at(i).length();

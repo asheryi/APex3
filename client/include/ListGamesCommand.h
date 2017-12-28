@@ -3,11 +3,15 @@
 
 
 #include "Command.h"
-
+#include "RemoteInputController.h"
+#include "RemoteOutputController.h"
 
 class ListGamesCommand : public Command{
+private:
+    int socket;
+
 public:
-    ListGamesCommand(GamesHandler *gamesHandler);
+    ListGamesCommand(int socket_);
 
     virtual void execute(vector<string> args);
     virtual ~ListGamesCommand();

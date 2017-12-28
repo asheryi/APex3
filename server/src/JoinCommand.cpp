@@ -6,6 +6,6 @@ JoinCommand::~JoinCommand(){
 
 }
 
-JoinCommand::JoinCommand(ThreadsManager *threadsManager) {
+JoinCommand::JoinCommand(ThreadsManager *threadsManager,GamesHandler* gamesHandler_):Command(gamesHandler_) {
 
 }

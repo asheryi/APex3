@@ -2,12 +2,12 @@
 #define EX3_CLIENTHANDLER_H
 
 
-#include "CommandsManager.h"
+#include "../include/CommandsManager.h"
 #include "ThreadsManager.h"
 
 class ClientHandler {
 private:
-    ClientCommandsManager* commandsManager;
+    CommandsManager* commandsManager;
     pthread_mutex_t sids_mutex;
     ThreadsManager threadsManager;
     vector<int> connectedClientsSid;

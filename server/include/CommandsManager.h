@@ -9,18 +9,16 @@
 #include "../include/JoinCommand.h"
 #include "ThreadsManager.h"
 
-class ClientCommandsManager {
+class CommandsManager {
 public:
-    ClientCommandsManager(const ThreadsManager *threadsManager);
+    CommandsManager(ThreadsManager *threadsManager);
 
-    ClientCommandsManager(ThreadsManager *threadsManager);
-
-    ~ClientCommandsManager();
+    ~CommandsManager();
     void executeCommand(string command,
                         vector<string>* args);
 private:
     map<string, Command *> commandsMap;
     Command* error;
-    GamesHandler gamesHandler;
+    GamesHandler *gamesHandler;
 };
 #endif
