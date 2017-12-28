@@ -1,6 +1,5 @@
 #include "../include/ClientHandler.h"
 #include <sstream>
-#include <algorithm>
 
 void *ClientHandler::handle(void *handleClientStruct_) {
     HandleClientStruct *handleClientStruct = (struct HandleClientStruct *) handleClientStruct_;
@@ -86,9 +85,11 @@ void ClientHandler::addClientSid(int sid) {
 
 void ClientHandler::removeClientSid(int sid) {
     pthread_mutex_lock(&sids_mutex);
+    // TODO run this below to remove ...
 
     //connectedClientsSid.erase(remove(connectedClientsSid.begin(), connectedClientsSid.end(), connectedClientsSid),
     //                          connectedClientsSid.end());
+
     pthread_mutex_unlock(&sids_mutex);
 
 }
