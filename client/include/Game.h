@@ -83,6 +83,8 @@ public:
     void createPlayers(int blacks, int whites);
 
     int connectToServer();
+
+    void prepareGame(int playerIndex);
 };
 
 

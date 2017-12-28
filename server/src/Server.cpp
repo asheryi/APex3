@@ -1,5 +1,4 @@
 #include "../include/Server.h"
-#include <netinet/in.h>
 #include <cstring>
 
 using namespace std;
@@ -34,6 +33,8 @@ void Server::start() {
         cin >> serverCommand;
     } while (serverCommand != "exit");
 
+    close(serverSocket);
+    cout << "closed socket" << endl;
 }
 
 void *Server::receiveClients(void *receiveClientsStructArg) {

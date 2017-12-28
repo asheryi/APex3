@@ -37,6 +37,8 @@ public:
     virtual void showEndGameStatus(GameStatus gameStatus) const;
 
     virtual void showMoveDone(const Cell &cell, Color playerColor) const;
+
+    virtual void showMessage(string message) const;
 };
 
 

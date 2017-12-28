@@ -1,34 +1,34 @@
 #include "../include/ClientListGamesCommand.h"
 
-ClientListGamesCommand::ClientListGamesCommand(int socket_) {
-    socket=socket_;
-    cout<<"Socket List:"<<socket<<endl;
+ClientListGamesCommand::ClientListGamesCommand(int socket_, Display *display) : Command(display, socket_) {
+
 }
 
 void ClientListGamesCommand::execute(vector<string> args) {
     //sending command to server
-    cout<<"Welcom to ClientGetList Exexute"<<endl;
-    const char *com="list_games";
-    int size=11;
-    int n = write(socket,com,sizeof(char)*size);
+
+    //cout<<"Welcome to ClientGetList Exexute"<<endl;
+    const char *com = "list_games";
+    int size = 11;
+    int n = write(sid, com, sizeof(char) * size);
     if (n == -1) {
-        throw "Error writing cell to socket";
+        throw "Error writing to socket";
     }
 
-   //receiving respond from server
+    //receiving respond from server
     unsigned long sizeRespond;
-    read(socket, &sizeRespond, sizeof(unsigned long));
-    cout<<"Number of game is: "<<sizeRespond<<endl;
-    vector<char*> *gameNames=new vector<char*>;
-    cout<<sizeRespond<<endl;
-    for(int i=0;i<sizeRespond;i++){
-        char *res = (char*) calloc(50, sizeof(char));
-        int n = read(socket, res, 50);
-        // cout<<res<<endl;
-        gameNames->push_back(res);
-    }
-    for(int i=0;i<gameNames->size();i++){
-        cout<<gameNames->at(i)<<endl;
+    read(sid, &sizeRespond, sizeof(unsigned long));
+
+    string str = "Number of games is: ";
+
+    clientDisplay->showMessage(str);
+    //cout << sizeRespond << endl;
+
+    char res[50];
+
+    for (int i = 0; i < sizeRespond; i++) {
+        int n = read(sid, res, 50);
+        clientDisplay->showMessage(string(res));
     }
 }
 

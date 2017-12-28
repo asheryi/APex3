@@ -45,6 +45,11 @@ public:
      * Show the initial menu.
      */
     virtual void showMenu() const = 0;
+
+    /**
+     * Show message .
+     */
+    virtual void showMessage(string message) const = 0;
 };
 
 

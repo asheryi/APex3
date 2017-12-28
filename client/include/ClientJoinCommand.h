@@ -1,13 +1,16 @@
-#ifndef JoinCommand_H
-#define JoinCommand_H
+#ifndef ClientJoinCommand_H
+#define ClientJoinCommand_H
+
 #include "Command.h"
 
-class JoinCommand: public Command {
+class ClientJoinCommand : public Command {
 public:
-    JoinCommand();
+    ClientJoinCommand(Display *display, int socket);
 
     virtual void execute(vector<string> args);
-   virtual ~JoinCommand();
+
+    virtual ~ClientJoinCommand();
 
 };
+
 #endif

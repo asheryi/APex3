@@ -1,11 +1,13 @@
 #include "../include/ClientJoinCommand.h"
-void JoinCommand::execute(vector<string> args){
+
+void ClientJoinCommand::execute(vector<string> args) {
 
 }
-JoinCommand::~JoinCommand(){
+
+ClientJoinCommand::~ClientJoinCommand() {
 
 }
 
-JoinCommand::JoinCommand() {
+ClientJoinCommand::ClientJoinCommand(Display *display, int socket) : Command(display, socket) {
 
 }

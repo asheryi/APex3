@@ -112,3 +112,7 @@ void Console::showMenu() const {
     cout << "To play remote please press 3" << endl;
 
 }
+
+void Console::showMessage(string message) const {
+    cout << message << endl;
+}

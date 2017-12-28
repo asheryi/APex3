@@ -8,6 +8,7 @@ void *ClientHandler::handle(void *handleClientStruct_) {
     int sid = handleClientStruct->sid;
     clientHandler->addClientSid(sid);
     string input = clientHandler->readCommand(sid);
+    cout << input;
     string command = clientHandler->getCommand(input);
     clientHandler->executeCommand(command, clientHandler->getArgs(input, sid));
     close(sid);
@@ -15,7 +16,6 @@ void *ClientHandler::handle(void *handleClientStruct_) {
 }
 
 string ClientHandler::getCommand(string input) {
-    cout<<input<<endl;
     return input.substr(0, input.find(" "));
 }
 

@@ -79,8 +79,6 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
         }
     } else if (network) {
-
-
         try {
             HumanPlayer *activePlayer = humanPlayer;
 
@@ -91,47 +89,15 @@ void Game::createPlayers(int blacks, int whites) {
 
             Display *rivalDisplay = new RemoteConsole();
 
-             string command;
-            cout<<"Socket PLayer:"<<clientSocket<<endl;
-            cin>>command;
-            ClientCommandsManager *cm=new ClientCommandsManager(clientSocket);
-            while(command!="exit"){
+            string command;
+            cout << "Socket PLayer:" << clientSocket << endl;
+            cin >> command;
+            ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display);
+            while (command != "exit") {
                 cm->executeCommand(command);
-                cin>>command;
-            }
-             toServer->sendCommand("list_games");
-            command=fromServer->getRespond();
-            cout<<command<<endl;
-            // if the cell is (1,0) - first , if (2,0) - second
-            Cell *colorFlag = fromServer->getLandingPoint();
-
-            Cell first(1, 0);
-
-            humanPlayer->setController(toServer);
-
-
-            // Default second.
-            HumanPlayer *blackPlayer = rivalPlayer;
-            HumanPlayer *whitePlayer = humanPlayer;
-            Display *blackDisplay = rivalDisplay;
-            Display *whiteDisplay = display;
-
-            if (*colorFlag == first) {
-                blackPlayer = activePlayer;
-                whitePlayer = rivalPlayer;
-                blackDisplay = display;
-                whiteDisplay = rivalDisplay;
+                cin >> command;
             }
 
-            delete colorFlag;
-
-            blackPlayer->modifyPlayerColor(black, blacksCounter);
-            whitePlayer->modifyPlayerColor(white, whitesCounter);
-            this->displays[0] = blackDisplay;
-            this->displays[1] = whiteDisplay;
-
-            this->players[0] = blackPlayer;
-            this->players[1] = whitePlayer;
 
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
@@ -148,8 +114,42 @@ void Game::createPlayers(int blacks, int whites) {
 
 }
 
+/*
+void Game::prepareGame(int playerIndex){
+    // if the cell is (1,0) - first , if (2,0) - second
+    Cell *colorFlag = fromServer->getLandingPoint();
+
+    Cell first(1, 0);
+
+    humanPlayer->setController(toServer);
+
+
+    // Default second.
+    HumanPlayer *blackPlayer = rivalPlayer;
+    HumanPlayer *whitePlayer = humanPlayer;
+    Display *blackDisplay = rivalDisplay;
+    Display *whiteDisplay = display;
+
+    if (*colorFlag == first) {
+        blackPlayer = activePlayer;
+        whitePlayer = rivalPlayer;
+        blackDisplay = display;
+        whiteDisplay = rivalDisplay;
+    }
+
+    delete colorFlag;
+
+    blackPlayer->modifyPlayerColor(black, blacksCounter);
+    whitePlayer->modifyPlayerColor(white, whitesCounter);
+    this->displays[0] = blackDisplay;
+    this->displays[1] = whiteDisplay;
+
+    this->players[0] = blackPlayer;
+    this->players[1] = whitePlayer;
+}*/
+
 int Game::connectToServer() {
-    int clientSocket=0;
+    int clientSocket = 0;
     try {
         // Create a socket point
         clientSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -182,7 +182,7 @@ int Game::connectToServer() {
             throw "Error connecting to server";
         }
         cout << "Connected to server" << endl;
-    }catch(const char *msg) {
+    } catch (const char *msg) {
         throw "Error connecting to server";
     }
     return clientSocket;

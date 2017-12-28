@@ -6,14 +6,12 @@
 #include "RemoteInputController.h"
 #include "RemoteOutputController.h"
 
-class ClientListGamesCommand : public Command{
-private:
-    int socket;
-
+class ClientListGamesCommand : public Command {
 public:
-    ClientListGamesCommand(int socket_);
+    ClientListGamesCommand(int socket_, Display *display);
 
     virtual void execute(vector<string> args);
+
     virtual ~ClientListGamesCommand();
 
 
