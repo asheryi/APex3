@@ -1,10 +1,10 @@
 #include "../include/GamesHandler.h"
 
 bool GamesHandler::exists(string name) {
-    bool result=true;
+    bool result = true;
     pthread_mutex_lock(&maps_mutex);
-    if ( holdOnGames.find(name) == holdOnGames.end() ) {
-        if (activeGames.find(name) == activeGames.end() ) {
+    if (holdOnGames.find(name) == holdOnGames.end()) {
+        if (activeGames.find(name) == activeGames.end()) {
             result = false;
         }
     }
@@ -12,33 +12,28 @@ bool GamesHandler::exists(string name) {
     return result;
 }
 
-bool GamesHandler::addGame(string name,GameManager* gm) {
-    if(exists(name)){
+bool GamesHandler::addGame(string name, GameManager *gm) {
+    if (exists(name)) {
         return false;
-    }else{
-        holdOnGames[name]=gm;
+    } else {
+        holdOnGames[name] = gm;
         return true;
     }
 }
-void GamesHandler::activateGame(string name,int socket) {
+
+void GamesHandler::activateGame(string name, int socket) {
     pthread_mutex_lock(&maps_mutex);
-    activeGames[name]=holdOnGames[name];
+    activeGames[name] = holdOnGames[name];
     holdOnGames.erase(name);
-    activeGames[name]->setPlayerSid(1,socket);
+    activeGames[name]->setPlayerSid(1, socket);
     pthread_mutex_unlock(&maps_mutex);
 }
 
-vector<string>*GamesHandler::getHoldOnGames() {
-    string result = "";
-    vector<string>* gamesList=new vector<string>();
+vector<string> *GamesHandler::getHoldOnGames() {
+    vector<string> *gamesList = new vector<string>();
     pthread_mutex_lock(&maps_mutex);
-    /*for (const pair<const string, GameManager *> & gameName:holdOnGames){
-        result += gameName.first;
-        result += "\n";
-    }*/
-    map<string, GameManager*>::iterator it;
-    for (it = holdOnGames.begin(); it != holdOnGames.end(); it++ )
-    {
+    map<string, GameManager *>::iterator it;
+    for (it = holdOnGames.begin(); it != holdOnGames.end(); it++) {
         gamesList->push_back(it->first);
     }
     pthread_mutex_unlock(&maps_mutex);
@@ -56,5 +51,17 @@ GamesHandler::GamesHandler() : holdOnGames(), maps_mutex(), activeGames() {
 
 unsigned long GamesHandler::howManyHoldOnGames() const {
     return holdOnGames.size();
+}
+
+GamesHandler::~GamesHandler() {
+    pthread_mutex_lock(&maps_mutex);
+    map<string, GameManager *>::iterator it;
+    for (it = holdOnGames.begin(); it != holdOnGames.end(); it++) {
+        delete it->second;
+    }
+    for (it = activeGames.begin(); it != activeGames.end(); it++) {
+        delete it->second;
+    }
+    pthread_mutex_unlock(&maps_mutex);
 }
 

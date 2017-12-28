@@ -1,5 +1,6 @@
 #ifndef GamesHandler_H
 #define GamesHandler_H
+
 #include<map>
 #include "GameManager.h"
 #include <pthread.h>
@@ -14,11 +15,20 @@ private:
 
 public:
     GamesHandler();
-    bool exists(string name) ;
-    bool addGame(string name,GameManager* gm);
-    void activateGame(string name,int socket);
+
+    bool exists(string name);
+
+    bool addGame(string name, GameManager *gm);
+
+    void activateGame(string name, int socket);
+
     unsigned long howManyHoldOnGames() const;
-    vector<string>* getHoldOnGames();
+
+    vector<string> *getHoldOnGames();
+
+    ~GamesHandler();
+
 };
+
 #endif
 
