@@ -28,7 +28,7 @@ void GamesHandler::activateGame(string name,int socket) {
     pthread_mutex_unlock(&maps_mutex);
 }
 
-string GamesHandler::getHoldOnGames(){
+string GamesHandler::getHoldOnGames() const {
     string result = "";
     pthread_mutex_lock(&maps_mutex);
     /*for (const pair<const string, GameManager *> & gameName:holdOnGames){

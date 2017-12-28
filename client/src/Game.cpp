@@ -78,6 +78,8 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
         }
     } else if (network) {
+
+
         try {
             HumanPlayer *activePlayer = humanPlayer;
 
@@ -175,6 +177,7 @@ void Game::nextPlayer(Color &currPlayerColor) {
 }
 
 void Game::start() {
+    Cell noMove(-1, -1);
 
     Color currPlayerColor(players[currPlayer]->getColor());
 
@@ -220,7 +223,6 @@ void Game::start() {
 
             delete move;
         } else {
-            Cell noMove(-1, -1);
             this->players[currPlayer]->update(noMove);
         }
 

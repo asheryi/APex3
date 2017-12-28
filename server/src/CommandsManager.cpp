@@ -1,10 +1,12 @@
 #include "../include/CommandsManager.h"
-CommandsManager::CommandsManager() : commandsMap(),gamesHandler() {
+#include "../include/ThreadsManager.h"
+
+CommandsManager::CommandsManager(ThreadsManager *threadsManager) : commandsMap(), gamesHandler() {
     error = new ErrorCommand();
 
     commandsMap["start"] = new StartCommand();
     commandsMap["list_games"] = new ListGamesCommand(gamesHandler);
-    commandsMap["join"] = new JoinCommand();
+    commandsMap["join"] = new JoinCommand(threadsManager);
 }
 void CommandsManager::executeCommand(string
                                      command, vector<string>* args) {

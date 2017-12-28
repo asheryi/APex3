@@ -7,9 +7,14 @@
 #include "../include/ErrorCommand.h"
 #include "../include/ListGamesCommand.h"
 #include "../include/JoinCommand.h"
+#include "ThreadsManager.h"
+
 class CommandsManager {
 public:
-    CommandsManager();
+    CommandsManager(const ThreadsManager *threadsManager);
+
+    CommandsManager(ThreadsManager *threadsManager);
+
     ~CommandsManager();
     void executeCommand(string command,
                         vector<string>* args);

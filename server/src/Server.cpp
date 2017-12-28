@@ -1,24 +1,49 @@
 #include "../include/Server.h"
-#include <sys/socket.h>
 #include <netinet/in.h>
-#include <unistd.h>
 #include <cstring>
 
 using namespace std;
 
-Server::Server(int port,ClientHandler* clientHandler) : port(port),alive(true), clientHandler(clientHandler),serverSocket(0), currPlayer(), clientSockets() {
+Server::Server(int port, ClientHandler *clientHandler) : port(port), clientHandler(clientHandler),
+                                                         serverSocket(0), threadsManager() {
     cout << "Server" << endl;
-    clientHandler->setAlive(getAlive());
-    clientHandler->setAliveMutex(getAliveMutex());
+
+    //clientHandler->setAlive(getAlive());
+    //clientHandler->setAliveMutex(getAliveMutex());
+
 }
 
 void Server::start() {
     initializeServer();
 
-    while (alive) {
-        pthread_mutex_unlock(&alive_mutex);
+    pthread_t receiveClientsThread;
+
+    ReceiveClientsStruct receiveClientsStruct = {};
+    receiveClientsStruct.serverSocket = this->serverSocket;
+    receiveClientsStruct.clientHandler = clientHandler;
+
+    int thread = pthread_create(&receiveClientsThread, NULL, this->receiveClients, &receiveClientsStruct);
+    if (thread) {
+        cout << "Error: unable to create thread, " << thread << endl;
+    }
+    threadsManager.addThread(receiveClientsThread);
+
+    string serverCommand;
+
+    do {
+        cin >> serverCommand;
+    } while (serverCommand != "exit");
+
+}
+
+static void *Server::receiveClients(void *receiveClientsStructArg) {
+    ReceiveClientsStruct *receiveClientsStruct = (ReceiveClientsStruct *) (receiveClientsStructArg);
+    int serverSocket = receiveClientsStruct->serverSocket;
+    ClientHandler *clientHandler = receiveClientsStruct->clientHandler;
+
+    while (true) {
         // Define the client socket's structures
-        struct sockaddr_in clientAddress;
+        struct sockaddr_in clientAddress = {};
         socklen_t clientAddressLen = 0;
         //TODO:testing
         cout << "Waiting for connection request" << endl;
@@ -27,14 +52,19 @@ void Server::start() {
         if (sid == -1)
             throw "Error on accept";
         cout << "Connection request accepted\nCreates Command thread" << endl;
-        HandleClientStruct* clientStruct;
-        clientStruct->setSid(sid);
-        clientStruct->setClientHandler(clientHandler);
+        ClientHandler::HandleClientStruct clientStruct = {};
+        clientStruct.sid = sid;
+        clientStruct.clientHandler = clientHandler;
         pthread_t handleClientThread;
-        pthread_create(&handleClientThread, NULL, clientHandler->handle, (void*)clientStruct);
-        string serverCommand;
-        cin>>serverCommand;
+        int thread = pthread_create(&handleClientThread, NULL, clientHandler->handle, &clientStruct);;
 
+        if (thread) {
+            cout << "Error: unable to create thread, " << thread << endl;
+        }
+
+        clientHandler->addThread(handleClientThread);
+
+        //TODO remove notes! : everyWHERE
         //initializeClients();
 
         //gameFlow();
@@ -43,36 +73,17 @@ void Server::start() {
         //close(clientSockets[0]);
         //close(clientSockets[1]);
         //cout << "Game Over ! ready for the next couple of players ." << endl;
-        pthread_mutex_lock(&alive_mutex);
-        if(cin=="exit"){
-
-            alive=false;
-        }
     }
 }
-bool* Server::getAlive(){
+
+/*
+bool *Server::getAlive() {
     return &alive;
 }
-pthread_mutex_t* Server::getAliveMutex(){
-    return &alive_mutex;
-}
-void Server::gameFlow() {
-    Cell cell;
-    Cell gameOver(-2, -2);
-    Cell passTurn(-1, -1);
-    do {
-        try {
-            cell = readFromClient();
-            currPlayer = 1 - currPlayer;
-            if (cell != passTurn) {
-                writeToClient(cell);
-            }
-        } catch (const char *msg) {
-            return;
-        }
 
-    } while (cell != gameOver);
-}
+pthread_mutex_t *Server::getAliveMutex() {
+    return &alive_mutex;
+}*/
 
 void Server::initializeServer() {
     // Create a socket point
@@ -92,55 +103,10 @@ void Server::initializeServer() {
         throw "Error on binding";
     }
     // Start listening to incoming connections
-    listen(serverSocket, MAX_CONNECTED_CLIENTS);
-}
-
-void Server::initializeClients() {
-
-    // Define the client socket's structures
-    struct sockaddr_in clientAddress;
-    socklen_t clientAddressLen = 0;
-
-    cout << "Waiting for players connections..." << endl;
-    // Accept a new client connection
-    int clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
-    if (clientSocket == -1)
-        throw "Error on accept";
-    cout << "First player connected" << endl;
-    clientSockets[0] = clientSocket;
-
-
-    clientSocket = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
-    if (clientSocket == -1)
-        throw "Error on accept";
-    cout << "Second player connected" << endl;
-    clientSockets[1] = clientSocket;
-    currPlayer = 0;
-    writeToClient(Cell(1, 0));
-    currPlayer = 1;
-    writeToClient(Cell(2, 0));
-    currPlayer = 0;
-}
-
-void Server::writeToClient(Cell cell) {
-    int n = write(clientSockets[currPlayer], &cell, sizeof(cell));
-    if (n <= 0) {
-        throw "Problem with write operation";
-    }
-}
-
-Cell Server::readFromClient() {
-    Cell cell;
-    int n = read(clientSockets[currPlayer], &cell, sizeof(cell));
-
-    if (n <= 0) {
-        throw "Problem with read operation";
-    }
-    return cell;
+    listen(serverSocket, MAX_WAITING);
 }
 
 void Server::stop() {
-    cout << "Game over !" <<
-         close(serverSocket);
+    cout << "Game over !" << endl;
+    close(serverSocket);
 }
-

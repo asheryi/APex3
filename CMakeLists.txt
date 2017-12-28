@@ -7,6 +7,8 @@ add_subdirectory(gtest_src/googletest-master)
 include_directories(gtest_src/googletest-master/googletest/include)
 include_directories(gtest_src/googletest-master/googlemock/include)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+
 set(CLIENT_FILES
         client/include/Attack.h
         client/src/Board.cpp
@@ -43,16 +45,15 @@ set(TEST_FILES
 
 set(SERVER_FILES
         server/src/Server.cpp server/include/Server.h server/include/Cell.h server/src/Cell.cpp server/src/CommandsManager.cpp server/src/StartCommand.cpp
-        server/include/Command.h server/include/CommandsManager.h server/include/StartCommand.h server/include/ErrorCommand.h server/src/ErrorCommand.cpp server/src/ListGamesCommand.cpp server/include/ListGamesCommand.h server/src/JoinCommand.cpp server/include/JoinCommand.h server/src/GameManager.cpp server/include/GameManager.h server/src/GamesHandler.cpp server/include/GamesHandler.h server/src/ClientHandler.cpp server/include/ClientHandler.h)
+        server/include/Command.h server/include/CommandsManager.h server/include/StartCommand.h server/include/ErrorCommand.h server/src/ErrorCommand.cpp server/src/ListGamesCommand.cpp server/include/ListGamesCommand.h server/src/JoinCommand.cpp server/include/JoinCommand.h server/src/GameManager.cpp server/include/GameManager.h server/src/GamesHandler.cpp server/include/GamesHandler.h server/src/ClientHandler.cpp server/include/ClientHandler.h server/src/ThreadsManager.cpp server/include/ThreadsManager.h)
 
 set(CHECK)
 
 add_executable(client ${CLIENT_FILES} client/src/main.cpp)
 add_executable(server ${SERVER_FILES} server/src/main.cpp)
-add_executable(check ${CHECK} check/main.cpp)
+#add_executable(check ${CHECK} check/main.cpp)
 add_executable(ex3_test ${SOURCE_FILES} ${TEST_FILES} client/test/test_main.cpp)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98 -pthread")
 
 target_link_libraries(ex3_test gtest gmock gtest_main)
 add_test(ex3_test ex3_test)

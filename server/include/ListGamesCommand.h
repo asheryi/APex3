@@ -7,11 +7,11 @@
 
 class ListGamesCommand : public Command{
 private:
-     GamesHandler& gamesHandler;
+    const GamesHandler &gamesHandler;
 
 
 public:
-    ListGamesCommand(GamesHandler& gamesHandler);
+    ListGamesCommand(const GamesHandler &gamesHandler);
 
     virtual void execute(vector<string> args);
     virtual ~ListGamesCommand();

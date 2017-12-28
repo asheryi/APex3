@@ -17,7 +17,8 @@ public:
     bool addGame(string name,GameManager* gm);
     void activateGame(string name,int socket);
     unsigned long howManyHoldOnGames() const;
-    string getHoldOnGames();
+
+    string getHoldOnGames()const;
 };
 #endif
 
