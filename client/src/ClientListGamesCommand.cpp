@@ -5,7 +5,7 @@ ClientListGamesCommand::ClientListGamesCommand(int socket_, Display *display) : 
 
 }
 
-void ClientListGamesCommand::execute(vector<string> args) {
+void ClientListGamesCommand::execute(string command) {
     //sending command to server
 
     //cout<<"Welcome to ClientGetList Exexute"<<endl;

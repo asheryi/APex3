@@ -13,6 +13,8 @@ void CommandsManager::executeCommand(string
     if ( commandsMap.find(command) == commandsMap.end() ) { // not found
         this->error->execute(*args);
         cout<<"Command Error"<<endl;
+        int sid = atoi((args->at(0)).c_str());
+        close(sid);
     } else { // found
         commandsMap[command]->execute(*args);
     }

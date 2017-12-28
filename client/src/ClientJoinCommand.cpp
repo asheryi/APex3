@@ -1,6 +1,6 @@
 #include "../include/ClientJoinCommand.h"
 
-void ClientJoinCommand::execute(vector<string> args) {
+void ClientJoinCommand::execute(string command) {
 
 }
 

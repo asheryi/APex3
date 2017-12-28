@@ -10,8 +10,6 @@ public:
    * Server constructor.
    * @param port -int, server's port.
    */
-    GameManager(int socket_,bool* alive_,pthread_mutex_t* alive_mutex);
-
     GameManager(int socket_);
 
     void setPlayerSid(int index, int sid);

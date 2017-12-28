@@ -16,7 +16,9 @@ bool GamesHandler::addGame(string name, GameManager *gm) {
     if (exists(name)) {
         return false;
     } else {
+        pthread_mutex_lock(&maps_mutex);
         holdOnGames[name] = gm;
+        pthread_mutex_unlock(&maps_mutex);
         return true;
     }
 }

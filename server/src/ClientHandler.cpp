@@ -12,7 +12,6 @@ void *ClientHandler::handle(void *handleClientStruct_) {
     cout << input;
     string command = clientHandler->getCommand(input);
     clientHandler->executeCommand(command, clientHandler->getArgs(input, sid));
-    close(sid);
     clientHandler->removeClientSid(sid);
 }
 

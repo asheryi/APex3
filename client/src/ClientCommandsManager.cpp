@@ -15,14 +15,17 @@ ClientCommandsManager::ClientCommandsManager(int socket_, RemoteOutputController
 }
 
 void ClientCommandsManager::executeCommand(string command) {
-    if (commandsMap.find(command) == commandsMap.end()) { // not found
+    int index=command.find(' ');
+    string command_=command.substr(0,index);
+
+    if (commandsMap.find(command_) == commandsMap.end()) { // not found
 
         //TODO abstraction.
-        cout << "Command Error" << endl;
+
+        cout << "Command Error For: " <<command_ <<" "<<command<<endl;
 
     } else { // found
-        vector<string> *args = new vector<string>();
-        commandsMap[command]->execute(*args);
+        commandsMap[command_]->execute(command);
     }
 }
 

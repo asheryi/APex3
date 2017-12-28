@@ -6,7 +6,7 @@ class ClientStartCommand: public Command {
 public:
     ClientStartCommand(Display *display, int socket);
 
-    virtual void execute(vector<string> args);
+    virtual void execute(string command);
     virtual ~ClientStartCommand();
 };
 #endif
