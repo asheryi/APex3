@@ -15,7 +15,7 @@ class ClientCommandsManager {
 public:
 
     ClientCommandsManager(int socket_, RemoteOutputController *toServer, RemoteInputController *fromServer, Game *game,
-                          Display *clientDisplay);
+                          Display *clientDisplay, Counter *whitesCounter, Counter *blacksCounter);
 
     ~ClientCommandsManager();
 
@@ -26,6 +26,8 @@ private:
     map<string, Command *> commandsMap;
     RemoteOutputController *toServer;
     RemoteInputController *fromServer;
+    Counter *whites;
+    Counter *blacks;
 };
 
 #endif

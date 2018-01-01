@@ -83,6 +83,7 @@ void Game::createPlayers(int blacks, int whites) {
             HumanPlayer *activePlayer = humanPlayer;
 
             int clientSocket = this->connectToServer();
+
             RemoteOutputController *toServer = new RemoteOutputController(tempController, clientSocket);
             humanPlayer->setController(toServer);
             RemoteInputController *fromServer = new RemoteInputController(clientSocket);
@@ -90,8 +91,7 @@ void Game::createPlayers(int blacks, int whites) {
 
             Display *rivalDisplay = new RemoteConsole();
 
-            activePlayer->modifyPlayerColor(black, blacksCounter);
-            rivalPlayer->modifyPlayerColor(white, whitesCounter);
+
             this->displays[0] = display;
             this->displays[1] = rivalDisplay;
 
@@ -103,7 +103,8 @@ void Game::createPlayers(int blacks, int whites) {
             cin.getline(dummy, sizeof(dummy));
             char command[60];
             cin.getline(command, sizeof(command));
-            ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display);
+            ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display,
+                                                                  whitesCounter, blacksCounter);
             //while (command != "exit") {
             cm->executeCommand(command);
             //cin.getline(command,sizeof(command));
@@ -122,20 +123,22 @@ void Game::createPlayers(int blacks, int whites) {
 }
 
 
-void Game::prepareGame(int playerIndex) {
+void Game::prepareGame(int playerIndex, Counter *whitesCounter, Counter *blacksCounter) {
     cout << "Welcom to prepare" << endl;
-    if (playerIndex == 0) {
-        return;
+    if (playerIndex == 1) {
+        // Swap from first to be second
+        Display *tempDisplay = this->displays[0];
+        this->displays[0] = this->displays[1];
+        this->displays[1] = tempDisplay;
+
+        Player *tempPlayer = this->players[0];
+        this->players[0] = this->players[1];
+        this->players[1] = tempPlayer;
     }
 
-    // Swap from first to be second
-    Display *tempDisplay = this->displays[0];
-    this->displays[0] = this->displays[1];
-    this->displays[1] = tempDisplay;
+    this->players[0]->modifyPlayerColor(black, blacksCounter);
+    this->players[1]->modifyPlayerColor(white, whitesCounter);
 
-    Player *tempPlayer = this->players[0];
-    this->players[0] = this->players[1];
-    this->players[1] = tempPlayer;
 }
 
 int Game::connectToServer() {
@@ -298,6 +301,7 @@ Game::~Game() {
     delete gameLogic;
     delete board;
 }
+
 
 
 

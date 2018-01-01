@@ -84,7 +84,7 @@ public:
 
     int connectToServer();
 
-    void prepareGame(int playerIndex);
+    void prepareGame(int playerIndex, Counter *whitesCounter, Counter *blacksCounter);
 };
 
 

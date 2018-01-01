@@ -27,4 +27,9 @@ Player::Player(PlayerController *controller, Counter *discsCounter, Color color)
 
 }
 
+void Player::modifyPlayerColor(Color color, Counter *discsCounter) {
+    this->color = color;
+    this->discsCounter = discsCounter;
+}
+
 

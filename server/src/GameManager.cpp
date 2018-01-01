@@ -9,8 +9,10 @@ GameManager::GameManager(int socket_) {
 }
 
 void GameManager::writeToClient(Cell cell) {
-    cout << "CURR PLAYER IS: " << currPlayer << endl;
+    cout << "WRITER PLAYER IS: " << currPlayer << endl;
+    cout << cell << endl;
     int n = write(playersSid[currPlayer], &cell, sizeof(cell));
+    cout << "NUM OF BYTES IN WRITE TO CLIENT IS: " << n << endl;
     if (n <= 0) {
         throw "Problem with write operation";
     }
@@ -18,8 +20,21 @@ void GameManager::writeToClient(Cell cell) {
 
 Cell GameManager::readFromClient() {
     Cell cell;
-    cout << "CURR PLAYER IS: " << currPlayer << endl;
+    cout << "READER PLAYER IS: " << currPlayer << endl;
+    //cout << "Sid:" << playersSid[currPlayer] << endl;
     int n = read(playersSid[currPlayer], &cell, sizeof(cell));
+    int respond;
+    char msg[300];
+    for (int i = 0; i < 300; i++) {
+        msg[i] = 0;
+    }
+    //int n=read(playersSid[currPlayer],msg,300);
+    //cout << msg << endl;
+    //cout << n << endl;
+    //cout<<"RESPOND:"<<respond<<endl;
+
+
+    cout << cell << endl;
 
     if (n <= 0) {
         throw "Problem with read operation";
@@ -45,7 +60,9 @@ void *GameManager::runGame(void *gameManager_) {
 
     do {
         try {
+            cout << gameManager->testPrint << endl;
             cell = gameManager->readFromClient();
+            cout << gameManager->testPrint << endl;
             gameManager->nextPlayer();
             if (cell != passTurn) {
                 gameManager->writeToClient(cell);

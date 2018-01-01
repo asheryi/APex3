@@ -19,11 +19,11 @@ void JoinCommand::execute(vector<string> args) {
         } else if(n == 0){
             throw "Socket closed";
         }
-
+        game->testPrint=gameName;
         n = write(sid, &respond, sizeof(int)); // TODO all n !+ 0 asking printing ....
         pthread_t gameThread;
-
         int t = pthread_create(&gameThread, NULL, game->runGame,game);
+
         if (t) {
             cout << "Error: unable to create thread, " << t << endl;
         } else {
@@ -42,7 +42,7 @@ void JoinCommand::execute(vector<string> args) {
 
 JoinCommand::JoinCommand(ThreadsManager *threadsManager_, GamesHandler *gamesHandler_) : Command(gamesHandler_),
                                                                                          threadsManager(
-                                                                                                 threadsManager) {
+                                                                                                 threadsManager_) {
 }
 
 JoinCommand::~JoinCommand() {

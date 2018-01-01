@@ -49,6 +49,8 @@ public:
         controller->update(cell);
     }
 
+    void modifyPlayerColor(Color color, Counter *discsCounter);
+
     /*****************************************************************************
     *function name:chooseAndReturnMove
     *operation function:returns a move from the player

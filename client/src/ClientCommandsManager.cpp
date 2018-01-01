@@ -2,12 +2,14 @@
 
 
 ClientCommandsManager::ClientCommandsManager(int socket_, RemoteOutputController *toServer,
-                                             RemoteInputController *fromServer,
-                                             Game *game, Display *clientDisplay) : socket(socket_), commandsMap() {
+                                             RemoteInputController *fromServer, Game *game,
+                                             Display *clientDisplay, Counter *whitesCounter, Counter *blacksCounter)
+        : socket(socket_), commandsMap(), toServer(toServer), fromServer(fromServer), whites(whitesCounter),
+          blacks(blacksCounter) {
 
-    commandsMap["start"] = new ClientStartCommand(clientDisplay, socket_);
+    commandsMap["start"] = new ClientStartCommand(game, clientDisplay, socket_, whitesCounter, blacksCounter);
     commandsMap["list_games"] = new ClientListGamesCommand(socket_, clientDisplay);
-    commandsMap["join"] = new ClientJoinCommand(game, clientDisplay, socket_);
+    commandsMap["join"] = new ClientJoinCommand(game, clientDisplay, socket_, whitesCounter, blacksCounter);
 
 
     cout << "Socket Manager:" << socket << endl;
