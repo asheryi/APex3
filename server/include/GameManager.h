@@ -1,10 +1,17 @@
 #ifndef GameManager_h
 #define GameManager_h
+
 #include "Cell.h"
 #include <sys/socket.h>
 #include <unistd.h>
 
 class GameManager {
+
+private:
+    int currPlayer;
+    int playersSid[2];
+
+
 public:
     /**
    * Server constructor.
@@ -16,26 +23,13 @@ public:
 
     void nextPlayer();
 
-    static void play(GameManager *gameManager);
-
-private:
-    int serverSocket; // the socket's file descriptor
-    bool* alive;
-    int currPlayer;
-    int playersSid[2];
-    pthread_mutex_t* alive_mutex;
-
-
+    virtual ~GameManager();
 
     /**
      * gameFlow manages the clients turns.
      */
-    void runGame(GameManager* gameManager);
+    static void *runGame(void *gameManager_);
 
-public:
-    virtual ~GameManager();
-
-private:
     /**
     * readFromClient reads the client message.
     * @return Cell - client's message(could be next move or indicates message to sever e.g:NoMoves).
@@ -47,7 +41,11 @@ private:
     */
     void writeToClient(Cell cell);
 
+    int getSid(int index);
+
+
 };
+
 #endif
 
 

@@ -100,14 +100,14 @@ void Game::createPlayers(int blacks, int whites) {
 
             cout << "Socket PLayer:" << clientSocket << endl;
             char dummy[1];
-            cin.getline(dummy,sizeof(dummy));
+            cin.getline(dummy, sizeof(dummy));
             char command[60];
-            cin.getline(command,sizeof(command));
+            cin.getline(command, sizeof(command));
             ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display);
-            while (command != "exit") {
-                cm->executeCommand(command);
-                cin.getline(command,sizeof(command));
-            }
+            //while (command != "exit") {
+            cm->executeCommand(command);
+            //cin.getline(command,sizeof(command));
+            //}
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
             exit(-1);
@@ -123,6 +123,7 @@ void Game::createPlayers(int blacks, int whites) {
 
 
 void Game::prepareGame(int playerIndex) {
+    cout << "Welcom to prepare" << endl;
     if (playerIndex == 0) {
         return;
     }
@@ -187,11 +188,11 @@ void Game::start() {
     Cell noMove(-1, -1);
 
     Color currPlayerColor(players[currPlayer]->getColor());
-
+    cout << "your color is " << currPlayerColor << endl;
     std::vector<Path *> *movePaths = this->gameLogic->validMovePaths(*board, currPlayerColor);
-    bool currPlayerhasMoves = !movePaths->empty();
+    bool currPlayerHasMoves = !movePaths->empty();
 
-    GameStatus gameStatus = gameLogic->currGameStatus(*board, currPlayerhasMoves, currPlayerColor,
+    GameStatus gameStatus = gameLogic->currGameStatus(*board, currPlayerHasMoves, currPlayerColor,
                                                       players[0]->getScore(),
                                                       players[1]->getScore());
 
@@ -205,6 +206,7 @@ void Game::start() {
             if (!passTurnState) {
                 //cout << "Before choose move" << endl;
                 Cell *move = players[currPlayer]->chooseAndReturnMove(*movePaths);
+
                 Path *currPathOfLandingPoint;
                 //cout << "After choose move" << endl;
 
@@ -235,6 +237,7 @@ void Game::start() {
         } catch (const char *errorMsg) {
             displays[0]->showMessage(errorMsg);
             displays[1]->showMessage(errorMsg);
+            break;
         }
 
 
@@ -243,9 +246,9 @@ void Game::start() {
 
         nextPlayer(currPlayerColor);
         movePaths = this->gameLogic->validMovePaths(*board, currPlayerColor);
-        currPlayerhasMoves = !movePaths->empty();
+        currPlayerHasMoves = !movePaths->empty();
 
-        gameStatus = gameLogic->currGameStatus(*board, currPlayerhasMoves, currPlayerColor, players[0]->getScore(),
+        gameStatus = gameLogic->currGameStatus(*board, currPlayerHasMoves, currPlayerColor, players[0]->getScore(),
                                                players[1]->getScore());
     }
     displays[currPlayer]->show(*board, *movePaths, empty, false, players[0]->getScore(), players[1]->getScore());

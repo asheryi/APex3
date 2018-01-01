@@ -4,22 +4,12 @@
 using namespace std;
 
 GameManager::GameManager(int socket_) {
-    playersSid[0]=socket_;
-
+    playersSid[0] = socket_;
     currPlayer = 0;
 }
 
-void GameManager::play(GameManager* gameManager) {
-
-    gameManager->writeToClient(Cell(1, 0));
-    gameManager->nextPlayer();
-    gameManager->writeToClient(Cell(2, 0));
-    gameManager->nextPlayer();
-
-    gameManager->runGame(gameManager);
-}
-
 void GameManager::writeToClient(Cell cell) {
+    cout << "CURR PLAYER IS: " << currPlayer << endl;
     int n = write(playersSid[currPlayer], &cell, sizeof(cell));
     if (n <= 0) {
         throw "Problem with write operation";
@@ -28,6 +18,7 @@ void GameManager::writeToClient(Cell cell) {
 
 Cell GameManager::readFromClient() {
     Cell cell;
+    cout << "CURR PLAYER IS: " << currPlayer << endl;
     int n = read(playersSid[currPlayer], &cell, sizeof(cell));
 
     if (n <= 0) {
@@ -42,29 +33,39 @@ GameManager::~GameManager() {
     close(playersSid[1]);
 }
 
-void GameManager::runGame(GameManager* gameManager) {
+void *GameManager::runGame(void *gameManager_) {
+    cout << "test1" << endl;
+
+    GameManager *gameManager = (GameManager *) (gameManager_);
+    cout << "test2" << endl;
+
     Cell cell;
     Cell gameOver(-2, -2);
     Cell passTurn(-1, -1);
+
     do {
         try {
-            cell = readFromClient();
-            nextPlayer();
+            cell = gameManager->readFromClient();
+            gameManager->nextPlayer();
             if (cell != passTurn) {
-                writeToClient(cell);
+                gameManager->writeToClient(cell);
             }
         } catch (const char *msg) {
-            return;
+            return (void *) (msg);
         }
     } while (cell != gameOver);
 }
 
 void GameManager::nextPlayer() {
-    this->currPlayer = 1-this->currPlayer;
+    this->currPlayer = 1 - this->currPlayer;
 }
 
 void GameManager::setPlayerSid(int index, int sid) {
     playersSid[index] = sid;
+}
+
+int GameManager::getSid(int index) {
+    return playersSid[index];
 }
 
 

@@ -9,7 +9,7 @@ class ClientHandler {
 private:
     CommandsManager* commandsManager;
     pthread_mutex_t sids_mutex;
-    ThreadsManager threadsManager;
+    ThreadsManager* threadsManager;
     vector<int> connectedClientsSid;
 public:
     ClientHandler();

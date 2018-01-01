@@ -4,7 +4,7 @@
 using namespace std;
 
 Server::Server(int port, ClientHandler *clientHandler) : port(port), clientHandler(clientHandler),
-                                                         serverSocket(0), threadsManager() {
+                                                         serverSocket(0) {
     cout << "Server" << endl;
 
     //clientHandler->setAlive(getAlive());
@@ -25,7 +25,7 @@ void Server::start() {
     if (thread) {
         cout << "Error: unable to create thread, " << thread << endl;
     }
-    threadsManager.addThread(receiveClientsThread);
+    clientHandler->addThread(receiveClientsThread);
 
     string serverCommand;
 
@@ -62,8 +62,6 @@ void *Server::receiveClients(void *receiveClientsStructArg) {
         if (thread) {
             cout << "Error: unable to create thread, " << thread << endl;
         }
-
-        clientHandler->addThread(handleClientThread);
 
         //TODO remove notes! : everyWHERE
         //initializeClients();

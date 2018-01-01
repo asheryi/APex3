@@ -1,10 +1,10 @@
 #include "../include/GamesHandler.h"
 
-bool GamesHandler::exists(string name) {
+bool GamesHandler::exists(string gameName) {
     bool result = true;
     pthread_mutex_lock(&maps_mutex);
-    if (holdOnGames.find(name) == holdOnGames.end()) {
-        if (activeGames.find(name) == activeGames.end()) {
+    if (holdOnGames.find(gameName) == holdOnGames.end()) {
+        if (activeGames.find(gameName) == activeGames.end()) {
             result = false;
         }
     }
@@ -12,20 +12,28 @@ bool GamesHandler::exists(string name) {
     return result;
 }
 
-void GamesHandler::addGame(string name, GameManager *gm) {
+void GamesHandler::addGame(string gameName, GameManager *gm) {
 
-        pthread_mutex_lock(&maps_mutex);
-        holdOnGames[name] = gm;
-        pthread_mutex_unlock(&maps_mutex);
+    pthread_mutex_lock(&maps_mutex);
+    holdOnGames[gameName] = gm;
+    pthread_mutex_unlock(&maps_mutex);
 
 }
 
-void GamesHandler::activateGame(string name, int socket) {
+GameManager * GamesHandler::joinGame(string gameName, int socket) {
     pthread_mutex_lock(&maps_mutex);
-    activeGames[name] = holdOnGames[name];
-    holdOnGames.erase(name);
-    activeGames[name]->setPlayerSid(1, socket);
+    if (holdOnGames.find(gameName) == holdOnGames.end()) {
+        pthread_mutex_unlock(&maps_mutex);
+        return NULL;
+    }
+
+    GameManager *gameManager = activeGames[gameName] = holdOnGames[gameName];
+    holdOnGames.erase(gameName);
     pthread_mutex_unlock(&maps_mutex);
+
+    gameManager->setPlayerSid(1, socket);
+
+    return gameManager;
 }
 
 vector<string> *GamesHandler::getHoldOnGames() {

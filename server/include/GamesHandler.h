@@ -16,11 +16,11 @@ private:
 public:
     GamesHandler();
 
-    bool exists(string name);
+    bool exists(string gameName);
 
-    void addGame(string name, GameManager *gm);
+    void addGame(string gameName, GameManager *gm);
 
-    void activateGame(string name, int socket);
+    GameManager * joinGame(string gameName, int socket);
 
     unsigned long howManyHoldOnGames() const;
 

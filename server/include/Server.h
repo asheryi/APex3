@@ -15,7 +15,7 @@ public:
    * Server constructor.
    * @param port -int, server's port.
    */
-    Server(int port,ClientHandler* clientHandler);
+    Server(int port, ClientHandler *clientHandler);
 
     /**
         * start the server operation.
@@ -27,13 +27,13 @@ public:
     //pthread_mutex_t* getAliveMutex();
 
 private:
-    ClientHandler* clientHandler;
+    ClientHandler *clientHandler;
 
     int port;
     int serverSocket; // the socket's file descriptor
-    ThreadsManager threadsManager;
 
     void stop();
+
     /**
     * initializeServer initializes the server to listen to connection requests.
     * @param clientSocket -int, client's socket.
@@ -42,7 +42,7 @@ private:
 
     typedef struct ReceiveClientsStruct {
         int serverSocket;
-        ClientHandler* clientHandler;
+        ClientHandler *clientHandler;
     } ReceiveClientsStruct;
 
 

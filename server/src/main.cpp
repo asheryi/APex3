@@ -42,3 +42,4 @@ bool getConnectionDetails(int *port) {
     sscanf(port_.c_str(), "%d", port);
     return true;
 }
+

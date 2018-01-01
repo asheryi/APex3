@@ -71,11 +71,12 @@ pthread_mutex_t* ClientHandler::getAliveMutex(){
 }*/
 
 void ClientHandler::addThread(pthread_t thread) {
-    threadsManager.addThread(thread);
+    threadsManager->addThread(thread);
 }
 
 ClientHandler::ClientHandler() : sids_mutex() {
-    commandsManager = new CommandsManager(&threadsManager);
+    threadsManager = new ThreadsManager();
+    commandsManager = new CommandsManager(threadsManager);
 }
 
 void ClientHandler::addClientSid(int sid) {

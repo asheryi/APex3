@@ -7,7 +7,7 @@ ClientCommandsManager::ClientCommandsManager(int socket_, RemoteOutputController
 
     commandsMap["start"] = new ClientStartCommand(clientDisplay, socket_);
     commandsMap["list_games"] = new ClientListGamesCommand(socket_, clientDisplay);
-    commandsMap["join"] = new ClientJoinCommand(clientDisplay, socket_);
+    commandsMap["join"] = new ClientJoinCommand(game, clientDisplay, socket_);
 
 
     cout << "Socket Manager:" << socket << endl;
@@ -15,14 +15,14 @@ ClientCommandsManager::ClientCommandsManager(int socket_, RemoteOutputController
 }
 
 void ClientCommandsManager::executeCommand(string command) {
-    int index=command.find(' ');
-    string command_=command.substr(0,index);
+    int index = command.find(' ');
+    string command_ = command.substr(0, index);
 
     if (commandsMap.find(command_) == commandsMap.end()) { // not found
 
         //TODO abstraction.
 
-        cout << "Command Error For: " <<command_ <<" "<<command<<endl;
+        cout << "Command Error For: " << command_ << " " << command << endl;
 
     } else { // found
         commandsMap[command_]->execute(command);

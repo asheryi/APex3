@@ -18,7 +18,7 @@ void ListGamesCommand::execute(vector<string> args) {
     }
    // gameNameLength =0;
     //int n = write(sid,&gameNameLength,sizeof(unsigned long));
-    close(sid);
+    //close(sid);
     delete gameList; //TODO delete inside strings ???
 }
 

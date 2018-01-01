@@ -12,7 +12,8 @@ void ClientListGamesCommand::execute(string command) {
     const char *com = "list_games";
     int size = 11;
     int n = write(sid, com, sizeof(char) * size);
-    if (n == -1) {
+    if (n <= 0) {
+        close(sid);
         throw "Error writing to socket";
     }
 
@@ -20,16 +21,18 @@ void ClientListGamesCommand::execute(string command) {
     unsigned long sizeRespond;
     read(sid, &sizeRespond, sizeof(unsigned long));
     stringstream gameNumStr;
-    gameNumStr<<"Number of games is: "<<sizeRespond;
-     clientDisplay->showMessage(gameNumStr.str());
+    gameNumStr << "Number of games is: " << sizeRespond;
+    clientDisplay->showMessage(gameNumStr.str());
     //cout << sizeRespond << endl;
 
     char res[50];
 
     for (int i = 0; i < sizeRespond; i++) {
-        int n = read(sid, res, 50);
+        int n = read(sid, res, 50); //TODO
         clientDisplay->showMessage(string(res));
     }
+
+    close(sid);
 }
 
 ClientListGamesCommand::~ClientListGamesCommand() {
