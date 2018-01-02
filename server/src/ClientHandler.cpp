@@ -9,7 +9,7 @@ void *ClientHandler::handle(void *handleClientStruct_) {
     int sid = handleClientStruct->sid;
     clientHandler->addClientSid(sid);
     string input = clientHandler->readCommand(sid);
-    cout << input;
+    cout << "The command is:"<<input<<endl;
     string command = clientHandler->getCommand(input);
     clientHandler->executeCommand(command, clientHandler->getArgs(input, sid));
     clientHandler->removeClientSid(sid);
@@ -20,29 +20,30 @@ string ClientHandler::getCommand(string input) {
 }
 
 vector<string> *ClientHandler::getArgs(string input, int sid) {
-    vector<string> *vectorArgs = new vector<string>();
-    stringstream stringStream_;
-    stringStream_ << sid;
-    vectorArgs->push_back(stringStream_.str());
-
-    int start = input.find(" ") + 1;
-    string args_ = input.substr(start, input.length() - start);
-    int end_ = args_.find(" ");
-
-    while (end_ > -1) {
-        vectorArgs->push_back(args_.substr(start, end_));
-        start = end_ + 1;
-        args_ = args_.substr(start, args_.length() - start);
-        end_ = args_.find(" ");
+    cout << "Received command: " << input << endl;
+    // Split the command string to the command name and the arguments
+    string str(input);
+    istringstream iss(str);
+    string command;
+    iss >> command;
+    vector<string> *args=new vector<string>();
+    while (iss) {
+        string arg;
+        iss >> arg;
+        args->push_back(arg);
     }
-    vectorArgs->push_back(args_);
-    return vectorArgs;
+    cout<<"the command after split is:"<<endl;
+    for(int i=0;i<args->size();i++){
+        cout<<args->at(i)<<endl;
+    }
+
+    return args;
 
 
 }
 
 string ClientHandler::readCommand(int sid) {
-    char command[20];
+    char command[MAX_COMMAND_SIZE];
     int n = read(sid, &command, sizeof(command));
 
     if (n <= 0) {
@@ -55,20 +56,6 @@ void ClientHandler::executeCommand(string command, vector<string> *args) {
     commandsManager->executeCommand(command, args);
 }
 
-/*
-
-void ClientHandler::setAlive(bool* alive_){
-    alive=alive_;
-}
-bool* ClientHandler::getAlive(){
-    return alive;
-}
-void ClientHandler::setAliveMutex(pthread_mutex_t* alive_mutex_){
-    alive_mutex=alive_mutex_;
-}
-pthread_mutex_t* ClientHandler::getAliveMutex(){
-    return alive_mutex;
-}*/
 
 void ClientHandler::addThread(pthread_t thread) {
     threadsManager->addThread(thread);

@@ -101,8 +101,8 @@ void Game::createPlayers(int blacks, int whites) {
             cout << "Socket PLayer:" << clientSocket << endl;
             char dummy[1];
             cin.getline(dummy, sizeof(dummy));
-            char command[60];
-            cin.getline(command, sizeof(command));
+            char command[MAX_COMMAND_SIZE];
+            cin.getline(command, MAX_COMMAND_SIZE);
             ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display,
                                                                   whitesCounter, blacksCounter);
             //while (command != "exit") {

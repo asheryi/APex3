@@ -2,6 +2,7 @@
 
 #ifndef EX2_GAME_H
 #define EX2_GAME_H
+#define MAX_COMMAND_SIZE 60
 
 
 #include "GameLogic.h"

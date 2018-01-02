@@ -1,6 +1,6 @@
 #ifndef EX3_CLIENTHANDLER_H
 #define EX3_CLIENTHANDLER_H
-
+#define MAX_COMMAND_SIZE 60
 
 #include "../include/CommandsManager.h"
 #include "ThreadsManager.h"

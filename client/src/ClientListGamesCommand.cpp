@@ -25,10 +25,10 @@ void ClientListGamesCommand::execute(string command) {
     clientDisplay->showMessage(gameNumStr.str());
     //cout << sizeRespond << endl;
 
-    char res[50];
+    char res[MAX_GAME_NAME_SIZE];
 
     for (int i = 0; i < sizeRespond; i++) {
-        int n = read(sid, res, 50); //TODO
+        int n = read(sid, res, MAX_GAME_NAME_SIZE); //TODO
         clientDisplay->showMessage(string(res));
     }
 
