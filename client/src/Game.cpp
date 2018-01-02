@@ -123,6 +123,7 @@ void Game::createPlayers(int blacks, int whites) {
                     break;
                 }
                 display->showMessage(networkMenu);
+                cin.get(dummy);
                 cin.getline(command, MAX_COMMAND_SIZE);
                 clientSocket = this->connectToServer();
             }

@@ -28,9 +28,9 @@ public:
 
     void removeGame(string gameName);
 
-    static void *joinAndStartGame(void *startGameArgs_);
+    //void removeGame(GameManager *gameManager);
 
-    unsigned long howManyHoldOnGames() const;
+    static void *joinAndStartGame(void *startGameArgs_);
 
     vector<string> *getHoldOnGames();
 

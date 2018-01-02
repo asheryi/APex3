@@ -9,7 +9,7 @@ void ListGamesCommand::execute(vector<string> args, int sid) {
     unsigned long gameNameLength;
     for (int i = 0; i < gameList->size(); i++) {
         const char *gamesList = gameList->at(i).c_str();
-        n = write(sid, gamesList, sizeof(char) * 50);
+        n = write(sid, gamesList, gameList->at(i).length() + 1);
     }
     delete gameList; //TODO delete inside strings ???
 }

@@ -68,10 +68,14 @@ GamesHandler::~GamesHandler() {
 
 
 void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
-    StartGameArgs *startGameArgs = (StartGameArgs *) startGameArgs_;
-    string gameName = startGameArgs->gameName;
+    StartGameArgs *startGameArgs = ((StartGameArgs *) startGameArgs_);
     GamesHandler *gamesHandler = startGameArgs->gamesHandler;
     GameManager *gameManager = startGameArgs->gameManager;
+    //cout << "almost reading gameName" << endl;
+    //cout << startGameArgs->gameName << endl;
+    string gameName = startGameArgs->gameName;
+    cout << "almost running game , just a sec" << endl;
+    cout << gameManager->testPrint << endl;
     gameManager->runGame();
     gamesHandler->removeGame(gameName);
 }
@@ -102,6 +106,35 @@ void GamesHandler::removeGame(string gameName) {
     delete activeGames[gameName];
     activeGames.erase(gameName);
 }
+/*
+void GamesHandler::removeGame(GameManager *gameManager) {
+    map<string, GameManager *>::iterator it;
+    string gameName = "";
+    for (it = holdOnGames.begin(); it != holdOnGames.end(); it++) {
+        if (it->second == gameManager) {
+            string gameName = it->first;
+            break;
+        }
+    }
+    if (gameName != NULL) {
+        delete gameManager;
+        holdOnGames.erase(gameName);
+        return;
+    }
+
+    for (it = activeGames.begin(); it != activeGames.end(); it++) {
+        if (it->second == gameManager) {
+            string gameName = it->first;
+            break;
+        }
+    }
+    if (gameName != NULL) {
+        delete gameManager;
+        activeGames.erase(gameName);
+    }
+
+}
+*/
 
 
 

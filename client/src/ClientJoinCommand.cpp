@@ -2,7 +2,7 @@
 
 void ClientJoinCommand::execute(string command, int sid) {
     const char *com = command.c_str();
-    int n = write(sid, com, command.length());
+    int n = write(sid, com, command.length() + 1);
     int respond = 0;
     read(sid, &respond, sizeof(int));
     if (respond == -1) {

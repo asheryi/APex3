@@ -26,7 +26,7 @@ void GameManager::writeToClient(Cell cell) {
 
 Cell GameManager::readFromClient() {
     Cell cell;
-    //cout << "READER PLAYER IS: " << currPlayer << endl;
+    cout << "READER PLAYER IS: " << currPlayer << endl;
     int n = read(playersSid[currPlayer], &cell, sizeof(cell));
 
     //cout << cell << endl;
@@ -56,9 +56,10 @@ void GameManager::runGame() {
 
     do {
         try {
-            cout << this->testPrint << endl;
+
+            cout << "something before readFromCLient..." << endl;
             cell = this->readFromClient();
-            cout << this->testPrint << endl;
+            //cout << this->testPrint << endl;
             this->nextPlayer();
             if (cell != passTurn) {
                 this->writeToClient(cell);

@@ -34,18 +34,17 @@ void JoinCommand::execute(vector<string> args, int sid) {
         return;
     }
 
-
-    GamesHandler::StartGameArgs startGameArgs = {};
-    startGameArgs.gamesHandler = gamesHandler;
-    startGameArgs.gameManager = game;
-    startGameArgs.gameName = gameName;
+    GamesHandler::StartGameArgs *startGameArgs = new GamesHandler::StartGameArgs();
+    startGameArgs->gamesHandler = gamesHandler;
+    startGameArgs->gameManager = game;
+    startGameArgs->gameName = gameName;
 
     game->testPrint = gameName;
     n = write(sid, &respond, sizeof(int)); // second player
     // TODO all n !+ 0 asking printing ....
 
     pthread_t gameThread;
-    int t = pthread_create(&gameThread, NULL, gamesHandler->joinAndStartGame, &startGameArgs);
+    int t = pthread_create(&gameThread, NULL, gamesHandler->joinAndStartGame, (void *) startGameArgs);
 
     if (t) {
         cout << "Error: unable to create thread, " << t << endl;
