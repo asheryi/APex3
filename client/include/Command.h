@@ -13,7 +13,7 @@ using namespace std;
 
 class Command {
 public:
-    virtual void execute(string command, int sid) = 0;
+    virtual bool execute(string command, int sid) = 0;
 
     virtual ~Command() {}
 

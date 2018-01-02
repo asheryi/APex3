@@ -118,12 +118,14 @@ void Game::createPlayers(int blacks, int whites) {
 
             ClientCommandsManager *cm = new ClientCommandsManager(this, display, whitesCounter, blacksCounter);
             while (true) {
-                cm->executeCommand(command, clientSocket);
-                if (string(command) != "list_games") {
+                if (!cm->executeCommand(command, clientSocket)) {
                     break;
                 }
                 display->showMessage(networkMenu);
                 cin.get(dummy);
+                for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
+                    command[i] = 0;
+                }
                 cin.getline(command, MAX_COMMAND_SIZE);
                 clientSocket = this->connectToServer();
             }
@@ -133,7 +135,7 @@ void Game::createPlayers(int blacks, int whites) {
 
             cout << "Socket PLayer:" << clientSocket << endl;
         } catch (const char *msg) {
-            cout << "Failed to connect to server. Reason: " << msg << endl;
+            display->showMessage(msg);
             exit(-1);
         }
     }
@@ -142,7 +144,6 @@ void Game::createPlayers(int blacks, int whites) {
     this->players[1]->updateScore(whites);
 
     this->currPlayer = 0;
-
 }
 
 

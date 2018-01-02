@@ -19,7 +19,7 @@ public:
 
     ~ClientCommandsManager();
 
-    void executeCommand(string command, int sid);
+    bool executeCommand(string command, int sid);
 
 
 private:

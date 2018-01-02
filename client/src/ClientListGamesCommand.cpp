@@ -5,16 +5,19 @@ ClientListGamesCommand::ClientListGamesCommand(Display *display) : Command(displ
 
 }
 
-void ClientListGamesCommand::execute(string command, int sid) {
+bool ClientListGamesCommand::execute(string command, int sid) {
     //sending command to server
 
     //cout<<"Welcome to ClientGetList Exexute"<<endl;
     const char *com = "list_games";
     int size = 11;
     int n = write(sid, com, sizeof(char) * size);
-    if (n <= 0) {
+    if (n == 0) {
         close(sid);
-        throw "Error writing to socket";
+        throw "server disconnected before list_games write";
+    } else if (n == -1) {
+        close(sid);
+        throw "problem writing to server in list_games command";
     }
 
     //receiving respond from server
@@ -28,11 +31,19 @@ void ClientListGamesCommand::execute(string command, int sid) {
     char res[MAX_GAME_NAME_SIZE];
 
     for (int i = 0; i < sizeRespond; i++) {
-        int n = read(sid, res, MAX_GAME_NAME_SIZE); //TODO
+        n = read(sid, res, MAX_GAME_NAME_SIZE);
+        if (n == 0) {
+            close(sid);
+            throw "server disconnected while list_games read";
+        } else if (n == -1) {
+            close(sid);
+            throw "problem reading from server in list_games command";
+        }
         clientDisplay->showMessage(string(res));
     }
 
     close(sid);
+    return true;
 }
 
 ClientListGamesCommand::~ClientListGamesCommand() {

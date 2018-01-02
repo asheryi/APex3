@@ -12,10 +12,9 @@ ClientCommandsManager::ClientCommandsManager(Game *game,
 
 
     cout << "Socket Manager:" << socket << endl;
-
 }
 
-void ClientCommandsManager::executeCommand(string command, int sid) {
+bool ClientCommandsManager::executeCommand(string command, int sid) {
     int index = command.find(' ');
     string command_ = command.substr(0, index);
 
@@ -24,9 +23,9 @@ void ClientCommandsManager::executeCommand(string command, int sid) {
         //TODO abstraction.
 
         cout << "Command Error For: " << command_ << " " << command << endl;
-
+        return true;
     } else { // found
-        commandsMap[command_]->execute(command, sid);
+        return commandsMap[command_]->execute(command, sid);
     }
 }
 

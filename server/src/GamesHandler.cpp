@@ -66,7 +66,6 @@ GamesHandler::~GamesHandler() {
     pthread_mutex_unlock(&maps_mutex);
 }
 
-
 void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
     StartGameArgs *startGameArgs = ((StartGameArgs *) startGameArgs_);
     GamesHandler *gamesHandler = startGameArgs->gamesHandler;
@@ -78,6 +77,7 @@ void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
     cout << gameManager->testPrint << endl;
     gameManager->runGame();
     gamesHandler->removeGame(gameName);
+    delete startGameArgs;
 }
 
 GameManager *GamesHandler::joinGame(string gameName, int sid) {

@@ -11,7 +11,7 @@ public:
 
     virtual ~ClientJoinCommand();
 
-    void execute(string command, int sid);
+    bool execute(string command, int sid);
 
 private:
     Game *game;
