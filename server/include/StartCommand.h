@@ -4,7 +4,8 @@
 class StartCommand: public Command {
 public:
     StartCommand(GamesHandler *gamesHandler_);
-    virtual void execute(vector<string> args);
     virtual ~StartCommand();
+
+    void execute(vector<string> args, int sid);
 };
 #endif

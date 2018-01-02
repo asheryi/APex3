@@ -17,9 +17,11 @@ public:
    */
     Server(int port, ClientHandler *clientHandler);
 
+    Server(int port, ClientHandler *clientHandler, ThreadsManager *threadsManager);
+
     /**
-        * start the server operation.
-      */
+            * start the server operation.
+          */
     void start();
 
     //TODO delete all notes !
@@ -28,7 +30,7 @@ public:
 
 private:
     ClientHandler *clientHandler;
-
+    ThreadsManager *threadsManager;
     int port;
     int serverSocket; // the socket's file descriptor
 

@@ -3,12 +3,13 @@
 
 using namespace std;
 
-Server::Server(int port, ClientHandler *clientHandler) : port(port), clientHandler(clientHandler),
-                                                         serverSocket(0) {
+Server::Server(int port, ClientHandler *clientHandler, ThreadsManager *threadsManager) : port(port),
+                                                                                         clientHandler(clientHandler),
+                                                                                         serverSocket(0),
+                                                                                         threadsManager(
+                                                                                                 threadsManager) {
     cout << "Server" << endl;
 
-    //clientHandler->setAlive(getAlive());
-    //clientHandler->setAliveMutex(getAliveMutex());
 
 }
 
@@ -23,9 +24,9 @@ void Server::start() {
 
     int thread = pthread_create(&receiveClientsThread, NULL, this->receiveClients, &receiveClientsStruct);
     if (thread) {
-        cout << "Error: unable to create thread, " << thread << endl;
+        cout << "Error: unable to create thread, " << receiveClientsThread << endl;
     }
-    clientHandler->addThread(receiveClientsThread);
+    threadsManager->addThread(receiveClientsThread);
 
     string serverCommand;
 

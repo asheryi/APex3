@@ -14,11 +14,14 @@ public:
     CommandsManager(ThreadsManager *threadsManager);
 
     ~CommandsManager();
-    void executeCommand(string command,
-                        vector<string>* args);
+
+    void executeCommand(string command, vector<string> *args, int sid);
+
 private:
     map<string, Command *> commandsMap;
-    Command* error;
+    Command *error;
     GamesHandler *gamesHandler;
+
 };
+
 #endif

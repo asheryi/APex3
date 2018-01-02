@@ -1,24 +1,22 @@
 #include "../include/CommandsManager.h"
-#include "../include/ThreadsManager.h"
 
-CommandsManager::CommandsManager(ThreadsManager *threadsManager) : commandsMap(){
-    gamesHandler=new GamesHandler();
+CommandsManager::CommandsManager(ThreadsManager *threadsManager) : commandsMap() {
+    gamesHandler = new GamesHandler();
     error = new ErrorCommand(gamesHandler);
     commandsMap["start"] = new StartCommand(gamesHandler);
     commandsMap["list_games"] = new ListGamesCommand(gamesHandler);
-    commandsMap["join"] = new JoinCommand(threadsManager,gamesHandler);
+    commandsMap["join"] = new JoinCommand(threadsManager, gamesHandler);
 }
+
 void CommandsManager::executeCommand(string
-                                     command, vector<string>* args) {
-    if ( commandsMap.find(command) == commandsMap.end() ) { // not found
-        this->error->execute(*args);
-        cout<<"Command Error"<<endl;
-        int sid = atoi((args->at(0)).c_str());
-        close(sid);
-    } else { // found
-        commandsMap[command]->execute(*args);
+                                     command, vector<string> *args, int sid) {
+    if (commandsMap.find(command) == commandsMap.end()) { // not found
+        this->error->execute(*args, sid);
+    } else {
+        commandsMap[command]->execute(*args, sid);
     }
 }
+
 CommandsManager::~CommandsManager() {
     map<string, Command *>::iterator it;
 
@@ -27,4 +25,5 @@ CommandsManager::~CommandsManager() {
     }
 
     delete error;
+    delete gamesHandler;
 }

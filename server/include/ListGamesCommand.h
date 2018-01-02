@@ -5,14 +5,14 @@
 #include "Command.h"
 
 
-class ListGamesCommand : public Command{
+class ListGamesCommand : public Command {
 public:
     ListGamesCommand(GamesHandler *gamesHandler);
 
-    virtual void execute(vector<string> args);
     virtual ~ListGamesCommand();
 
 
+    void execute(vector<string> args, int sid);
 };
 
 

@@ -12,13 +12,15 @@ using namespace std;
 class ThreadsManager {
 private:
     vector<pthread_t> threads;
-    //pthread_mutex_t threads_mutex;
+    pthread_mutex_t threads_mutex;
 public:
     ThreadsManager();
 
     void addThread(pthread_t thread);
 
     void removeThread(pthread_t thread);
+
+    void killAllThreads();
 };
 
 

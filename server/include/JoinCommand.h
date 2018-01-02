@@ -12,9 +12,9 @@ private:
 public:
     JoinCommand(ThreadsManager *threadsManager_, GamesHandler *gamesHandler_);
 
-    virtual void execute(vector<string> args);
-
     virtual ~JoinCommand();
+
+    void execute(vector<string> args, int sid);
 };
 
 #endif

@@ -7,17 +7,17 @@
 
 class ClientHandler {
 private:
-    CommandsManager* commandsManager;
+
+    CommandsManager *commandsManager;
     pthread_mutex_t sids_mutex;
-    ThreadsManager* threadsManager;
+    ThreadsManager *threadsManager;
     vector<int> connectedClientsSid;
 public:
-    ClientHandler();
-    static void* handle(void *clientHandlerStruct);
+    static void *handle(void *clientHandlerStruct);
+
     string readCommand(int sid);
+
     string getCommand(string input);
-    vector<string>* getArgs(string input,int sid);
-    void executeCommand(string command,vector<string>* args);
 
     /*
     void setAliveMutex(pthread_mutex_t* alive_mutex_);
@@ -31,11 +31,17 @@ public:
         ClientHandler *clientHandler;
     } HandleClientStruct;
 
-    void addThread(pthread_t thread);
-
     void removeClientSid(int sid);
 
     void addClientSid(int sid);
+
+    ClientHandler(ThreadsManager *threadsManager);
+
+    ~ClientHandler();
+
+    void executeCommand(string command, vector<string> *args, int sid);
+
+    vector<string> *getArgs(string input);
 };
 
 

@@ -20,7 +20,7 @@ void GamesHandler::addGame(string gameName, GameManager *gm) {
 
 }
 
-GameManager * GamesHandler::joinGame(string gameName, int socket) {
+GameManager *GamesHandler::joinGame(string gameName, int socket) {
     pthread_mutex_lock(&maps_mutex);
     if (holdOnGames.find(gameName) == holdOnGames.end()) {
         pthread_mutex_unlock(&maps_mutex);
@@ -49,11 +49,7 @@ vector<string> *GamesHandler::getHoldOnGames() {
 }
 
 GamesHandler::GamesHandler() : holdOnGames(), maps_mutex(), activeGames() {
-    holdOnGames["yossi"] = new GameManager(123);
-    holdOnGames["is"] = new GameManager(124);
-    holdOnGames["your"] = new GameManager(113);
-    holdOnGames["Turn"] = new GameManager(124);
-    holdOnGames["Now"] = new GameManager(113);
+
 }
 
 unsigned long GamesHandler::howManyHoldOnGames() const {

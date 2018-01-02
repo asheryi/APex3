@@ -13,7 +13,8 @@ private:
 
 
 public:
-    string testPrint="default";
+    string testPrint = "default";
+
     /**
    * Server constructor.
    * @param port -int, server's port.

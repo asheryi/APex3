@@ -2,6 +2,12 @@
 #include <sstream>
 #include <algorithm>
 
+
+ClientHandler::ClientHandler(ThreadsManager *threadsManager) : sids_mutex(), threadsManager(threadsManager) {
+    commandsManager = new CommandsManager(threadsManager);
+}
+
+
 void *ClientHandler::handle(void *handleClientStruct_) {
     HandleClientStruct *handleClientStruct = (struct HandleClientStruct *) handleClientStruct_;
 
@@ -9,32 +15,32 @@ void *ClientHandler::handle(void *handleClientStruct_) {
     int sid = handleClientStruct->sid;
     clientHandler->addClientSid(sid);
     string input = clientHandler->readCommand(sid);
-    cout << "The command is:"<<input<<endl;
+    cout << input;
     string command = clientHandler->getCommand(input);
-    clientHandler->executeCommand(command, clientHandler->getArgs(input, sid));
-    clientHandler->removeClientSid(sid);
+    clientHandler->executeCommand(command, clientHandler->getArgs(input), sid);
+    //clientHandler->removeClientSid(sid);
 }
 
 string ClientHandler::getCommand(string input) {
     return input.substr(0, input.find(" "));
 }
 
-vector<string> *ClientHandler::getArgs(string input, int sid) {
+vector<string> *ClientHandler::getArgs(string input) {
     cout << "Received command: " << input << endl;
     // Split the command string to the command name and the arguments
     string str(input);
     istringstream iss(str);
     string command;
     iss >> command;
-    vector<string> *args=new vector<string>();
+    vector<string> *args = new vector<string>();
     while (iss) {
         string arg;
         iss >> arg;
         args->push_back(arg);
     }
-    cout<<"the command after split is:"<<endl;
-    for(int i=0;i<args->size();i++){
-        cout<<args->at(i)<<endl;
+    cout << "the command after split is:" << endl;
+    for (int i = 0; i < args->size(); i++) {
+        cout << args->at(i) << endl;
     }
 
     return args;
@@ -43,7 +49,7 @@ vector<string> *ClientHandler::getArgs(string input, int sid) {
 }
 
 string ClientHandler::readCommand(int sid) {
-    char command[MAX_COMMAND_SIZE];
+    char command[20];
     int n = read(sid, &command, sizeof(command));
 
     if (n <= 0) {
@@ -52,19 +58,10 @@ string ClientHandler::readCommand(int sid) {
     return string(command);
 }
 
-void ClientHandler::executeCommand(string command, vector<string> *args) {
-    commandsManager->executeCommand(command, args);
+void ClientHandler::executeCommand(string command, vector<string> *args, int sid) {
+    commandsManager->executeCommand(command, args, sid);
 }
 
-
-void ClientHandler::addThread(pthread_t thread) {
-    threadsManager->addThread(thread);
-}
-
-ClientHandler::ClientHandler() : sids_mutex() {
-    threadsManager = new ThreadsManager();
-    commandsManager = new CommandsManager(threadsManager);
-}
 
 void ClientHandler::addClientSid(int sid) {
     pthread_mutex_lock(&sids_mutex);
@@ -79,6 +76,10 @@ void ClientHandler::removeClientSid(int sid) {
 
     pthread_mutex_unlock(&sids_mutex);
 
+}
+
+ClientHandler::~ClientHandler() {
+    delete commandsManager;
 }
 
 
