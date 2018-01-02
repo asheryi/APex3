@@ -1,5 +1,6 @@
 #ifndef Command_h
 #define Command_h
+#define MAX_GAME_NAME_SIZE 50
 
 #include <vector>
 #include <string>
