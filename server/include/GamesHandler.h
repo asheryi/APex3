@@ -28,6 +28,7 @@ public:
 
     ~GamesHandler();
 
+    unsigned long howManyHoldOnGames();
 };
 
 #endif

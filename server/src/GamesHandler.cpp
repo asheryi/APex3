@@ -52,8 +52,12 @@ GamesHandler::GamesHandler() : holdOnGames(), maps_mutex(), activeGames() {
 
 }
 
-unsigned long GamesHandler::howManyHoldOnGames() const {
-    return holdOnGames.size();
+unsigned long GamesHandler::howManyHoldOnGames() {
+    pthread_mutex_lock(&maps_mutex);
+
+    unsigned long size = holdOnGames.size();
+    pthread_mutex_unlock(&maps_mutex);
+    return size;
 }
 
 GamesHandler::~GamesHandler() {
