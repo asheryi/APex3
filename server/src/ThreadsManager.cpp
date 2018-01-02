@@ -25,9 +25,9 @@ ThreadsManager::ThreadsManager() : threads_mutex() {
 
 void ThreadsManager::killAllThreads() {
     pthread_mutex_lock(&threads_mutex);
-
-    for (pthread_t thread:threads) {
-        pthread_cancel(thread);
+    int threads_size = threads.size();
+    for (int i = 0; i < threads_size; i++) {
+        pthread_cancel(threads[i]);
     }
 
     pthread_mutex_unlock(&threads_mutex);

@@ -1,6 +1,7 @@
 #include <sstream>
 #include "../include/JoinCommand.h"
 
+
 void JoinCommand::execute(vector<string> args, int sid) {
     string gameName = args[0];
     cout << "Welcome to JOIN" << endl;
@@ -22,17 +23,29 @@ void JoinCommand::execute(vector<string> args, int sid) {
     // GAME IS ON:
 
     cout << "you joined to the game" << endl;
-    int n = write(game->getSid(0), &respond, sizeof(int));
+    int n = write(game->getSid(0), &respond, sizeof(int)); // first player
     if (n == -1) {
-        cout << "Unable to writie to client (sid = " << sid << ")" << endl;
+        cout << "Unable to write to client (sid = " << sid << ")" << endl;
     } else if (n == 0) {
         cout << "Client with sid = " << sid << ", closed the connection" << endl;
+        respond = -1;
+        n = write(sid, &respond, sizeof(int)); // second player cannot play because first player disconnected.
+        gamesHandler->removeGame(gameName);
+        return;
     }
 
+
+    GamesHandler::StartGameArgs startGameArgs = {};
+    startGameArgs.gamesHandler = gamesHandler;
+    startGameArgs.gameManager = game;
+    startGameArgs.gameName = gameName;
+
     game->testPrint = gameName;
-    n = write(sid, &respond, sizeof(int)); // TODO all n !+ 0 asking printing ....
+    n = write(sid, &respond, sizeof(int)); // second player
+    // TODO all n !+ 0 asking printing ....
+
     pthread_t gameThread;
-    int t = pthread_create(&gameThread, NULL, game->runGame, game);
+    int t = pthread_create(&gameThread, NULL, gamesHandler->joinAndStartGame, &startGameArgs);
 
     if (t) {
         cout << "Error: unable to create thread, " << t << endl;

@@ -14,11 +14,13 @@ int main() {
         Server server(port, clientHandler, threadsManager);
         try {
             server.start();
+            cout<<"All Threads About To Die2"<<endl;
         } catch (const char *msg) {
             cout << "Cannot start server. Reason: " << msg << endl;
             exit(-1);
         }
     }
+    cout<<"All Threads About To Die"<<endl;
     threadsManager->killAllThreads();
 
     delete clientHandler;

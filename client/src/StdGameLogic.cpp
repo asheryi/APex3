@@ -78,7 +78,7 @@ GameStatus
 StdGameLogic::currGameStatus(const Board &board, bool currPlayerhasMoves, const Color &currPlayerColor, int blacks,
                              int whites) {
 
-    if (blacks + whites == board.getRows() * board.getColumns()) {
+    if (blacks + whites == board.getRows() * board.getColumns() || currPlayerColor == empty) {
         if (blacks == whites) {
             return tie;
         }

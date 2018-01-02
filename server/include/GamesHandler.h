@@ -13,14 +13,22 @@ private:
     map<string, GameManager *> holdOnGames;
     pthread_mutex_t maps_mutex;
 
+    bool isWaitingGame(string gameName);
+
+
 public:
     GamesHandler();
 
     bool exists(string gameName);
 
+
+    GameManager *joinGame(string gameName, int sid);
+
     void addGame(string gameName, GameManager *gm);
 
-    GameManager * joinGame(string gameName, int socket);
+    void removeGame(string gameName);
+
+    static void *joinAndStartGame(void *startGameArgs_);
 
     unsigned long howManyHoldOnGames() const;
 
@@ -29,6 +37,12 @@ public:
     ~GamesHandler();
 
     unsigned long howManyHoldOnGames();
+
+    typedef struct StartGameArgs {
+        GamesHandler *gamesHandler;
+        GameManager *gameManager;
+        string gameName;
+    } StartGameArgs;
 };
 
 #endif

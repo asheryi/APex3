@@ -42,6 +42,7 @@ vector<string> *ClientHandler::getArgs(string input) {
     for (int i = 0; i < args->size(); i++) {
         cout << args->at(i) << endl;
     }
+    cout<<"Args SIZE:"<<args->size()<<endl;
 
     return args;
 

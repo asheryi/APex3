@@ -30,7 +30,7 @@ public:
     /**
      * gameFlow manages the clients turns.
      */
-    static void *runGame(void *gameManager_);
+    void runGame();
 
     /**
     * readFromClient reads the client message.

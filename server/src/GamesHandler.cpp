@@ -4,9 +4,19 @@ bool GamesHandler::exists(string gameName) {
     bool result = true;
     pthread_mutex_lock(&maps_mutex);
     if (holdOnGames.find(gameName) == holdOnGames.end()) {
-        if (activeGames.find(gameName) == activeGames.end()) {
+        if (activeGames.find(gameName) == activeGames.end()) { // if not found on neither map .
             result = false;
         }
+    }
+    pthread_mutex_unlock(&maps_mutex);
+    return result;
+}
+
+bool GamesHandler::isWaitingGame(string gameName) {
+    bool result = true;
+    pthread_mutex_lock(&maps_mutex);
+    if (holdOnGames.find(gameName) == holdOnGames.end()) { // is waiting game .
+        result = false;
     }
     pthread_mutex_unlock(&maps_mutex);
     return result;
@@ -18,22 +28,6 @@ void GamesHandler::addGame(string gameName, GameManager *gm) {
     holdOnGames[gameName] = gm;
     pthread_mutex_unlock(&maps_mutex);
 
-}
-
-GameManager *GamesHandler::joinGame(string gameName, int socket) {
-    pthread_mutex_lock(&maps_mutex);
-    if (holdOnGames.find(gameName) == holdOnGames.end()) {
-        pthread_mutex_unlock(&maps_mutex);
-        return NULL;
-    }
-
-    GameManager *gameManager = activeGames[gameName] = holdOnGames[gameName];
-    holdOnGames.erase(gameName);
-    pthread_mutex_unlock(&maps_mutex);
-
-    gameManager->setPlayerSid(1, socket);
-
-    return gameManager;
 }
 
 vector<string> *GamesHandler::getHoldOnGames() {
@@ -71,4 +65,43 @@ GamesHandler::~GamesHandler() {
     }
     pthread_mutex_unlock(&maps_mutex);
 }
+
+
+void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
+    StartGameArgs *startGameArgs = (StartGameArgs *) startGameArgs_;
+    string gameName = startGameArgs->gameName;
+    GamesHandler *gamesHandler = startGameArgs->gamesHandler;
+    GameManager *gameManager = startGameArgs->gameManager;
+    gameManager->runGame();
+    gamesHandler->removeGame(gameName);
+}
+
+GameManager *GamesHandler::joinGame(string gameName, int sid) {
+    if (!isWaitingGame(gameName)) {
+        return NULL;
+    }
+    pthread_mutex_lock(&maps_mutex);
+
+    GameManager *gameManager = activeGames[gameName] = holdOnGames[gameName];
+    holdOnGames.erase(gameName);
+    pthread_mutex_unlock(&maps_mutex);
+
+    gameManager->setPlayerSid(1, sid);
+
+    return gameManager;
+}
+
+void GamesHandler::removeGame(string gameName) {
+    if (!this->exists(gameName)) {
+        return;
+    }
+    if (this->isWaitingGame(gameName)) {
+        delete holdOnGames[gameName];
+        holdOnGames.erase(gameName);
+    }
+    delete activeGames[gameName];
+    activeGames.erase(gameName);
+}
+
+
 

@@ -1,3 +1,4 @@
+#include <sstream>
 #include "../include/GameManager.h"
 
 
@@ -9,36 +10,36 @@ GameManager::GameManager(int socket_) {
 }
 
 void GameManager::writeToClient(Cell cell) {
-    cout << "WRITER PLAYER IS: " << currPlayer << endl;
+    //cout << "WRITER PLAYER IS: " << currPlayer << endl;
     cout << cell << endl;
     int n = write(playersSid[currPlayer], &cell, sizeof(cell));
-    cout << "NUM OF BYTES IN WRITE TO CLIENT IS: " << n << endl;
-    if (n <= 0) {
-        throw "Problem with write operation";
+    //cout << "NUM OF BYTES IN WRITE TO CLIENT IS: " << n << endl;
+    int sid = playersSid[currPlayer];
+    if (n == -1) {
+        cout << "Problem with write operation sid(" << sid << ")" << endl;
+        throw "";
+    } else if (n == 0) {
+        cout << "Client disconnected (sid" << sid << ")" << endl;
+        throw "";
     }
 }
 
 Cell GameManager::readFromClient() {
     Cell cell;
-    cout << "READER PLAYER IS: " << currPlayer << endl;
-    //cout << "Sid:" << playersSid[currPlayer] << endl;
+    //cout << "READER PLAYER IS: " << currPlayer << endl;
     int n = read(playersSid[currPlayer], &cell, sizeof(cell));
-    int respond;
-    char msg[300];
-    for (int i = 0; i < 300; i++) {
-        msg[i] = 0;
+
+    //cout << cell << endl;
+    int sid = playersSid[currPlayer];
+
+    if (n == -1) {
+        cout << "Problem with write operation sid(" << sid << ")" << endl;
+        throw "";
+    } else if (n == 0) {
+        cout << "Client disconnected (sid" << sid << ")" << endl;
+        throw "";
     }
-    //int n=read(playersSid[currPlayer],msg,300);
-    //cout << msg << endl;
-    //cout << n << endl;
-    //cout<<"RESPOND:"<<respond<<endl;
 
-
-    cout << cell << endl;
-
-    if (n <= 0) {
-        throw "Problem with read operation";
-    }
     return cell;
 }
 
@@ -48,29 +49,26 @@ GameManager::~GameManager() {
     close(playersSid[1]);
 }
 
-void *GameManager::runGame(void *gameManager_) {
-    cout << "test1" << endl;
-
-    GameManager *gameManager = (GameManager *) (gameManager_);
-    cout << "test2" << endl;
-
+void GameManager::runGame() {
     Cell cell;
     Cell gameOver(-2, -2);
     Cell passTurn(-1, -1);
 
     do {
         try {
-            cout << gameManager->testPrint << endl;
-            cell = gameManager->readFromClient();
-            cout << gameManager->testPrint << endl;
-            gameManager->nextPlayer();
+            cout << this->testPrint << endl;
+            cell = this->readFromClient();
+            cout << this->testPrint << endl;
+            this->nextPlayer();
             if (cell != passTurn) {
-                gameManager->writeToClient(cell);
+                this->writeToClient(cell);
             }
         } catch (const char *msg) {
-            return (void *) (msg);
+            break;
         }
     } while (cell != gameOver);
+
+    cout << "GAME IS OVER" << endl;
 }
 
 void GameManager::nextPlayer() {

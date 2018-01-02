@@ -20,7 +20,7 @@ void Server::start() {
 
     ReceiveClientsStruct receiveClientsStruct = {};
     receiveClientsStruct.serverSocket = this->serverSocket;
-    receiveClientsStruct.clientHandler = clientHandler;
+    receiveClientsStruct.clientHandler = this->clientHandler;
 
     int thread = pthread_create(&receiveClientsThread, NULL, this->receiveClients, &receiveClientsStruct);
     if (thread) {
@@ -52,7 +52,7 @@ void *Server::receiveClients(void *receiveClientsStructArg) {
         // Accept a new client connection
         int sid = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
         if (sid == -1)
-            throw "Error on accept";
+            break;
         cout << "Connection request accepted\nCreates Command thread" << endl;
         ClientHandler::HandleClientStruct clientStruct = {};
         clientStruct.sid = sid;

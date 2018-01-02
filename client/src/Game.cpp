@@ -5,6 +5,7 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include <cstdlib>
+#include <limits>
 #include "../include/Game.h"
 #include "../include/StdGameLogic.h"
 #include "../include/Console.h"
@@ -99,9 +100,15 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = rivalPlayer;
 
             cout << "Socket PLayer:" << clientSocket << endl;
-            char dummy[1];
-            cin.getline(dummy, sizeof(dummy));
+            // ignoring whitespaces .
+            std::cin.clear();
+            std::cin.ignore(numeric_limits<int>::max(), '\n');
+            //char dummy[1];
+            //cin.getline(dummy, sizeof(dummy));
             char command[MAX_COMMAND_SIZE];
+            for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
+                command[i] = 0;
+            }
             cin.getline(command, MAX_COMMAND_SIZE);
             ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display,
                                                                   whitesCounter, blacksCounter);
@@ -183,6 +190,9 @@ int Game::connectToServer() {
 
 
 void Game::nextPlayer(Color &currPlayerColor) {
+    if (currPlayerColor == empty) {
+        return;
+    }
     this->currPlayer = (this->currPlayer + 1) % 2;
     currPlayerColor = players[this->currPlayer]->getColor();
 }
@@ -199,7 +209,8 @@ void Game::start() {
                                                       players[0]->getScore(),
                                                       players[1]->getScore());
 
-    while (gameStatus == noOneWon || gameStatus == passTurn) {
+    bool errorAccoured = false;
+    while (!errorAccoured && (gameStatus == noOneWon || gameStatus == passTurn)) {
 
         bool passTurnState = gameStatus == passTurn;
         this->displays[currPlayer]->show(*board, *movePaths, currPlayerColor, passTurnState, players[0]->getScore(),
@@ -240,9 +251,9 @@ void Game::start() {
         } catch (const char *errorMsg) {
             displays[0]->showMessage(errorMsg);
             displays[1]->showMessage(errorMsg);
-            break;
+            errorAccoured = true;
+            currPlayerColor = empty; // only used as flag to validate the game status now .
         }
-
 
         deleteVector(*movePaths);
         delete movePaths;
@@ -262,7 +273,6 @@ void Game::start() {
     Cell end(-2, -2);
     displays[currPlayer]->showEndGameStatus(gameStatus);
     this->players[currPlayer]->update(end);
-
 }
 
 Path *Game::pathOfLandingPoint(std::vector<Path *> paths, const Cell &point) {
