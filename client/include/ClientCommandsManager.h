@@ -14,20 +14,20 @@
 class ClientCommandsManager {
 public:
 
-    ClientCommandsManager(int socket_, RemoteOutputController *toServer, RemoteInputController *fromServer, Game *game,
-                          Display *clientDisplay, Counter *whitesCounter, Counter *blacksCounter);
+
+    ClientCommandsManager(Game *game, Display *clientDisplay, Counter *whitesCounter, Counter *blacksCounter);
 
     ~ClientCommandsManager();
 
-    void executeCommand(string command);
+    void executeCommand(string command, int sid);
+
 
 private:
     int socket;
     map<string, Command *> commandsMap;
-    RemoteOutputController *toServer;
-    RemoteInputController *fromServer;
     Counter *whites;
     Counter *blacks;
+
 };
 
 #endif

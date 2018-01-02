@@ -1,6 +1,7 @@
 #ifndef Command_h
 #define Command_h
 #define MAX_GAME_NAME_SIZE 50
+
 #include <vector>
 #include <string>
 #include <cstdlib>
@@ -12,12 +13,12 @@ using namespace std;
 
 class Command {
 public:
-    virtual void execute(string command) = 0;
+    virtual void execute(string command, int sid) = 0;
 
     virtual ~Command() {}
 
 protected:
-    Command(Display *display, int socket) : clientDisplay(), sid(socket) {
+    Command(Display *display) : clientDisplay() {
         clientDisplay = display;
     }
 

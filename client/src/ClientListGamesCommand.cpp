@@ -1,11 +1,11 @@
 #include <sstream>
 #include "../include/ClientListGamesCommand.h"
 
-ClientListGamesCommand::ClientListGamesCommand(int socket_, Display *display) : Command(display, socket_) {
+ClientListGamesCommand::ClientListGamesCommand(Display *display) : Command(display) {
 
 }
 
-void ClientListGamesCommand::execute(string command) {
+void ClientListGamesCommand::execute(string command, int sid) {
     //sending command to server
 
     //cout<<"Welcome to ClientGetList Exexute"<<endl;

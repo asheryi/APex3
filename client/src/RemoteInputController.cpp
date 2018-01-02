@@ -21,3 +21,7 @@ Cell *RemoteInputController::getLandingPoint() const {
 int RemoteInputController::getMenuSelection() const {
     return 0;
 }
+
+void RemoteInputController::setClientSocket(int clientSocket) {
+    this->clientSocket = clientSocket;
+}

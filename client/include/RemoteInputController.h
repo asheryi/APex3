@@ -9,6 +9,8 @@
 class RemoteInputController : public PlayerController {
     int clientSocket;
 public:
+    void setClientSocket(int clientSocket);
+
     /**
     * RemoteInputController constructor.
     * @param clientSocket -int, client's socket.
@@ -18,6 +20,7 @@ public:
     virtual Cell *getLandingPoint() const;
 
     virtual int getMenuSelection() const;
+
 };
 
 

@@ -6,11 +6,12 @@
 
 class ClientJoinCommand : public Command {
 public:
-    ClientJoinCommand(Game *game_, Display *display, int socket, Counter *whitesCounter, Counter *blacksCounter);
 
-    virtual void execute(string command);
+    ClientJoinCommand(Game *game_, Display *display, Counter *whitesCounter, Counter *blacksCounter);
 
     virtual ~ClientJoinCommand();
+
+    void execute(string command, int sid);
 
 private:
     Game *game;

@@ -33,4 +33,8 @@ int RemoteOutputController::getMenuSelection() const {
     return pc->getMenuSelection();
 }
 
+void RemoteOutputController::setClientSocket(int clientSocket) {
+    this->clientSocket = clientSocket;
+}
+
 

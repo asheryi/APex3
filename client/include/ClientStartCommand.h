@@ -8,16 +8,19 @@
 class ClientStartCommand : public Command {
 public:
 
-    ClientStartCommand(Game* game_,Display *display, int socket, Counter *whitesCounter, Counter *blacksCounter);
 
-    virtual void execute(string command);
+    ClientStartCommand(Game *game_, Display *display, Counter *whitesCounter, Counter *blacksCounter);
 
     virtual ~ClientStartCommand();
 
+    void execute(string command, int sid);
+
+
 private:
-    Game* game;
+    Game *game;
     Counter *whites;
     Counter *blacks;
+
 };
 
 #endif

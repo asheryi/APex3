@@ -10,6 +10,8 @@ class RemoteOutputController : public PlayerController {
     PlayerController *pc;
     int clientSocket;
 public:
+    void setClientSocket(int clientSocket);
+
     /**
    * RemoteOutputController constructor.
    * @param pc -PlayerController, client's PlayerController.

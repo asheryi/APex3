@@ -8,13 +8,13 @@
 
 class ClientListGamesCommand : public Command {
 public:
-    ClientListGamesCommand(int socket_, Display *display);
 
-    virtual void execute(string command);
+    ClientListGamesCommand(Display *display);
 
     virtual ~ClientListGamesCommand();
 
 
+    void execute(string command, int sid);
 };
 
 

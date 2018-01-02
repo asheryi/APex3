@@ -5,7 +5,7 @@
 #include <arpa/inet.h>
 #include <cstring>
 #include <cstdlib>
-#include <limits>
+#include <cstdio>
 #include "../include/Game.h"
 #include "../include/StdGameLogic.h"
 #include "../include/Console.h"
@@ -83,11 +83,41 @@ void Game::createPlayers(int blacks, int whites) {
         try {
             HumanPlayer *activePlayer = humanPlayer;
 
-            int clientSocket = this->connectToServer();
+            // ignoring whitespaces .
+            char dummy;
+            cin.get(dummy);
+            char command[MAX_COMMAND_SIZE];
+            for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
+                command[i] = 0;
+            }
+            string startMenuCommand = "1) start game_name(start a new game called game_name\n";
+            string joinMenuCommand = "2) join game_name (join a game called game_name)\n";
+            string listGamesMenuCommand = "3) list_games (display the list of available games)";
+            string networkMenu =
+                    "You have 3 options to write :\n" + startMenuCommand + joinMenuCommand + listGamesMenuCommand;
+            display->showMessage(networkMenu);
+            cin.getline(command, MAX_COMMAND_SIZE);
+            int clientSocket;
+
+            clientSocket = this->connectToServer();
 
             RemoteOutputController *toServer = new RemoteOutputController(tempController, clientSocket);
-            humanPlayer->setController(toServer);
             RemoteInputController *fromServer = new RemoteInputController(clientSocket);
+            ClientCommandsManager *cm = new ClientCommandsManager(this, display, whitesCounter, blacksCounter);
+            while (true) {
+                cm->executeCommand(command, clientSocket);
+                if (string(command) != "list_games") {
+                    break;
+                }
+                display->showMessage(networkMenu);
+                cin.getline(command, MAX_COMMAND_SIZE);
+                clientSocket = this->connectToServer();
+            }
+
+            toServer->setClientSocket(clientSocket);
+            fromServer->setClientSocket(clientSocket);
+
+            humanPlayer->setController(toServer);
             HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
 
             Display *rivalDisplay = new RemoteConsole();
@@ -100,22 +130,6 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = rivalPlayer;
 
             cout << "Socket PLayer:" << clientSocket << endl;
-            // ignoring whitespaces .
-            std::cin.clear();
-            std::cin.ignore(numeric_limits<int>::max(), '\n');
-            //char dummy[1];
-            //cin.getline(dummy, sizeof(dummy));
-            char command[MAX_COMMAND_SIZE];
-            for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
-                command[i] = 0;
-            }
-            cin.getline(command, MAX_COMMAND_SIZE);
-            ClientCommandsManager *cm = new ClientCommandsManager(clientSocket, toServer, fromServer, this, display,
-                                                                  whitesCounter, blacksCounter);
-            //while (command != "exit") {
-            cm->executeCommand(command);
-            //cin.getline(command,sizeof(command));
-            //}
         } catch (const char *msg) {
             cout << "Failed to connect to server. Reason: " << msg << endl;
             exit(-1);

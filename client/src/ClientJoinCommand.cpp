@@ -1,6 +1,6 @@
 #include "../include/ClientJoinCommand.h"
 
-void ClientJoinCommand::execute(string command) {
+void ClientJoinCommand::execute(string command, int sid) {
     const char *com = command.c_str();
     int n = write(sid, com, command.length());
     int respond = 0;
@@ -19,8 +19,8 @@ ClientJoinCommand::~ClientJoinCommand() {
 
 }
 
-ClientJoinCommand::ClientJoinCommand(Game *game_, Display *display, int socket,
-                                     Counter *whitesCounter, Counter *blacksCounter) : Command(display, socket),
+ClientJoinCommand::ClientJoinCommand(Game *game_, Display *display,
+                                     Counter *whitesCounter, Counter *blacksCounter) : Command(display),
                                                                                        game(game_),
                                                                                        whites(whitesCounter),
                                                                                        blacks(blacksCounter) {
