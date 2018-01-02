@@ -9,7 +9,7 @@ ClientHandler::ClientHandler(ThreadsManager *threadsManager) : sids_mutex(), thr
 
 
 void *ClientHandler::handle(void *handleClientStruct_) {
-    HandleClientStruct *handleClientStruct = (struct HandleClientStruct *) handleClientStruct_;
+    HandleClientStruct *handleClientStruct = (HandleClientStruct *) handleClientStruct_;
 
     ClientHandler *clientHandler = handleClientStruct->clientHandler;
     int sid = handleClientStruct->sid;
@@ -18,7 +18,9 @@ void *ClientHandler::handle(void *handleClientStruct_) {
     cout << input;
     string command = clientHandler->getCommand(input);
     clientHandler->executeCommand(command, clientHandler->getArgs(input), sid);
-    //clientHandler->removeClientSid(sid);
+    clientHandler->removeClientSid(sid);
+    handleClientStruct->threadsManager->removeThread(pthread_self());
+    delete handleClientStruct;
 }
 
 string ClientHandler::getCommand(string input) {
@@ -42,7 +44,7 @@ vector<string> *ClientHandler::getArgs(string input) {
     for (int i = 0; i < args->size(); i++) {
         cout << args->at(i) << endl;
     }
-    cout<<"Args SIZE:"<<args->size()<<endl;
+    cout << "Args SIZE:" << args->size() << endl;
 
     return args;
 

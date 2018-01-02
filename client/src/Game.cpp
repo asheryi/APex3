@@ -122,7 +122,6 @@ void Game::createPlayers(int blacks, int whites) {
                     break;
                 }
                 display->showMessage(networkMenu);
-                cin.get(dummy);
                 for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
                     command[i] = 0;
                 }
