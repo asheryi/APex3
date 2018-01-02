@@ -103,6 +103,19 @@ void Game::createPlayers(int blacks, int whites) {
 
             RemoteOutputController *toServer = new RemoteOutputController(tempController, clientSocket);
             RemoteInputController *fromServer = new RemoteInputController(clientSocket);
+
+            humanPlayer->setController(toServer);
+            HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
+
+            Display *rivalDisplay = new RemoteConsole();
+
+            this->displays[0] = display;
+            this->displays[1] = rivalDisplay;
+
+            this->players[0] = activePlayer;
+            this->players[1] = rivalPlayer;
+
+
             ClientCommandsManager *cm = new ClientCommandsManager(this, display, whitesCounter, blacksCounter);
             while (true) {
                 cm->executeCommand(command, clientSocket);
@@ -116,18 +129,6 @@ void Game::createPlayers(int blacks, int whites) {
 
             toServer->setClientSocket(clientSocket);
             fromServer->setClientSocket(clientSocket);
-
-            humanPlayer->setController(toServer);
-            HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
-
-            Display *rivalDisplay = new RemoteConsole();
-
-
-            this->displays[0] = display;
-            this->displays[1] = rivalDisplay;
-
-            this->players[0] = activePlayer;
-            this->players[1] = rivalPlayer;
 
             cout << "Socket PLayer:" << clientSocket << endl;
         } catch (const char *msg) {
