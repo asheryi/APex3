@@ -29,6 +29,7 @@ public:
     typedef struct HandleClientStruct {
         int sid;
         ClientHandler *clientHandler;
+        ThreadsManager *threadsManager;
     } HandleClientStruct;
 
     void removeClientSid(int sid);

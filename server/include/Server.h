@@ -29,10 +29,14 @@ public:
     //pthread_mutex_t* getAliveMutex();
 
 private:
-    ClientHandler *clientHandler;
-    ThreadsManager *threadsManager;
+    typedef struct ServerDetails {
+        int serverSocket;
+        ClientHandler *clientHandler;
+        ThreadsManager *threadsManager;
+    } ServerDetails;
+
+    ServerDetails *serverDetails;
     int port;
-    int serverSocket; // the socket's file descriptor
 
     void stop();
 
@@ -41,11 +45,6 @@ private:
     * @param clientSocket -int, client's socket.
     */
     void initializeServer();
-
-    typedef struct ReceiveClientsStruct {
-        int serverSocket;
-        ClientHandler *clientHandler;
-    } ReceiveClientsStruct;
 
 
     static void *receiveClients(void *receiveClientsStructArg);

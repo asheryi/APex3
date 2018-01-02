@@ -3,11 +3,11 @@
 
 using namespace std;
 
-Server::Server(int port, ClientHandler *clientHandler, ThreadsManager *threadsManager) : port(port),
-                                                                                         clientHandler(clientHandler),
-                                                                                         serverSocket(0),
-                                                                                         threadsManager(
-                                                                                                 threadsManager) {
+Server::Server(int port, ClientHandler *clientHandler, ThreadsManager *threadsManager) : port(port) {
+    this->serverDetails = new ServerDetails;
+    serverDetails->threadsManager = threadsManager;
+    serverDetails->serverSocket = 0;
+    serverDetails->clientHandler = clientHandler;
     cout << "Server" << endl;
 
 
@@ -18,15 +18,11 @@ void Server::start() {
 
     pthread_t receiveClientsThread;
 
-    ReceiveClientsStruct receiveClientsStruct = {};
-    receiveClientsStruct.serverSocket = this->serverSocket;
-    receiveClientsStruct.clientHandler = this->clientHandler;
-
-    int thread = pthread_create(&receiveClientsThread, NULL, this->receiveClients, &receiveClientsStruct);
+    int thread = pthread_create(&receiveClientsThread, NULL, this->receiveClients, this->serverDetails);
     if (thread) {
         cout << "Error: unable to create thread, " << receiveClientsThread << endl;
     }
-    threadsManager->addThread(receiveClientsThread);
+    serverDetails->threadsManager->addThread(receiveClientsThread);
 
     string serverCommand;
 
@@ -34,12 +30,12 @@ void Server::start() {
         cin >> serverCommand;
     } while (serverCommand != "exit");
 
-    close(serverSocket);
+    close(this->serverDetails->serverSocket);
     cout << "closed socket" << endl;
 }
 
 void *Server::receiveClients(void *receiveClientsStructArg) {
-    ReceiveClientsStruct *receiveClientsStruct = (ReceiveClientsStruct *) (receiveClientsStructArg);
+    ServerDetails *receiveClientsStruct = (ServerDetails *) (receiveClientsStructArg);
     int serverSocket = receiveClientsStruct->serverSocket;
     ClientHandler *clientHandler = receiveClientsStruct->clientHandler;
 
@@ -54,14 +50,17 @@ void *Server::receiveClients(void *receiveClientsStructArg) {
         if (sid == -1)
             break;
         cout << "Connection request accepted\nCreates Command thread" << endl;
-        ClientHandler::HandleClientStruct clientStruct = {};
-        clientStruct.sid = sid;
-        clientStruct.clientHandler = clientHandler;
+        ClientHandler::HandleClientStruct *clientStruct = new ClientHandler::HandleClientStruct;
+        clientStruct->sid = sid;
+        clientStruct->clientHandler = clientHandler;
+        clientStruct->threadsManager = receiveClientsStruct->threadsManager;
         pthread_t handleClientThread;
-        int thread = pthread_create(&handleClientThread, NULL, clientHandler->handle, &clientStruct);;
+        int thread = pthread_create(&handleClientThread, NULL, clientHandler->handle, clientStruct);;
 
         if (thread) {
             cout << "Error: unable to create thread, " << thread << endl;
+        } else {
+            receiveClientsStruct->threadsManager->addThread(handleClientThread);
         }
 
         //TODO remove notes! : everyWHERE
@@ -87,7 +86,8 @@ pthread_mutex_t *Server::getAliveMutex() {
 
 void Server::initializeServer() {
     // Create a socket point
-    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    serverDetails->serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+    int serverSocket = serverDetails->serverSocket;
     if (serverSocket == -1) {
         throw "Error opening socket";
     }
@@ -108,5 +108,5 @@ void Server::initializeServer() {
 
 void Server::stop() {
     cout << "Game over !" << endl;
-    close(serverSocket);
+    close(serverDetails->serverSocket);
 }
