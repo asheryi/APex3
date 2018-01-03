@@ -6,7 +6,6 @@
 
 class ClientJoinCommand : public Command {
 public:
-
     ClientJoinCommand(Game *game_, Display *display, Counter *whitesCounter, Counter *blacksCounter);
 
     virtual ~ClientJoinCommand();

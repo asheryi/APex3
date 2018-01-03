@@ -4,6 +4,7 @@
 ClientCommandsManager::ClientCommandsManager(Game *game,
                                              Display *clientDisplay, Counter *whitesCounter, Counter *blacksCounter)
         : commandsMap(), whites(whitesCounter), blacks(blacksCounter) {
+    this->errorCommand = new ClientErrorCommand(clientDisplay);
 
     commandsMap["start"] = new ClientStartCommand(game, clientDisplay, whitesCounter, blacksCounter);
     commandsMap["list_games"] = new ClientListGamesCommand(clientDisplay);
@@ -15,11 +16,7 @@ bool ClientCommandsManager::executeCommand(string command, int sid) {
     string command_ = command.substr(0, index);
 
     if (commandsMap.find(command_) == commandsMap.end()) { // not found
-
-        //TODO abstraction.
-
-        cout << "Command Error For: " << command_ << " " << command << endl;
-        return true;
+        return errorCommand->execute(command_, sid);
     } else { // found
         return commandsMap[command_]->execute(command, sid);
     }

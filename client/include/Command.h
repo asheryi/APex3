@@ -15,7 +15,7 @@ using namespace std;
 class Command {
 public:
     /**
-     * excute the command .
+     * execute the command .
      * @param command - the command to execute .
      * @param sid - socket id .
      * @return true if after execution needs to read another command , false otherwise .
@@ -26,15 +26,14 @@ public:
 
 protected:
     /**
-     *
+     * Construct Command.
      * @param display
      */
-    Command(Display *display) : sid() {
+    Command(Display *display) {
         clientDisplay = display;
     }
 
     Display *clientDisplay;
-    int sid;
 };
 
 #endif

@@ -100,15 +100,17 @@ void Game::createPlayers(int blacks, int whites) {
             for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
                 command[i] = 0;
             }
-            string startMenuCommand = "1) start game_name(start a new game called game_name\n";
-            string joinMenuCommand = "2) join game_name (join a game called game_name)\n";
-            string listGamesMenuCommand = "3) list_games (display the list of available games)";
+            string startMenuCommand = "start game_name(start a new game called game_name)\n";
+            string joinMenuCommand = "join game_name (join a game called game_name)\n";
+            string listGamesMenuCommand = "list_games (display the list of available games)";
             string networkMenu =
-                    "You have 3 options to write :\n" + startMenuCommand + joinMenuCommand + listGamesMenuCommand;
+                    "You have 3 options :\n" + startMenuCommand + joinMenuCommand + listGamesMenuCommand;
+            // Showing menu :
             display->showMessage(networkMenu);
+            // Reading first command .
             cin.getline(command, MAX_COMMAND_SIZE);
             int clientSocket;
-
+            // Then connecting to server (more efficient)
             clientSocket = this->connectToServer();
 
             RemoteOutputController *toServer = new RemoteOutputController(tempController, clientSocket);
@@ -125,12 +127,14 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[0] = activePlayer;
             this->players[1] = rivalPlayer;
 
-
             cm = new ClientCommandsManager(this, display, whitesCounter, blacksCounter);
+
+            // while the command is a command that afterwards reading another command is required then :
             while (true) {
                 if (!cm->executeCommand(command, clientSocket)) {
                     break;
                 }
+                // Showing menu again , and reading again the next command .
                 display->showMessage(networkMenu);
                 for (int i = 0; i < MAX_COMMAND_SIZE; i++) {
                     command[i] = 0;
@@ -145,6 +149,7 @@ void Game::createPlayers(int blacks, int whites) {
 
             cout << "Socket PLayer:" << clientSocket << endl;
         } catch (const char *msg) {
+            // if error occured we need to delete all of the allocated memory .
             display->showMessage(msg);
 
             delete activePlayer;
