@@ -5,13 +5,10 @@ ListGamesCommand::ListGamesCommand(GamesHandler *gamesHandler_) : Command(gamesH
 void ListGamesCommand::execute(vector<string> args, int sid) {
     unsigned long gamesCount = gamesHandler->howManyHoldOnGames();
     int n = write(sid, &gamesCount, sizeof(unsigned long));
-    vector<string> *gameList = gamesHandler->getHoldOnGames();
-    unsigned long gameNameLength;
-    for (int i = 0; i < gameList->size(); i++) {
-        const char *gamesList = gameList->at(i).c_str();
-        n = write(sid, gamesList, gameList->at(i).length() + 1);
-    }
-    delete gameList; //TODO delete inside strings ???
+    string gameList_ = gamesHandler->getHoldOnGames();
+    cout<<"The Games Are:"<<gameList_;
+    const char *gamesList = gameList_.c_str();
+    n = write(sid, gamesList, gameList_.length() + 1);
 }
 
 ListGamesCommand::~ListGamesCommand() {

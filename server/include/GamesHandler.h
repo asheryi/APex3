@@ -32,7 +32,7 @@ public:
 
     static void *joinAndStartGame(void *startGameArgs_);
 
-    vector<string> *getHoldOnGames();
+    string getHoldOnGames();
 
     ~GamesHandler();
 

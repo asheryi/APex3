@@ -30,16 +30,17 @@ void GamesHandler::addGame(string gameName, GameManager *gm) {
 
 }
 
-vector<string> *GamesHandler::getHoldOnGames() {
-    vector<string> *gamesList = new vector<string>();
+string GamesHandler::getHoldOnGames() {
+    string gamesList_="";
     pthread_mutex_lock(&maps_mutex);
     map<string, GameManager *>::iterator it;
     for (it = holdOnGames.begin(); it != holdOnGames.end(); it++) {
-        gamesList->push_back(it->first);
+
+        gamesList_+=it->first+"\n";
     }
     pthread_mutex_unlock(&maps_mutex);
 
-    return gamesList;
+    return gamesList_;
 }
 
 GamesHandler::GamesHandler() : holdOnGames(), maps_mutex(), activeGames() {
