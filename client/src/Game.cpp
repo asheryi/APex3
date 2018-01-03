@@ -28,7 +28,6 @@ Game::Game(int rows, int columns, const char *serverIp, int serverPort)
     unsigned long blacksSize = 2;
     unsigned long whitesSize = 2;
 
-
     createPlayers(blacksSize, whitesSize);
 
     std::vector<Cell *> blacks(blacksSize), whites(whitesSize);
@@ -46,8 +45,6 @@ Game::Game(int rows, int columns, const char *serverIp, int serverPort)
     deleteVector(whites);
 
     this->gameLogic = new StdGameLogic();
-
-
 }
 
 void Game::createPlayers(int blacks, int whites) {

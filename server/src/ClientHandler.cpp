@@ -9,14 +9,20 @@ ClientHandler::ClientHandler(ThreadsManager *threadsManager) : sids_mutex(), thr
 
 
 void *ClientHandler::handle(void *handleClientStruct_) {
+    // getting the args .
     HandleClientStruct *handleClientStruct = (HandleClientStruct *) handleClientStruct_;
 
     ClientHandler *clientHandler = handleClientStruct->clientHandler;
     int sid = handleClientStruct->sid;
+    // add this client sid to the collection of active sid.
     clientHandler->addClientSid(sid);
+    // reading the command from the client .
     string input = clientHandler->readCommand(sid);
+    // extracting it .
     string command = clientHandler->getCommand(input);
+    // executing it
     clientHandler->executeCommand(command, clientHandler->getArgs(input), sid);
+    // now sid should close.
     clientHandler->removeClientSid(sid);
     handleClientStruct->threadsManager->removeThread(pthread_self());
     delete handleClientStruct;
@@ -39,12 +45,9 @@ vector<string> *ClientHandler::getArgs(string input) {
         iss >> arg;
         args->push_back(arg);
     }
-    cout << "the command after split is:" << endl;
     for (int i = 0; i < args->size(); i++) {
         cout << args->at(i) << endl;
     }
-    cout << "Args SIZE:" << args->size() << endl;
-
     return args;
 }
 
@@ -75,11 +78,15 @@ void ClientHandler::removeClientSid(int sid) {
                               connectedClientsSid.end());
 
     pthread_mutex_unlock(&sids_mutex);
-
 }
 
 ClientHandler::~ClientHandler() {
+
+    // Closing all of the active sockets.
+    int size = connectedClientsSid.size();
+    for (int i = 0; i < size; i++) {
+        close(connectedClientsSid[i]);
+    }
     delete commandsManager;
 }
-
 

@@ -14,9 +14,9 @@ public:
     /**
    * Server constructor.
    * @param port -int, server's port.
+   * @param clientHandler .
+   * @param threadsManager.
    */
-    Server(int port, ClientHandler *clientHandler);
-
     Server(int port, ClientHandler *clientHandler, ThreadsManager *threadsManager);
 
     /**
@@ -29,6 +29,7 @@ public:
     //pthread_mutex_t* getAliveMutex();
 
 private:
+    // args to threaded func below . also used as wrapper of these 3 fields in server property serverDetails.
     typedef struct ServerDetails {
         int serverSocket;
         ClientHandler *clientHandler;
@@ -46,7 +47,11 @@ private:
     */
     void initializeServer();
 
-
+    /**
+     * Main loop accepting clients (threaded) .
+     * @param receiveClientsStructArg - args to func
+     * @return
+     */
     static void *receiveClients(void *receiveClientsStructArg);
 
 };

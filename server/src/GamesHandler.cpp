@@ -31,12 +31,12 @@ void GamesHandler::addGame(string gameName, GameManager *gm) {
 }
 
 string GamesHandler::getHoldOnGames() {
-    string gamesList_="";
+    string gamesList_ = "";
     pthread_mutex_lock(&maps_mutex);
     map<string, GameManager *>::iterator it;
     for (it = holdOnGames.begin(); it != holdOnGames.end(); it++) {
 
-        gamesList_+=it->first+"\n";
+        gamesList_ += it->first + "\n";
     }
     pthread_mutex_unlock(&maps_mutex);
 

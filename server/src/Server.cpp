@@ -47,7 +47,7 @@ void *Server::receiveClients(void *receiveClientsStructArg) {
         int sid = accept(serverSocket, (struct sockaddr *) &clientAddress, &clientAddressLen);
         if (sid == -1)
             break;
-        cout << "Connection request accepted\nCreates Command thread" << endl;
+        cout << "Connection established with sid = " << sid << endl;
         ClientHandler::HandleClientStruct *clientStruct = new ClientHandler::HandleClientStruct;
         clientStruct->sid = sid;
         clientStruct->clientHandler = clientHandler;
@@ -60,27 +60,8 @@ void *Server::receiveClients(void *receiveClientsStructArg) {
         } else {
             receiveClientsStruct->threadsManager->addThread(handleClientThread);
         }
-
-        //TODO remove notes! : everyWHERE
-        //initializeClients();
-
-        //gameFlow();
-
-        // Close communication with the clients
-        //close(clientSockets[0]);
-        //close(clientSockets[1]);
-        //cout << "Game Over ! ready for the next couple of players ." << endl;
     }
 }
-
-/*
-bool *Server::getAlive() {
-    return &alive;
-}
-
-pthread_mutex_t *Server::getAliveMutex() {
-    return &alive_mutex;
-}*/
 
 void Server::initializeServer() {
     // Create a socket point

@@ -10,10 +10,8 @@ GameManager::GameManager(int socket_) {
 }
 
 void GameManager::writeToClient(Cell cell) {
-    //cout << "WRITER PLAYER IS: " << currPlayer << endl;
     cout << cell << endl;
     int n = write(playersSid[currPlayer], &cell, sizeof(cell));
-    //cout << "NUM OF BYTES IN WRITE TO CLIENT IS: " << n << endl;
     int sid = playersSid[currPlayer];
     if (n == -1) {
         cout << "Problem with write operation sid(" << sid << ")" << endl;
@@ -26,10 +24,7 @@ void GameManager::writeToClient(Cell cell) {
 
 Cell GameManager::readFromClient() {
     Cell cell;
-    cout << "READER PLAYER IS: " << currPlayer << endl;
     int n = read(playersSid[currPlayer], &cell, sizeof(cell));
-
-    //cout << cell << endl;
     int sid = playersSid[currPlayer];
 
     if (n == -1) {
@@ -56,10 +51,7 @@ void GameManager::runGame() {
 
     do {
         try {
-
-            cout << "something before readFromCLient..." << endl;
             cell = this->readFromClient();
-            //cout << this->testPrint << endl;
             this->nextPlayer();
             if (cell != passTurn) {
                 this->writeToClient(cell);

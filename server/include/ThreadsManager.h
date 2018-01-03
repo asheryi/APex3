@@ -8,7 +8,7 @@ using namespace std;
 #ifndef EX3_THREADSMANAGER_H
 #define EX3_THREADSMANAGER_H
 
-
+// Used to manage all threads in the program .
 class ThreadsManager {
 private:
     vector<pthread_t> threads;
@@ -16,10 +16,21 @@ private:
 public:
     ThreadsManager();
 
+    /**
+     * Add the thread given to the threads managed.
+     * @param thread
+     */
     void addThread(pthread_t thread);
 
+    /**
+     * Remove this thread from the threds managed.
+     * @param thread
+     */
     void removeThread(pthread_t thread);
 
+    /**
+     * Kill all threads managed here.
+     */
     void killAllThreads();
 };
 

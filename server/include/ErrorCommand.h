@@ -3,6 +3,7 @@
 
 #include "../include/Command.h"
 
+// used to display invalid command.
 class ErrorCommand : public Command {
 public:
     ~ErrorCommand();

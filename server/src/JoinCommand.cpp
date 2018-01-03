@@ -41,7 +41,11 @@ void JoinCommand::execute(vector<string> args, int sid) {
     startGameArgs->threadsManager = threadsManager;
 
     n = write(sid, &respond, sizeof(int)); // second player
-    // TODO all n !+ 0 asking printing ....
+    if (n <= 0) {
+        cout << "Player sid(" << sid << ") unavailable" << endl;
+        gamesHandler->removeGame(gameName);
+        return;
+    }
 
     pthread_t gameThread;
     int t = pthread_create(&gameThread, NULL, gamesHandler->joinAndStartGame, (void *) startGameArgs);
