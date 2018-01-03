@@ -15,17 +15,21 @@ using namespace std;
 class Command {
 public:
     /**
-     *
+     * excute the command .
      * @param command - the command to execute .
      * @param sid - socket id .
-     * @return true if after execution
+     * @return true if after execution needs to read another command , false otherwise .
      */
     virtual bool execute(string command, int sid) = 0;
 
     virtual ~Command() {}
 
 protected:
-    Command(Display *display) : clientDisplay() {
+    /**
+     *
+     * @param display
+     */
+    Command(Display *display) : sid() {
         clientDisplay = display;
     }
 
