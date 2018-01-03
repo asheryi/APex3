@@ -1,6 +1,5 @@
 #ifndef Command_h
 #define Command_h
-#define MAX_GAME_NAME_SIZE 50
 
 #include <vector>
 #include <string>
@@ -14,7 +13,11 @@ using namespace std;
 class Command {
 protected:
     GamesHandler *gamesHandler;
-
+    /**
+   * readCommand, reads command from client.
+   * @param sid -int, client's socket.
+   * @return  string, client's command.
+   */
     Command(GamesHandler *gamesHandler_) {
         gamesHandler = gamesHandler_;
     }

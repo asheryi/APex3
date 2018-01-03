@@ -32,6 +32,7 @@ void Server::start() {
 
     close(this->serverDetails->serverSocket);
     cout << "closed socket" << endl;
+    delete serverDetails;
 }
 
 void *Server::receiveClients(void *receiveClientsStructArg) {

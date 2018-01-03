@@ -15,6 +15,7 @@ void CommandsManager::executeCommand(string
     } else {
         commandsMap[command]->execute(*args, sid);
     }
+    delete args;
 }
 
 CommandsManager::~CommandsManager() {

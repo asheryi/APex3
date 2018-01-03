@@ -39,7 +39,7 @@ void JoinCommand::execute(vector<string> args, int sid) {
     startGameArgs->gameManager = game;
     startGameArgs->gameName = gameName;
 
-    game->testPrint = gameName;
+    
     n = write(sid, &respond, sizeof(int)); // second player
     // TODO all n !+ 0 asking printing ....
 

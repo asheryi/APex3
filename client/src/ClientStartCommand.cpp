@@ -17,7 +17,11 @@ bool ClientStartCommand::execute(string command, int sid) {
         return true;
     } else {
         clientDisplay->showMessage("Waiting to second player...");
-        read(sid, &respond, sizeof(int));
+        n=read(sid, &respond, sizeof(int));
+         if (n == 0) {
+        close(sid);
+        throw "server disconnected before start command";
+       }
         game->prepareGame(0, whites, blacks);
         return false;
     }

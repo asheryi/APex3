@@ -74,7 +74,7 @@ void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
     //cout << startGameArgs->gameName << endl;
     string gameName = startGameArgs->gameName;
     cout << "almost running game , just a sec" << endl;
-    cout << gameManager->testPrint << endl;
+   
     gameManager->runGame();
     gamesHandler->removeGame(gameName);
     delete startGameArgs;
@@ -102,6 +102,7 @@ void GamesHandler::removeGame(string gameName) {
     if (this->isWaitingGame(gameName)) {
         delete holdOnGames[gameName];
         holdOnGames.erase(gameName);
+        return;
     }
     delete activeGames[gameName];
     activeGames.erase(gameName);

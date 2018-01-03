@@ -13,35 +13,60 @@ private:
     ThreadsManager *threadsManager;
     vector<int> connectedClientsSid;
 public:
+    /**
+   * handle.
+   * @param clientHandlerStruct -void.
+   */
     static void *handle(void *clientHandlerStruct);
-
+    /**
+   * readCommand, reads command from client.
+   * @param sid -int, client's socket.
+   * @return  string, client's command.
+   */
     string readCommand(int sid);
-
+    /**
+   * getCommand, extracts the command type from the command.
+   * @param input -string, command to execute.
+   * @return  string, command type.
+   */
     string getCommand(string input);
-
-    /*
-    void setAliveMutex(pthread_mutex_t* alive_mutex_);
-    void setAlive(bool* alive_);
-    pthread_mutex_t* getAliveMutex();
-    bool* getAlive();
-     */
 
     typedef struct HandleClientStruct {
         int sid;
         ClientHandler *clientHandler;
         ThreadsManager *threadsManager;
     } HandleClientStruct;
-
+    /**
+   * removeClientSid, removes sid from sids vector.
+   * @param sid -int, client socket.
+   */
     void removeClientSid(int sid);
-
+    /**
+   * addClientSid, adds sid to sids vector.
+   * @param sid -int, client socket.
+   */
     void addClientSid(int sid);
-
+    /**
+   * ClientHandler constructor.
+   * @param threadsManager -ThreadsManager.
+   */
     ClientHandler(ThreadsManager *threadsManager);
-
+    /**
+  * ClientHandler deconstructor.
+  */
     ~ClientHandler();
-
+    /**
+   * executeCommand.
+   * @param command -string, command to execute.
+   * @param  args-vector<string>*, arguments need for execute the command.
+   * @param  sid-int, client socket who sent the command.
+   */
     void executeCommand(string command, vector<string> *args, int sid);
-
+    /**
+   * executeCommand, extracts the args from the command.
+   * @param input -string, command to execute.
+   * @return  args-vector<string>*, arguments need for execute the command.
+   */
     vector<string> *getArgs(string input);
 };
 

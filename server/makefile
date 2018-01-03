@@ -1,5 +1,5 @@
 a.out: compileAll
-	g++ *.o
+	g++ -pthread *.o
 	rm -f *.o
 
 compileAll: include/*.h src/*.cpp

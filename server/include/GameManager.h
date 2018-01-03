@@ -13,7 +13,7 @@ private:
 
 
 public:
-    string testPrint = "default";
+    
 
     /**
    * Server constructor.

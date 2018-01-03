@@ -80,8 +80,12 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
         }
     } else if (network) {
+            HumanPlayer *activePlayer;
+            HumanPlayer *rivalPlayer;
+            ClientCommandsManager *cm;
+            Display *rivalDisplay;
         try {
-            HumanPlayer *activePlayer = humanPlayer;
+             activePlayer = humanPlayer;
 
             // ignoring whitespaces .
             char dummy;
@@ -105,9 +109,9 @@ void Game::createPlayers(int blacks, int whites) {
             RemoteInputController *fromServer = new RemoteInputController(clientSocket);
 
             humanPlayer->setController(toServer);
-            HumanPlayer *rivalPlayer = new HumanPlayer(fromServer);
+            rivalPlayer = new HumanPlayer(fromServer);
 
-            Display *rivalDisplay = new RemoteConsole();
+            rivalDisplay = new RemoteConsole();
 
             this->displays[0] = display;
             this->displays[1] = rivalDisplay;
@@ -116,7 +120,7 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = rivalPlayer;
 
 
-            ClientCommandsManager *cm = new ClientCommandsManager(this, display, whitesCounter, blacksCounter);
+            cm = new ClientCommandsManager(this, display, whitesCounter, blacksCounter);
             while (true) {
                 if (!cm->executeCommand(command, clientSocket)) {
                     break;
@@ -128,15 +132,26 @@ void Game::createPlayers(int blacks, int whites) {
                 cin.getline(command, MAX_COMMAND_SIZE);
                 clientSocket = this->connectToServer();
             }
+            delete cm;
 
             toServer->setClientSocket(clientSocket);
             fromServer->setClientSocket(clientSocket);
 
             cout << "Socket PLayer:" << clientSocket << endl;
-        } catch (const char *msg) {
+         } catch (const char *msg) {
             display->showMessage(msg);
+            delete activePlayer;
+            delete rivalPlayer;
+            delete cm;
+            delete blacksCounter;
+            delete whitesCounter;
+            delete display;
+            delete rivalDisplay;
+            delete board;
+            delete gameLogic;
+            
             exit(-1);
-        }
+         }
     }
 
     this->players[0]->updateScore(blacks);
