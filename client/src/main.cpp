@@ -1,7 +1,6 @@
 
 #include "../include/Game.h"
 #include <fstream>
-#include <cstdlib>
 
 bool getConnectionDetails(string *serverIp, int *port);
 
@@ -12,7 +11,7 @@ int main(int argc, char *argv[]) {
 
     if (getConnectionDetails(&serverIp, &port)) {
         try {
-            Game game(3, 3, serverIp.c_str(), port);
+            Game game(8, 8, serverIp.c_str(), port);
             game.start();
         } catch (const char *errorMsg) {
 
@@ -40,7 +39,7 @@ bool getConnectionDetails(string *serverIp, int *port) {
         cout << "Error: config file is missing!";
         return false;
     }
-    sscanf(port_.c_str(),"%d",port);
+    sscanf(port_.c_str(), "%d", port);
     *serverIp = ip;
     return true;
 }
