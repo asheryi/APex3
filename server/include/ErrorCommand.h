@@ -8,7 +8,7 @@ class ErrorCommand : public Command {
 public:
     ~ErrorCommand();
 
-    ErrorCommand(GamesHandler *clientHandler_);
+    ErrorCommand(GamesHandler *gameHandler_);
 
     void execute(vector<string> args, int sid);
 };

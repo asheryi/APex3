@@ -16,15 +16,23 @@ public:
     
 
     /**
-   * Server constructor.
-   * @param port -int, server's port.
+   * GameManager constructor.
+   * @param socket_ -int, client's socket.
    */
     GameManager(int socket_);
-
+   /*
+    *setPlayerSid.
+    * @param index -int, client's index on the GameManger.
+    * @param sid -int, client's socket.
+    */
     void setPlayerSid(int index, int sid);
-
+    /*
+     *nextPlayer. passing the turn to the other player.
+     */
     void nextPlayer();
-
+    /**
+    * GameManager deconstructor.
+    */
     virtual ~GameManager();
 
     /**
@@ -42,7 +50,11 @@ public:
     * writeToClient writes message to client.
     */
     void writeToClient(Cell cell);
-
+    /**
+    * GameManager constructor.
+    * @param index -int, client's index in gameManager.
+    * @return socket -int, client's socket.
+    */
     int getSid(int index);
 
 

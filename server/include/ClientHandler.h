@@ -31,7 +31,9 @@ public:
    * @return  string, command type.
    */
     string getCommand(string input);
-
+    /*
+     * Struct using to pass arguments to thread function.
+     */
     typedef struct HandleClientStruct {
         int sid;
         ClientHandler *clientHandler;

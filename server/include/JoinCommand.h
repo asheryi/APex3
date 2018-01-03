@@ -10,10 +10,12 @@ private:
     ThreadsManager *threadsManager;
 
 public:
+    /**
+     *JoinCommand constructor.
+     * @param threadsManager_-ThreadsManager, required for adding the game thread to the threads list.
+     */
     JoinCommand(ThreadsManager *threadsManager_, GamesHandler *gamesHandler_);
-
     virtual ~JoinCommand();
-
     void execute(vector<string> args, int sid);
 };
 

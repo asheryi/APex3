@@ -14,17 +14,23 @@ class Command {
 protected:
     GamesHandler *gamesHandler;
     /**
-   * readCommand, reads command from client.
-   * @param sid -int, client's socket.
-   * @return  string, client's command.
+   * Command constructor.
+   * @param gamesHandler_ -GamesHandler, in change of the gaems.
    */
     Command(GamesHandler *gamesHandler_) {
         gamesHandler = gamesHandler_;
     }
 
 public:
+    /**
+   * execute, operates the command.
+   * @param args -vector<string>, arguments required for the command.
+   * @param sid -int, the socket of the client who sent the command.
+   */
     virtual void execute(vector<string> args, int sid) = 0;
-
+   /*
+    * Command deconstructor.
+    */
     virtual ~Command() {};
 
 };
