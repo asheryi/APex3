@@ -45,9 +45,6 @@ vector<string> *ClientHandler::getArgs(string input) {
         iss >> arg;
         args->push_back(arg);
     }
-    for (int i = 0; i < args->size(); i++) {
-        cout << args->at(i) << endl;
-    }
     return args;
 }
 

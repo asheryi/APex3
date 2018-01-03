@@ -10,7 +10,6 @@ GameManager::GameManager(int socket_) {
 }
 
 void GameManager::writeToClient(Cell cell) {
-    cout << cell << endl;
     int n = write(playersSid[currPlayer], &cell, sizeof(cell));
     int sid = playersSid[currPlayer];
     if (n == -1) {

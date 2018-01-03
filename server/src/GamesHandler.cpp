@@ -71,10 +71,7 @@ void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
     StartGameArgs *startGameArgs = ((StartGameArgs *) startGameArgs_);
     GamesHandler *gamesHandler = startGameArgs->gamesHandler;
     GameManager *gameManager = startGameArgs->gameManager;
-    //cout << "almost reading gameName" << endl;
-    //cout << startGameArgs->gameName << endl;
     string gameName = startGameArgs->gameName;
-    cout << "almost running game , just a sec" << endl;
 
     gameManager->runGame();
     gamesHandler->removeGame(gameName);

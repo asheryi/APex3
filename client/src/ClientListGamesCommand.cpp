@@ -33,19 +33,21 @@ bool ClientListGamesCommand::execute(string command, int sid) {
 
     stringstream gameNumStr;
     gameNumStr << "Number of games is: " << sizeRespond;
-    clientDisplay->showMessage(gameNumStr.str());
 
-    char *res = new char[(sizeRespond * (MAX_GAME_NAME_SIZE + 1)) + 1];
-    n = read(sid, res, MAX_GAME_NAME_SIZE);
-    if (n == 0) {
-        close(sid);
-        throw "server disconnected while list_games read";
-    } else if (n == -1) {
-        close(sid);
-        throw "problem reading from server in list_games command";
+    clientDisplay->showMessage(gameNumStr.str());
+    if (sizeRespond > 0) {
+        char *res = new char[(sizeRespond * (MAX_GAME_NAME_SIZE + 1)) + 1];
+        n = read(sid, res, MAX_GAME_NAME_SIZE);
+        if (n == 0) {
+            close(sid);
+            throw "server disconnected while list_games read";
+        } else if (n == -1) {
+            close(sid);
+            throw "problem reading from server in list_games command";
+        }
+        clientDisplay->showMessage(string(res));
+        delete[] res;
     }
-    clientDisplay->showMessage(string(res));
-    delete[] res;
     close(sid);
     return true;
 }

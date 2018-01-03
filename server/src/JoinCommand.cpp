@@ -4,8 +4,7 @@
 
 void JoinCommand::execute(vector<string> args, int sid) {
     string gameName = args[0];
-    cout << "Welcome to JOIN" << endl;
-    cout << "The game you want to join is: " << gameName << endl;
+    cout << "The game sid = " << sid << " want to join is: " << gameName << endl;
 
     int respond = 1;
 
@@ -13,7 +12,7 @@ void JoinCommand::execute(vector<string> args, int sid) {
 
 
     if (game == NULL) {
-        cout << "you can not join to the game" << endl;
+        cout << "sid = " << sid << " can not join to the game" << endl;
         respond = -1;
         int n = write(sid, &respond, sizeof(int));
         close(sid);
@@ -22,7 +21,7 @@ void JoinCommand::execute(vector<string> args, int sid) {
 
     // GAME IS ON:
 
-    cout << "you joined to the game" << endl;
+    cout << "sid = " << sid << " joined to the game : " << gameName << endl;
     int n = write(game->getSid(0), &respond, sizeof(int)); // first player
     if (n == -1) {
         cout << "Unable to write to client (sid = " << sid << ")" << endl;

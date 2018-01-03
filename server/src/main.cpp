@@ -14,13 +14,11 @@ int main() {
         Server server(port, clientHandler, threadsManager);
         try {
             server.start();
-            cout<<"All Threads About To Die2"<<endl;
         } catch (const char *msg) {
             cout << "Cannot start server. Reason: " << msg << endl;
             exit(-1);
         }
     }
-    cout<<"All Threads About To Die"<<endl;
     threadsManager->killAllThreads();
 
     delete clientHandler;
@@ -40,7 +38,7 @@ bool getConnectionDetails(int *port) {
         getline(configFile, port_);
         configFile.close();
     } else {
-        cout << "Error: config file is missing!";
+        cout << "Error: config file is missing!" << endl;
         return false;
     }
     sscanf(port_.c_str(), "%d", port);

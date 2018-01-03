@@ -4,13 +4,9 @@
 #include "../include/ThreadsManager.h"
 
 void ThreadsManager::addThread(pthread_t thread) {
-    cout << "ALMOST ADDED THREAD" << endl;
     pthread_mutex_lock(&threads_mutex);
-    cout << "AFTER LOCK" << endl;
     threads.push_back(thread);
-    cout << "BEFORE UNLOCK" << endl;
     pthread_mutex_unlock(&threads_mutex);
-    cout << "ADDED THREAD" << endl;
 }
 
 void ThreadsManager::removeThread(pthread_t thread) {
