@@ -75,9 +75,10 @@ void *GamesHandler::joinAndStartGame(void *startGameArgs_) {
     //cout << startGameArgs->gameName << endl;
     string gameName = startGameArgs->gameName;
     cout << "almost running game , just a sec" << endl;
-   
+
     gameManager->runGame();
     gamesHandler->removeGame(gameName);
+    startGameArgs->threadsManager->removeThread(pthread_self());
     delete startGameArgs;
 }
 
@@ -108,35 +109,6 @@ void GamesHandler::removeGame(string gameName) {
     delete activeGames[gameName];
     activeGames.erase(gameName);
 }
-/*
-void GamesHandler::removeGame(GameManager *gameManager) {
-    map<string, GameManager *>::iterator it;
-    string gameName = "";
-    for (it = holdOnGames.begin(); it != holdOnGames.end(); it++) {
-        if (it->second == gameManager) {
-            string gameName = it->first;
-            break;
-        }
-    }
-    if (gameName != NULL) {
-        delete gameManager;
-        holdOnGames.erase(gameName);
-        return;
-    }
-
-    for (it = activeGames.begin(); it != activeGames.end(); it++) {
-        if (it->second == gameManager) {
-            string gameName = it->first;
-            break;
-        }
-    }
-    if (gameName != NULL) {
-        delete gameManager;
-        activeGames.erase(gameName);
-    }
-
-}
-*/
 
 
 

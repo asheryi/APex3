@@ -9,8 +9,6 @@ Server::Server(int port, ClientHandler *clientHandler, ThreadsManager *threadsMa
     serverDetails->serverSocket = 0;
     serverDetails->clientHandler = clientHandler;
     cout << "Server" << endl;
-
-
 }
 
 void Server::start() {
@@ -23,7 +21,6 @@ void Server::start() {
         cout << "Error: unable to create thread, " << receiveClientsThread << endl;
     }
     serverDetails->threadsManager->addThread(receiveClientsThread);
-
     string serverCommand;
 
     do {

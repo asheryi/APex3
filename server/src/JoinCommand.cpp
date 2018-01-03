@@ -38,8 +38,8 @@ void JoinCommand::execute(vector<string> args, int sid) {
     startGameArgs->gamesHandler = gamesHandler;
     startGameArgs->gameManager = game;
     startGameArgs->gameName = gameName;
+    startGameArgs->threadsManager = threadsManager;
 
-    
     n = write(sid, &respond, sizeof(int)); // second player
     // TODO all n !+ 0 asking printing ....
 

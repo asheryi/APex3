@@ -3,6 +3,7 @@
 
 #include<map>
 #include "GameManager.h"
+#include "ThreadsManager.h"
 #include <pthread.h>
 #include <vector>
 
@@ -42,6 +43,7 @@ public:
         GamesHandler *gamesHandler;
         GameManager *gameManager;
         string gameName;
+        ThreadsManager *threadsManager;
     } StartGameArgs;
 };
 
