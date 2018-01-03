@@ -11,8 +11,15 @@
 
 using namespace std;
 
+// Command pattern , also for the client .
 class Command {
 public:
+    /**
+     *
+     * @param command - the command to execute .
+     * @param sid - socket id .
+     * @return true if after execution
+     */
     virtual bool execute(string command, int sid) = 0;
 
     virtual ~Command() {}

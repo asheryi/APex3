@@ -35,8 +35,7 @@ bool ClientListGamesCommand::execute(string command, int sid) {
     gameNumStr << "Number of games is: " << sizeRespond;
     clientDisplay->showMessage(gameNumStr.str());
 
-    //char res[MAX_GAME_NAME_SIZE];
-    char *res=new char[(MAX_GAME_NAME_SIZE*(sizeRespond+1))+1];
+    char *res = new char[(sizeRespond * (MAX_GAME_NAME_SIZE + 1)) + 1];
     n = read(sid, res, MAX_GAME_NAME_SIZE);
     if (n == 0) {
         close(sid);
@@ -46,7 +45,7 @@ bool ClientListGamesCommand::execute(string command, int sid) {
         throw "problem reading from server in list_games command";
     }
     clientDisplay->showMessage(string(res));
-    delete res;
+    delete[] res;
     close(sid);
     return true;
 }

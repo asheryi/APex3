@@ -15,7 +15,6 @@ void *ClientHandler::handle(void *handleClientStruct_) {
     int sid = handleClientStruct->sid;
     clientHandler->addClientSid(sid);
     string input = clientHandler->readCommand(sid);
-    cout << input;
     string command = clientHandler->getCommand(input);
     clientHandler->executeCommand(command, clientHandler->getArgs(input), sid);
     clientHandler->removeClientSid(sid);
@@ -47,17 +46,15 @@ vector<string> *ClientHandler::getArgs(string input) {
     cout << "Args SIZE:" << args->size() << endl;
 
     return args;
-
-
 }
 
 string ClientHandler::readCommand(int sid) {
-    char command[20];
-    int n = read(sid, &command, sizeof(command));
-
+    char command[MAX_COMMAND_SIZE];
+    int n = read(sid, &command, MAX_COMMAND_SIZE);
     if (n <= 0) {
-        throw "Problem with read operation";
+        return "";
     }
+
     return string(command);
 }
 
