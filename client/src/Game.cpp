@@ -25,7 +25,13 @@ using namespace std;
 
 Game::Game(int rows, int columns, const char *serverIp, int serverPort)
         : players(), displays(), currPlayer(), serverIP(serverIp), serverPort(serverPort) {
-    std::vector<Cell *> blacks(2), whites(2);
+    unsigned long blacksSize = 2;
+    unsigned long whitesSize = 2;
+
+
+    createPlayers(blacksSize, whitesSize);
+
+    std::vector<Cell *> blacks(blacksSize), whites(whitesSize);
 
     blacks[0] = new Cell(rows / 2, columns / 2 + 1);
     blacks[1] = new Cell(rows / 2 + 1, columns / 2);
@@ -36,12 +42,12 @@ Game::Game(int rows, int columns, const char *serverIp, int serverPort)
 
     this->board = new Board(rows, columns, blacks, whites);
 
-
-    this->gameLogic = new StdGameLogic();
-    createPlayers(blacks.size(), whites.size());
-
     deleteVector(blacks);
     deleteVector(whites);
+
+    this->gameLogic = new StdGameLogic();
+
+
 }
 
 void Game::createPlayers(int blacks, int whites) {
@@ -80,12 +86,12 @@ void Game::createPlayers(int blacks, int whites) {
             this->players[1] = new AIplayer(pc2, whitesCounter, *blacksCounter, *board, *gameLogic, white);
         }
     } else if (network) {
-            HumanPlayer *activePlayer;
-            HumanPlayer *rivalPlayer;
-            ClientCommandsManager *cm;
-            Display *rivalDisplay;
+        HumanPlayer *activePlayer;
+        HumanPlayer *rivalPlayer = NULL;
+        ClientCommandsManager *cm = NULL;
+        Display *rivalDisplay = NULL;
         try {
-             activePlayer = humanPlayer;
+            activePlayer = humanPlayer;
 
             // ignoring whitespaces .
             char dummy;
@@ -138,8 +144,11 @@ void Game::createPlayers(int blacks, int whites) {
             fromServer->setClientSocket(clientSocket);
 
             cout << "Socket PLayer:" << clientSocket << endl;
-         } catch (const char *msg) {
+        } catch (const char *msg) {
             display->showMessage(msg);
+
+            delete msg;
+
             delete activePlayer;
             delete rivalPlayer;
             delete cm;
@@ -147,11 +156,9 @@ void Game::createPlayers(int blacks, int whites) {
             delete whitesCounter;
             delete display;
             delete rivalDisplay;
-            delete board;
-            delete gameLogic;
-            
+
             exit(-1);
-         }
+        }
     }
 
     this->players[0]->updateScore(blacks);

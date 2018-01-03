@@ -23,7 +23,6 @@ public:
 
 
 private:
-    int socket;
     map<string, Command *> commandsMap;
     Counter *whites;
     Counter *blacks;

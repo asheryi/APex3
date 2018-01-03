@@ -5,23 +5,34 @@ bool ClientStartCommand::execute(string command, int sid) {
     int n = write(sid, com, command.length() + 1);
     if (n == 0) {
         close(sid);
-        throw "server disconnected before start command";
+        throw "server disconnected in start command";
     } else if (n == -1) {
         close(sid);
         throw "problem writing to server in start command";
     }
     int respond = 0;
-    read(sid, &respond, sizeof(int));
+    n = read(sid, &respond, sizeof(int));
+    if (n == 0) {
+        close(sid);
+        throw "server disconnected in start command";
+    } else if (n == -1) {
+        close(sid);
+        throw "problem writing to server in start command";
+    }
+
     if (respond == -1) {
         clientDisplay->showMessage("this game is taken");
         return true;
     } else {
         clientDisplay->showMessage("Waiting to second player...");
-        n=read(sid, &respond, sizeof(int));
-         if (n == 0) {
-        close(sid);
-        throw "server disconnected before start command";
-       }
+        n = read(sid, &respond, sizeof(int));
+        if (n == 0) {
+            close(sid);
+            throw "server disconnected in start command";
+        } else if (n == -1) {
+            close(sid);
+            throw "problem writing to server in start command";
+        }
         game->prepareGame(0, whites, blacks);
         return false;
     }

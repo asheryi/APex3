@@ -3,15 +3,11 @@
 
 ClientCommandsManager::ClientCommandsManager(Game *game,
                                              Display *clientDisplay, Counter *whitesCounter, Counter *blacksCounter)
-        : commandsMap(), whites(whitesCounter),
-          blacks(blacksCounter) {
+        : commandsMap(), whites(whitesCounter), blacks(blacksCounter) {
 
     commandsMap["start"] = new ClientStartCommand(game, clientDisplay, whitesCounter, blacksCounter);
     commandsMap["list_games"] = new ClientListGamesCommand(clientDisplay);
     commandsMap["join"] = new ClientJoinCommand(game, clientDisplay, whitesCounter, blacksCounter);
-
-
-    cout << "Socket Manager:" << socket << endl;
 }
 
 bool ClientCommandsManager::executeCommand(string command, int sid) {
