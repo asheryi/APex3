@@ -8,13 +8,20 @@ int main(int argc, char *argv[]) {
 
     string serverIp;
     int port;
+
     if (getConnectionDetails(&serverIp, &port)) {
-        Game game(3, 3, serverIp.c_str(), port);
-        game.start();
+        try {
+            Game game(3, 3, serverIp.c_str(), port);
+            game.start();
+        } catch (const char *errorMsg) {
+
+        }
+
     }
 
     return 0;
 }
+
 /**
     * Reading from the configurations file the port and ip address of server.
     * @param serverIp - pointer, to the serverIp variable.

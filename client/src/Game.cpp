@@ -147,8 +147,6 @@ void Game::createPlayers(int blacks, int whites) {
         } catch (const char *msg) {
             display->showMessage(msg);
 
-            delete msg;
-
             delete activePlayer;
             delete rivalPlayer;
             delete cm;
@@ -157,7 +155,7 @@ void Game::createPlayers(int blacks, int whites) {
             delete display;
             delete rivalDisplay;
 
-            exit(-1);
+            throw msg;
         }
     }
 
@@ -169,7 +167,7 @@ void Game::createPlayers(int blacks, int whites) {
 
 
 void Game::prepareGame(int playerIndex, Counter *whitesCounter, Counter *blacksCounter) {
-    cout << "Welcom to prepare" << endl;
+    cout << "Welcome to prepare" << endl;
     if (playerIndex == 1) {
         // Swap from first to be second
         Display *tempDisplay = this->displays[0];
