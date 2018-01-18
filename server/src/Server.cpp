@@ -48,18 +48,23 @@ void *Server::receiveClients(void *receiveClientsStructArg) {
         if (sid == -1)
             break;
         cout << "Connection established with sid = " << sid << endl;
-        ClientHandler::HandleClientStruct *clientStruct = new ClientHandler::HandleClientStruct;
+        ClientHandler::taskArgs *clientStruct = new ClientHandler::taskArgs;
         clientStruct->sid = sid;
         clientStruct->clientHandler = clientHandler;
         clientStruct->threadsManager = receiveClientsStruct->threadsManager;
+
+        Task *commandTask = new Task(ClientHandler::handle, clientStruct);
+        receiveClientsStruct->threadsManager->addTaskToThreadPool(commandTask);
+
+        /*
         pthread_t handleClientThread;
-        int thread = pthread_create(&handleClientThread, NULL, clientHandler->handle, clientStruct);;
+        int thread = pthread_create(&handleClientThread, NULL, ClientHandler::handle, clientStruct);;
 
         if (thread) {
             cout << "Error: unable to create thread, " << thread << endl;
         } else {
             receiveClientsStruct->threadsManager->addThread(handleClientThread);
-        }
+        }*/
     }
 }
 

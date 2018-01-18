@@ -1,6 +1,8 @@
 #include <netinet/in.h>
 #include <vector>
 #include <pthread.h>
+#include "Task.h"
+#include "ThreadPool.h"
 
 using namespace std;
 
@@ -13,8 +15,10 @@ class ThreadsManager {
 private:
     vector<pthread_t> threads;
     pthread_mutex_t threads_mutex;
+    ThreadPool threadPool;
+
 public:
-    ThreadsManager();
+    ThreadsManager(int threadPoolSize);
 
     /**
      * Add the thread given to the threads managed.
@@ -28,10 +32,13 @@ public:
      */
     void removeThread(pthread_t thread);
 
+
     /**
      * Kill all threads managed here.
      */
     void killAllThreads();
+
+    void addTaskToThreadPool(Task *task);
 };
 
 

@@ -1,5 +1,5 @@
 a.out: compileAll
-	g++ *.o
+	g++ *.o -o client
 	rm -f *.o
 
 compileAll: include/*.h src/*.cpp

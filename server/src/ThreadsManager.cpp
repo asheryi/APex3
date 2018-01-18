@@ -15,10 +15,6 @@ void ThreadsManager::removeThread(pthread_t thread) {
     pthread_mutex_unlock(&threads_mutex);
 }
 
-ThreadsManager::ThreadsManager() : threads_mutex() {
-
-}
-
 void ThreadsManager::killAllThreads() {
     pthread_mutex_lock(&threads_mutex);
     int threads_size = threads.size();
@@ -27,6 +23,16 @@ void ThreadsManager::killAllThreads() {
     }
 
     pthread_mutex_unlock(&threads_mutex);
+    pthread_mutex_destroy(&threads_mutex);
+
+    threadPool.terminate();
+}
+
+void ThreadsManager::addTaskToThreadPool(Task *task) {
+    threadPool.addTask(task);
+}
+
+ThreadsManager::ThreadsManager(int threadPoolSize) : threads_mutex(), threadPool(threadPoolSize) {
 
 }
 

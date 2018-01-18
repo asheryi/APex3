@@ -65,6 +65,7 @@ GamesHandler::~GamesHandler() {
         delete it->second;
     }
     pthread_mutex_unlock(&maps_mutex);
+    pthread_mutex_destroy(&maps_mutex);
 }
 
 void *GamesHandler::joinAndStartGame(void *startGameArgs_) {

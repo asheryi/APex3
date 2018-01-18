@@ -6,8 +6,10 @@ using namespace std;
 
 bool getConnectionDetails(int *port);
 
+#define THREAD_POOL_SIZE 5
+
 int main() {
-    ThreadsManager *threadsManager = new ThreadsManager();
+    ThreadsManager *threadsManager = new ThreadsManager(THREAD_POOL_SIZE);
     ClientHandler *clientHandler = new ClientHandler(threadsManager);
     int port;
     if (getConnectionDetails(&port)) {
@@ -27,10 +29,10 @@ int main() {
 }
 
 /**
-    * Reading from the configurations file the port of server.
-    * @param port - pointer to the port variable.
-    * @return true if the file exists otherwise false.
-    */
+* Reading from the configurations file the port of server.
+* @param port - pointer to the port variable.
+* @return true if the file exists otherwise false.
+*/
 bool getConnectionDetails(int *port) {
     string port_;
     ifstream configFile("configFileServer");

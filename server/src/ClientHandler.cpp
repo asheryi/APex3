@@ -78,12 +78,14 @@ void ClientHandler::removeClientSid(int sid) {
 }
 
 ClientHandler::~ClientHandler() {
-
+    pthread_mutex_lock(&sids_mutex);
     // Closing all of the active sockets.
     int size = connectedClientsSid.size();
     for (int i = 0; i < size; i++) {
         close(connectedClientsSid[i]);
     }
+    pthread_mutex_unlock(&sids_mutex);
+    pthread_mutex_destroy(&sids_mutex);
     delete commandsManager;
 }
 

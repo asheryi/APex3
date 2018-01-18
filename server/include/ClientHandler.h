@@ -2,7 +2,7 @@
 #define EX3_CLIENTHANDLER_H
 #define MAX_COMMAND_SIZE 60
 
-#include "../include/CommandsManager.h"
+#include "CommandsManager.h"
 #include "ThreadsManager.h"
 
 class ClientHandler {
@@ -31,6 +31,7 @@ public:
    * @return  string, command type.
    */
     string getCommand(string input);
+
     /*
      * Struct using to pass arguments to thread function.
      */
@@ -38,7 +39,7 @@ public:
         int sid;
         ClientHandler *clientHandler;
         ThreadsManager *threadsManager;
-    } HandleClientStruct;
+    } taskArgs;
 
     /**
    * removeClientSid, removes sid from sids vector.
